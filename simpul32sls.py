@@ -95,7 +95,7 @@ if st.session_state.selected_kab is None:
     <div class="landing-container">
         <div class="landing-icon">🏗️</div>
         <h1 class="landing-title">Dashboard UMKM SLS</h1>
-        <p class="landing-subtitle">Pantau progress pengisian data UMKM per Sensus Lingkungan di tingkat Kabupaten/Kota se-Jawa Barat</p>
+        <p class="landing-subtitle">Pantau progress pendataan UMKM di tingkat Kabupaten/Kota CLUSTER B</p>
         <div class="landing-card">
     """, unsafe_allow_html=True)
 
