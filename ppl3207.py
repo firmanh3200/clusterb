@@ -344,6 +344,24 @@ table_df.columns = ["Kecamatan", "Desa/Kelurahan", "SLS"] + [STATUS_LABELS[c] fo
 # Tampilkan dataframe langsung tanpa styling (menghindari error applymap)
 st.dataframe(table_df, use_container_width=True, height=450, hide_index=True)
 
+# 1. Ekstrak nama dalam kurung ke kolom baru "PPL"
+df_f['PPL'] = df_f['SLS'].str.extract(r'\(\s*([^)]+)\s*\)')
+
+# 2. Definisikan kolom-kolom yang akan diagregasi
+kolom_agregasi = ['Approved', 'Submitted Pencacah', 'Open', 'Edited', 
+                  'Rejected', 'Revoked', 'Draft', 'Submitted Responden', 'Total']
+
+# 3. Groupby berdasarkan Kecamatan dan PPL, lalu sum
+df_baru = df_f.groupby(['Kecamatan', 'PPL'])[kolom_agregasi].sum().reset_index()
+
+# 4. Atur ulang urutan kolom sesuai keinginan
+df_baru = df_baru[['Kecamatan', 'PPL', 'Approved', 'Submitted Pencacah', 'Open', 
+                   'Edited', 'Rejected', 'Revoked', 'Draft', 'Submitted Respondent', 
+                   'Total']]
+
+with st.expander("CAPAIAN PPL"):
+    st.dataframe(df_baru, use_container_width=True, height=450, hide_index=True)
+
 # ============================================================
 # FOOTER
 # ============================================================
