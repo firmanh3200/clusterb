@@ -711,8 +711,8 @@ with ch4:
 # ============================================================
 # CHARTS ROW 3: Heatmap Kecamatan vs Status
 # ============================================================
-st.markdown("<div class="divider'></div>", unsafe_allow_html=True)
-st.markdown('<div class="section-title">Heatmap & Distribusi per Desa</div>', unsafe_allow_html=True)
+st.markdown("<div class='divider'></div>", unsafe_allow_html=True)
+st.markdown("<div class='section-title'>Heatmap & Distribusi per Desa</div>", unsafe_allow_html=True)
 
 ch5, ch6 = st.columns([1, 1])
 
