@@ -344,17 +344,19 @@ table_df.columns = ["Kecamatan", "Desa/Kelurahan", "SLS"] + [STATUS_LABELS[c] fo
 # Tampilkan dataframe langsung tanpa styling (menghindari error applymap)
 st.dataframe(table_df, use_container_width=True, height=450, hide_index=True)
 
-# 1. Ekstrak nama dalam kurung ke kolom baru "PPL"
-df_f['PPL'] = df_f['SLS'].str.extract(r'\(\s*([^)]+)\s*\)')
+# 1. Ekstrak nama dalam kurung ke kolom baru "PPL" dari kolom sls_label
+df_f['PPL'] = df_f['sls_label'].str.extract(r'\(\s*([^)]+)\s*\)')
 
-# 2. Definisikan kolom-kolom yang akan diagregasi
-kolom_agregasi = ['Approved', 'Submitted Pencacah', 'Open', 'Edited', 
-                  'Rejected', 'Revoked', 'Draft', 'Submitted Responden', 'Total']
+# 2. Definisikan kolom-kolom yang akan diagregasi (nama asli dari API)
+kolom_agregasi = STATUS_COLUMNS + ['TOTAL']
 
-# 3. Groupby berdasarkan Kecamatan dan PPL, lalu sum
-df_baru = df_f.groupby(['Kecamatan', 'PPL'])[kolom_agregasi].sum().reset_index()
+# 3. Groupby berdasarkan kec_label dan PPL, lalu sum
+df_baru = df_f.groupby(['kec_label', 'PPL'])[kolom_agregasi].sum().reset_index()
 
-# 4. Atur ulang urutan kolom sesuai keinginan
+# 4. Rename kolom agar sesuai dengan label yang diinginkan
+df_baru.columns = ['Kecamatan', 'PPL'] + [STATUS_LABELS[c] for c in STATUS_COLUMNS] + ['Total']
+
+# 5. Atur ulang urutan kolom sesuai keinginan
 df_baru = df_baru[['Kecamatan', 'PPL', 'Approved', 'Submitted Pencacah', 'Open', 
                    'Edited', 'Rejected', 'Revoked', 'Draft', 'Submitted Respondent', 
                    'Total']]
