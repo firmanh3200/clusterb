@@ -323,8 +323,9 @@ df_baru.columns = ['Kecamatan', 'PPL'] + [STATUS_LABELS[c] for c in STATUS_COLUM
 # 5. Atur ulang urutan kolom sesuai keinginan
 df_baru = df_baru[['Kecamatan', 'PPL', 'Approved', 'Submitted Pencacah', 'Open', 'Edited', 'Rejected', 'Revoked', 'Draft', 'Submitted Respondent', 'Total']]
 
+st.divider()
 st.subheader("PROGRESS PPL")
-st.dataframe(df_baru, use_container_width=True, height=450, hide_index=True)
+st.dataframe(df_baru, use_container_width=False, height=450, hide_index=True)
 
 df_baru['DIKERJAKAN'] = df_baru['Total'] - df_baru['Open']
 df_baru['CAPAIAN BRUTO (%)'] = (df_baru['DIKERJAKAN']/df_baru['Total']*100).round(2)
