@@ -15,16 +15,6 @@ st.set_page_config(
 )
 
 # ============================================================
-# DATA WILAYAH
-# ============================================================
-DAFTAR_WILAYAH = {
-    "3207": "Kabupaten Ciamis",
-}
-
-if "selected_kab" not in st.session_state:
-    st.session_state.selected_kab = None
-
-# ============================================================
 # CUSTOM CSS
 # ============================================================
 st.markdown(
@@ -82,36 +72,10 @@ st.markdown(
 )
 
 # ============================================================
-# HALAMAN PEMILIHAN WILAYAH
-# ============================================================
-if st.session_state.selected_kab is None:
-    st.markdown("""
-    <div class="landing-container">
-        <div class="landing-icon">🏗️</div>
-        <h1 class="landing-title">Dashboard UMKM SLS</h1>
-        <p class="landing-subtitle">Pantau progress pengisian data UMKM per SLS di Kabupaten Ciamis</p>
-        <div class="landing-card">
-    """, unsafe_allow_html=True)
-
-    opsi_dropdown = {f"{kode} — {nama}": kode for kode, nama in DAFTAR_WILAYAH.items()}
-    pilihan_label = st.selectbox("Pilih Wilayah", options=list(opsi_dropdown.keys()), index=None, placeholder="— Pilih Kabupaten / Kota —", label_visibility="visible")
-    submitted = st.button("Tampilkan Dashboard", type="primary", use_container_width=True)
-    
-    st.markdown("</div>", unsafe_allow_html=True)
-    if submitted and pilihan_label:
-        st.session_state.selected_kab = opsi_dropdown[pilihan_label]
-        st.rerun()
-    elif submitted and not pilihan_label:
-        st.warning("Silakan pilih wilayah terlebih dahulu.")
-        
-    st.markdown("""<p class="landing-footer">Sumber data: <a href="https://simpul-jabar.32net.id" target="_blank">simpul-jabar.32net.id</a></p></div>""", unsafe_allow_html=True)
-    st.stop()
-
-# ============================================================
 # INISIALISASI VARIABEL DASHBOARD
 # ============================================================
-KODE_TERPILIH = st.session_state.selected_kab
-NAMA_TERPILIH = DAFTAR_WILAYAH.get(KODE_TERPILIH, "Unknown")
+KODE_TERPILIH = "3207"
+NAMA_TERPILIH = "Kabupaten Ciamis"
 URL_API = f"https://simpul-jabar.32net.id/api/umkm-sls-by-kab/{KODE_TERPILIH}"
 
 STATUS_COLUMNS = ["APPROVED BY Pengawas","SUBMITTED BY Pencacah","OPEN","EDITED BY Pengawas","REJECTED BY Pengawas","REVOKED BY Pengawas","DRAFT","SUBMITTED RESPONDENT"]
@@ -357,12 +321,21 @@ df_baru = df_f.groupby(['kec_label', 'PPL'])[kolom_agregasi].sum().reset_index()
 df_baru.columns = ['Kecamatan', 'PPL'] + [STATUS_LABELS[c] for c in STATUS_COLUMNS] + ['Total']
 
 # 5. Atur ulang urutan kolom sesuai keinginan
-df_baru = df_baru[['Kecamatan', 'PPL', 'Approved', 'Submitted Pencacah', 'Open', 
-                   'Edited', 'Rejected', 'Revoked', 'Draft', 'Submitted Respondent', 
-                   'Total']]
+df_baru = df_baru[['Kecamatan', 'PPL', 'Approved', 'Submitted Pencacah', 'Open', 'Edited', 'Rejected', 'Revoked', 'Draft', 'Submitted Respondent', 'Total']]
 
-with st.expander("CAPAIAN PPL"):
-    st.dataframe(df_baru, use_container_width=True, height=450, hide_index=True)
+st.subheader("PROGRESS PPL")
+st.dataframe(df_baru, use_container_width=True, height=450, hide_index=True)
+
+df_baru['DIKERJAKAN'] = df_baru['Total'] - df_baru['Open']
+df_baru['CAPAIAN BRUTO (%)'] = df_baru['DIKERJAKAN']/df_baru['Total']*100
+df_baru['CAPAIAN NETTO (%)'] = df_baru['Approved']/df_baru['Total']*100
+
+st.divider()
+df_baru2 = df_baru[['Kecamatan', 'PPL', 'DIKERJAKAN', 'CAPAIAN BRUTO (%)', 'CAPAIAN NETTO (%)']]
+
+st.subheader("CAPAIAN PPL")
+st.dataframe(df_baru2, width='stretch', hide_index=True)
+st.caption("CAPAIAN NETTO = Approved/Total")
 
 # ============================================================
 # FOOTER
