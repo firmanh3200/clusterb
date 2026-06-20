@@ -334,8 +334,8 @@ st.divider()
 df_baru2 = df_baru[['Kecamatan', 'PPL', 'DIKERJAKAN', 'CAPAIAN BRUTO (%)', 'CAPAIAN NETTO (%)']]
 
 st.subheader("CAPAIAN PPL")
-st.dataframe(df_baru2, use_container_width=True, hide_index=True)
-st.warning("CAPAIAN BRUTO = ASSIGNMENT SELAIN OPEN")
+st.dataframe(df_baru2, use_container_width=False, hide_index=True)
+st.warning("CAPAIAN BRUTO = DIKERJAKAN = ASSIGNMENT SELAIN OPEN")
 st.success("CAPAIAN NETTO = Approved/Total")
 
 # ============================================================
