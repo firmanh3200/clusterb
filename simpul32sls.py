@@ -350,6 +350,37 @@ table_df.columns = ["Kecamatan", "Desa/Kelurahan", "SLS"] + [STATUS_LABELS[c] fo
 # Tampilkan dataframe langsung tanpa styling (menghindari error applymap)
 st.dataframe(table_df, use_container_width=True, height=450, hide_index=True)
 
+# 1. Ekstrak nama dalam kurung ke kolom baru "PPL" dari kolom sls_label
+df_f['PPL'] = df_f['sls_label'].str.extract(r'\(\s*([^)]+)\s*\)')
+
+# 2. Definisikan kolom-kolom yang akan diagregasi (nama asli dari API)
+kolom_agregasi = STATUS_COLUMNS + ['TOTAL']
+
+# 3. Groupby berdasarkan kec_label dan PPL, lalu sum
+df_baru = df_f.groupby(['kec_label', 'PPL'])[kolom_agregasi].sum().reset_index()
+
+# 4. Rename kolom agar sesuai dengan label yang diinginkan
+df_baru.columns = ['Kecamatan', 'PPL'] + [STATUS_LABELS[c] for c in STATUS_COLUMNS] + ['Total']
+
+# 5. Atur ulang urutan kolom sesuai keinginan
+df_baru = df_baru[['Kecamatan', 'PPL', 'Approved', 'Submitted Pencacah', 'Open', 'Edited', 'Rejected', 'Revoked', 'Draft', 'Submitted Respondent', 'Total']]
+
+st.divider()
+st.subheader("PROGRESS PPL")
+st.dataframe(df_baru, use_container_width=False, height=450, hide_index=True)
+
+df_baru['DIKERJAKAN'] = df_baru['Total'] - df_baru['Open']
+df_baru['CAPAIAN BRUTO (%)'] = (df_baru['DIKERJAKAN']/df_baru['Total']*100).round(2)
+df_baru['CAPAIAN NETTO (%)'] = (df_baru['Approved']/df_baru['Total']*100).round(2)
+
+st.divider()
+df_baru2 = df_baru[['Kecamatan', 'PPL', 'DIKERJAKAN', 'CAPAIAN BRUTO (%)', 'CAPAIAN NETTO (%)']]
+
+st.subheader("CAPAIAN PPL")
+st.dataframe(df_baru2, use_container_width=False, hide_index=True)
+st.warning("CAPAIAN BRUTO = DIKERJAKAN = ASSIGNMENT SELAIN OPEN")
+st.success("CAPAIAN NETTO = Approved/Total")
+
 # ============================================================
 # FOOTER
 # ============================================================
