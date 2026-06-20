@@ -327,15 +327,16 @@ st.subheader("PROGRESS PPL")
 st.dataframe(df_baru, use_container_width=True, height=450, hide_index=True)
 
 df_baru['DIKERJAKAN'] = df_baru['Total'] - df_baru['Open']
-df_baru['CAPAIAN BRUTO (%)'] = df_baru['DIKERJAKAN']/df_baru['Total']*100
-df_baru['CAPAIAN NETTO (%)'] = df_baru['Approved']/df_baru['Total']*100
+df_baru['CAPAIAN BRUTO (%)'] = (df_baru['DIKERJAKAN']/df_baru['Total']*100).round(2)
+df_baru['CAPAIAN NETTO (%)'] = (df_baru['Approved']/df_baru['Total']*100).round(2)
 
 st.divider()
 df_baru2 = df_baru[['Kecamatan', 'PPL', 'DIKERJAKAN', 'CAPAIAN BRUTO (%)', 'CAPAIAN NETTO (%)']]
 
 st.subheader("CAPAIAN PPL")
-st.dataframe(df_baru2, width='stretch', hide_index=True)
-st.caption("CAPAIAN NETTO = Approved/Total")
+st.dataframe(df_baru2, use_container_width=True, hide_index=True)
+st.warning("CAPAIAN BRUTO = ASSIGNMENT SELAIN OPEN")
+st.success("CAPAIAN NETTO = Approved/Total")
 
 # ============================================================
 # FOOTER
