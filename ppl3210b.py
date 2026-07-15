@@ -109,7 +109,28 @@ with tab_sls:
 
 with tab_usaha:
     st.subheader("Progress Pendataan Usaha")
-    st.dataframe(df_bku, width='stretch', hide_index=True)
+    df_bku['kab'] = 'KAB. MAJALENGKA'
+    df_bku_kab = df_bku.groupby(by=['kab'])[['target_usaha', 'bku_baru', 'bku_baru_non', 'bku_baru_pertanian', 'bku_ditemukan', 'bku_ganda', 'bku_tdk_ditemukan', 'bku_temu_non', 'bku_temu_pertanian', 'bku_tutup', 'uk_baru', 'uk_baru_non', 'uk_baru_pertanian', 'uk_ditemukan', 'uk_ganda', 'uk_tdk_ditemukan', 'uk_temu_non', 'uk_temu_pertanian', 'uk_tutup']].sum().reset_index()
+    
+    grafik_bku_kab = px.bar(df_bku_kab, x='kab', y=['target_usaha', 'bku_ditemukan', 'bku_tdk_ditemukan', 'bku_ganda', 'bku_tutup', 'bku_baru'], barmode='group', title="Capaian Pendataan BKU", labels={'value':'Jumlah', 'variable':'Status'})
+    
+    with st.container(border=True):    
+        st.plotly_chart(grafik_bku_kab, width="content")
+    
+    with st.expander("PER SLS"):
+        st.dataframe(df_bku, width='stretch', hide_index=True)
+    with st.expander("REKAP DESA"):
+        df_bku_desa = df_bku.groupby(by=['kec', 'desa'])[['target_usaha', 'bku_baru', 'bku_baru_non', 'bku_baru_pertanian', 'bku_ditemukan', 'bku_ganda', 'bku_tdk_ditemukan', 'bku_temu_non', 'bku_temu_pertanian', 'bku_tutup', 'uk_baru', 'uk_baru_non', 'uk_baru_pertanian', 'uk_ditemukan', 'uk_ganda', 'uk_tdk_ditemukan', 'uk_temu_non', 'uk_temu_pertanian', 'uk_tutup']].sum().reset_index()
+        st.dataframe(df_bku_desa, width='stretch', hide_index=True)
+    with st.expander("REKAP KECAMATAN"):
+        df_bku_kec = df_bku.groupby(by=['kec'])[['target_usaha', 'bku_baru', 'bku_baru_non', 'bku_baru_pertanian', 'bku_ditemukan', 'bku_ganda', 'bku_tdk_ditemukan', 'bku_temu_non', 'bku_temu_pertanian', 'bku_tutup', 'uk_baru', 'uk_baru_non', 'uk_baru_pertanian', 'uk_ditemukan', 'uk_ganda', 'uk_tdk_ditemukan', 'uk_temu_non', 'uk_temu_pertanian', 'uk_tutup']].sum().reset_index()
+        st.dataframe(df_bku_kec, width='stretch', hide_index=True)
+        
+        grafik_bku_kec = px.bar(df_bku_kec, x='kec', y=['target_usaha', 'bku_ditemukan', 'bku_tdk_ditemukan', 'bku_ganda', 'bku_tutup', 'bku_baru'], barmode='group', title="Rekap Pendataan BKU per Kecamatan", labels={'value':'Jumlah', 'variable':'Status'})
+        
+        with st.container(border=True):
+            st.plotly_chart(grafik_bku_kec, width="content")
+    
 
 with tab_qc:
     st.subheader("Pendataan Keluarga")
