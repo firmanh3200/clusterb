@@ -69,38 +69,35 @@ df_usaha = df_usaha.sort_values(by=['kec', 'desa', 'sls'])
 df_bku = df_usaha[['kec', 'desa', 'sls', 'target_usaha', 'bku_baru', 'bku_baru_non', 'bku_baru_pertanian', 'bku_ditemukan', 'bku_ganda', 'bku_tdk_ditemukan', 'bku_temu_non', 'bku_temu_pertanian', 'bku_tutup', 'uk_baru', 'uk_baru_non', 'uk_baru_pertanian', 'uk_ditemukan', 'uk_ganda', 'uk_tdk_ditemukan', 'uk_temu_non', 'uk_temu_pertanian', 'uk_tutup']]
 
 
-## KUALITAS
-url_q = "https://simpul-jabar.32net.id/api/kualitas-data-rekap?kdkab=3210%20-%20KAB.%20MAJALENGKA&kdkec=&kdkel=&level=sls"
+## PENDATAAN KELUARGA
+url_qk = "https://simpul-jabar.32net.id/api/kualitas-data-rekap?kdkab=3210%20-%20KAB.%20MAJALENGKA&kdkec=&kdkel=&level=sls"
 
-response_q = requests.get(url_q)
-response_q.raise_for_status()  # raise error jika gagal
+response_qk = requests.get(url_qk)
+response_qk.raise_for_status()  # raise error jika gagal
 
-json_data_q = response_q.json()
+json_data_qk = response_qk.json()
 
 # Ambil key "data" yang berisi list of dict
-df_q = pd.DataFrame(json_data_q["data"])
+df_qk = pd.DataFrame(json_data_qk["data"])
 
-df_q["desa"] = df_q["parent_wilayah"].str.extract(r"^(.+?)\s*\|\s*(.+)$")[0]
-df_q["kec"]  = df_q["parent_wilayah"].str.extract(r"^(.+?)\s*\|\s*(.+)$")[1]
-df_q["sls"]  = df_q["wilayah"]
+df_qk["desa"] = df_qk["parent_wilayah"].str.extract(r"^(.+?)\s*\|\s*(.+)$")[0]
+df_qk["kec"]  = df_qk["parent_wilayah"].str.extract(r"^(.+?)\s*\|\s*(.+)$")[1]
+df_qk["sls"]  = df_qk["wilayah"]
 
-df_art = df_q[['kec', 'desa', 'sls', 'art_baru', 'art_khusus', 'art_meninggal', 'art_pindah_dn', 'art_pindah_ln', 'art_prelist', 'art_tidak_ditemukan', 'art_tinggal_bersama']]
+df_art = df_qk[['kec', 'desa', 'sls', 'art_baru', 'art_khusus', 'art_meninggal', 'art_pindah_dn', 'art_pindah_ln', 'art_prelist', 'art_tidak_ditemukan', 'art_tinggal_bersama']]
 df_art = df_art.sort_values(by=['kec', 'desa', 'sls'])
 
-df_kk = df_q[['kec', 'desa', 'sls', 'target_keluarga', 'usaha_keluarga', 'k_baru', 'k_bersedia', 'k_ditemukan',
-       'k_khusus', 'k_memiliki_usaha', 'k_meninggal', 'k_menolak',
+df_kk = df_qk[['kec', 'desa', 'sls', 'target_keluarga', 'k_baru', 'k_bersedia', 'k_ditemukan',
+       'k_khusus', 'k_meninggal', 'k_menolak',
        'k_tidak_ditemui', 'k_tidak_ditemukan', 'k_tidak_eligible']]
 df_kk = df_kk.sort_values(by=['kec', 'desa', 'sls'])
-
-df_qusaha = df_q[['kec', 'desa', 'sls', 'target_usaha', 'target_ub', 'ub_didata', 'target_um', 'um_didata', 'target_umk', 'umk_didata', 'bku_baru', 'bku_ditemukan', 'bku_ganda', 'bku_tdk_ditemukan', 'bku_tutup']]
-df_qusaha = df_qusaha.sort_values(by=['kec', 'desa', 'sls'])
 
 
 with st.container(border=True):
        st.header("Progress Sensus Ekonomi 2026 Kabupaten Majalengka")
        st.caption("Sumber: simpul-jabar.32net.id")
 
-tab_ppl, tab_sls, tab_usaha, tab_qc = st.tabs(['PPL', 'SLS', 'USAHA', 'KUALITAS'])
+tab_ppl, tab_sls, tab_usaha, tab_qc = st.tabs(['PPL', 'SLS', 'PENDATAAN USAHA', 'PENDATAAN KELUARGA'])
 
 with tab_ppl:
     st.subheader("Progress PPL")
@@ -111,15 +108,12 @@ with tab_sls:
     st.dataframe(df_sls2, width='stretch', hide_index=True)
 
 with tab_usaha:
-    st.subheader("Progress Usaha")
+    st.subheader("Progress Pendataan Usaha")
     st.dataframe(df_bku, width='stretch', hide_index=True)
 
 with tab_qc:
-    st.subheader("Kualitas Data")
+    st.subheader("Pendataan Keluarga")
     
-    with st.expander("KUALITAS DATA USAHA"):
-       st.dataframe(df_qusaha, width='stretch', hide_index=True)
-
     with st.expander("KUALITAS DATA KELUARGA"):
        st.dataframe(df_kk, width='stretch', hide_index=True)
 
