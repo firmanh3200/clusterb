@@ -259,7 +259,7 @@ with tab_qc:
     with st.expander("HASIL PENDATAAN ANGGOTA KELUARGA"):
        grafik_art = px.bar(rekap_art_kab, x='kab', y=['art_baru', 'art_khusus', 'art_meninggal', 'art_pindah_dn', 'art_pindah_ln', 'art_prelist', 'art_tidak_ditemukan', 'art_tinggal_bersama'], barmode='group')
        with st.container(border=True):
-           st.plotly_chart(grafik_art_kab, width='stretch')
+           st.plotly_chart(grafik_art, width='stretch')
        st.dataframe(df_art, width='stretch', hide_index=True)
 
 # ============================================================
