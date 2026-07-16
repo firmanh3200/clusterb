@@ -252,11 +252,15 @@ with tab_qc:
     
     with st.expander("HASIL PENDATAAN KELUARGA"):
        grafik_kk = px.bar(rekap_kk_kab, x='kab', y=['target_keluarga', 'k_baru', 'k_bersedia', 'k_ditemukan', 'k_khusus', 'k_meninggal', 'k_menolak', 'k_tidak_ditemui', 'k_tidak_ditemukan', 'k_tidak_eligible'], barmode='group')
-       st.plotly_chart(grafik_kk, width='stretch') 
+       with st.container(border=True):
+           st.plotly_chart(grafik_kk, width='stretch') 
        st.dataframe(df_kk, width='stretch', hide_index=True)
 
     with st.expander("HASIL PENDATAAN ANGGOTA KELUARGA"):
-       st.dataframe(df_art, width='stretch', hide_index=True)
+       grafik_art = px.bar(rekap_art_kab, x='kab', y=['art_baru', 'art_khusus', 'art_meninggal', 'art_pindah_dn', 'art_pindah_ln', 'art_prelist', 'art_tidak_ditemukan', 'art_tinggal_bersama'], barmode='group')
+        with st.container(border=True):
+            st.plotly_chart(grafik_art_kab, width='stretch')
+        st.dataframe(df_art, width='stretch', hide_index=True)
 
 # ============================================================
 # FOOTER
