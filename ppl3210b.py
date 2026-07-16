@@ -278,8 +278,8 @@ with tab_qc:
            st.plotly_chart(grafik_kk, width='stretch') 
        st.dataframe(df_kk, width='stretch', hide_index=True)
        kol4aa, kol4bb = st.columns(2)
-        with kol4aa:
-            with st.container(border=True):
+       with kol4aa:
+           with st.container(border=True):
                 st.subheader("BKU Tertinggi")
                 st.success(f"Baru: {' | '.join(maks_bku_baru.astype(str).values)}")
                 st.info(f"Ganda: {' | '.join(maks_bku_ganda.astype(str).values)}")
@@ -287,8 +287,8 @@ with tab_qc:
                 st.caption(f"Tidak Ditemukan: {' | '.join(maks_bku_tdketemu.astype(str).values)}")
                 st.caption(f"Ditemukan: {' | '.join(maks_bku_ketemu.astype(str).values)}")
     
-        with kol4bb:
-            with st.container(border=True):
+       with kol4bb:
+           with st.container(border=True):
                 st.subheader("BKU Terendah")
                 st.success(f"Baru: {' | '.join(min_bku_baru.astype(str).values)}")
                 st.info(f"Ganda: {' | '.join(min_bku_ganda.astype(str).values)}")
