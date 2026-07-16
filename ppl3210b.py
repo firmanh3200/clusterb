@@ -109,11 +109,18 @@ df_qk["sls"]  = df_qk["wilayah"]
 
 df_art = df_qk[['kec', 'desa', 'sls', 'art_baru', 'art_khusus', 'art_meninggal', 'art_pindah_dn', 'art_pindah_ln', 'art_prelist', 'art_tidak_ditemukan', 'art_tinggal_bersama']]
 df_art = df_art.sort_values(by=['kec', 'desa', 'sls'])
+df_art["kab"]  = "KAB. MAJALENGKA"
+
+rekap_art_kab = df_art.groupby(by='kab')[['art_baru', 'art_khusus', 'art_meninggal', 'art_pindah_dn', 'art_pindah_ln', 'art_prelist', 'art_tidak_ditemukan', 'art_tinggal_bersama']].sum().reset_index()
 
 df_kk = df_qk[['kec', 'desa', 'sls', 'target_keluarga', 'k_baru', 'k_bersedia', 'k_ditemukan',
        'k_khusus', 'k_meninggal', 'k_menolak',
        'k_tidak_ditemui', 'k_tidak_ditemukan', 'k_tidak_eligible']]
 df_kk = df_kk.sort_values(by=['kec', 'desa', 'sls'])
+df_kk["kab"]  = "KAB. MAJALENGKA"
+
+rekap_kk_kab = df_kk.groupby(by='kab')[['target_keluarga', 'k_baru', 'k_bersedia', 'k_ditemukan',
+       'k_khusus', 'k_meninggal', 'k_menolak', 'k_tidak_ditemui', 'k_tidak_ditemukan', 'k_tidak_eligible']].sum().reset_index()
 
 # Samakan tipe data menjadi string terlebih dahulu
 df_bku['kec'] = df_bku['kec'].astype(str)
@@ -244,6 +251,8 @@ with tab_qc:
     st.subheader("Pendataan Keluarga")
     
     with st.expander("HASIL PENDATAAN KELUARGA"):
+       grafik_kk = px.bar(rekap_kk_kab, x='kab', y=['target_keluarga', 'k_baru', 'k_bersedia', 'k_ditemukan', 'k_khusus', 'k_meninggal', 'k_menolak', 'k_tidak_ditemui', 'k_tidak_ditemukan', 'k_tidak_eligible'], barmode='group')
+       st.plotly_chart(grafik_kk, width='stretch') 
        st.dataframe(df_kk, width='stretch', hide_index=True)
 
     with st.expander("HASIL PENDATAAN ANGGOTA KELUARGA"):
