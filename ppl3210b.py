@@ -32,18 +32,18 @@ df_ppl = df_ppl.sort_values(by=['kec_petugas', 'kel_petugas', 'nama_petugas'])
 df_ppl2 = df_ppl.groupby(by=['kec_petugas', 'kel_petugas', 'nama_petugas'])[['target', 'open_val', 'draft', 'submit', 'pendataan']].sum().reset_index()
 
 #TERTINGGI
-target_tertinggi = df_ppl2.loc[df_ppl2['target'].idxmax(), ['nama_petugas', 'kec_petugas']]
-open_tertinggi = df_ppl2.loc[df_ppl2['open_val'].idxmax(), ['nama_petugas', 'kec_petugas']]
-draft_tertinggi = df_ppl2.loc[df_ppl2['draft'].idxmax(), ['nama_petugas', 'kec_petugas']]
-submit_tertinggi = df_ppl2.loc[df_ppl2['submit'].idxmax(), ['nama_petugas', 'kec_petugas']]
-mendata_tertinggi = df_ppl2.loc[df_ppl2['pendataan'].idxmax(), ['nama_petugas', 'kec_petugas']]
+target_tertinggi = df_ppl2.loc[df_ppl2['target'].idxmax(), ['target', 'nama_petugas', 'kec_petugas']]
+open_tertinggi = df_ppl2.loc[df_ppl2['open_val'].idxmax(), ['open_val', 'nama_petugas', 'kec_petugas']]
+draft_tertinggi = df_ppl2.loc[df_ppl2['draft'].idxmax(), ['draft', 'nama_petugas', 'kec_petugas']]
+submit_tertinggi = df_ppl2.loc[df_ppl2['submit'].idxmax(), ['submit', 'nama_petugas', 'kec_petugas']]
+mendata_tertinggi = df_ppl2.loc[df_ppl2['pendataan'].idxmax(), ['pendataan', 'nama_petugas', 'kec_petugas']]
 
 #TERENDAH
-target_terendah = df_ppl2.loc[df_ppl2['target'].idxmin(), ['nama_petugas', 'kec_petugas']]
-open_terendah = df_ppl2.loc[df_ppl2['open_val'].idxmin(), ['nama_petugas', 'kec_petugas']]
-draft_terendah = df_ppl2.loc[df_ppl2['draft'].idxmin(), ['nama_petugas', 'kec_petugas']]
-submit_terendah = df_ppl2.loc[df_ppl2['submit'].idxmin(), ['nama_petugas', 'kec_petugas']]
-mendata_terendah = df_ppl2.loc[df_ppl2['pendataan'].idxmin(), ['nama_petugas', 'kec_petugas']]
+target_terendah = df_ppl2.loc[df_ppl2['target'].idxmin(), ['target', 'nama_petugas', 'kec_petugas']]
+open_terendah = df_ppl2.loc[df_ppl2['open_val'].idxmin(), ['open_val', 'nama_petugas', 'kec_petugas']]
+draft_terendah = df_ppl2.loc[df_ppl2['draft'].idxmin(), ['draft', 'nama_petugas', 'kec_petugas']]
+submit_terendah = df_ppl2.loc[df_ppl2['submit'].idxmin(), ['submit', 'nama_petugas', 'kec_petugas']]
+mendata_terendah = df_ppl2.loc[df_ppl2['pendataan'].idxmin(), ['pendataan', 'nama_petugas', 'kec_petugas']]
 
 ## SLS
 url_sls = "https://simpul-jabar.32net.id/api/um-rekap?kdkab=3210%20-%20KAB.%20MAJALENGKA&kdkec=&kdkel=&level_view=SLS"
@@ -149,20 +149,20 @@ with tab_ppl:
     with kol1a:
         with st.container(border=True):
             st.subheader("Tertinggi")
-            st.write(f"Target: {target_tertinggi}")
-            st.write(f"Open: {open_tertinggi}")
-            st.write(f"Draft: {draft_tertinggi}")
-            st.write(f"Submit: {submit_tertinggi}")
-            st.write(f"Pendataan: {mendata_tertinggi}")
+            st.write(f"Target: {'| '.join(target_tertinggi.values)}")
+            st.write(f"Open: {'| '.join(open_tertinggi.values)}")
+            st.write(f"Draft: {'| '.join(draft_tertinggi.values)}")
+            st.write(f"Submit: {'| '.join(submit_tertinggi.values)}")
+            st.write(f"Pendataan: {'| '.join(mendata_tertinggi.values)}")
 
     with kol1b:
         with st.container(border=True):
             st.subheader("Terendah")
-            st.write(f"Target: {target_terendah}")
-            st.write(f"Open: {open_terendah}")
-            st.write(f"Draft: {draft_terendah}")
-            st.write(f"Submit: {submit_terendah}")
-            st.write(f"Pendataan: {mendata_terendah}")
+            st.write(f"Target: {'| '.join(target_terendah.values)}")
+            st.write(f"Open: {'| '.join(open_terendah.values)}")
+            st.write(f"Draft: {'| '.join(draft_terendah.values)}")
+            st.write(f"Submit: {'| '.join(submit_terendah.values)}")
+            st.write(f"Pendataan: {'| '.join(mendata_terendah.values)}")
     
     st.dataframe(df_ppl2, width='stretch', hide_index=True)
 
