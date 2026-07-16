@@ -250,9 +250,6 @@ with tab_usaha:
     
     with st.expander("PER SLS"):
         st.dataframe(df_bku, width='stretch', hide_index=True)
-    
-    with st.expander("REKAP PPL"):
-        st.dataframe(usaha_ppl, width='stretch', hide_index=True)
 
 #TERTINGGI
 maks_bku_baru = usaha_ppl.loc[usaha_ppl['bku_baru'].idxmax(), ['bku_baru', 'nama_lengkap', 'kec']]
@@ -268,6 +265,27 @@ min_bku_ganda = usaha_ppl.loc[usaha_ppl['bku_ganda'].idxmin(), ['bku_ganda', 'na
 min_bku_tutup = usaha_ppl.loc[usaha_ppl['bku_tutup'].idxmin(), ['bku_tutup', 'nama_lengkap', 'kec']]
 min_bku_tdketemu = usaha_ppl.loc[usaha_ppl['bku_tdk_ditemukan'].idxmin(), ['bku_tdk_ditemukan', 'nama_lengkap', 'kec']]
 min_bku_ketemu = usaha_ppl.loc[usaha_ppl['bku_ditemukan'].idxmin(), ['bku_ditemukan', 'nama_lengkap', 'kec']]
+    
+    with st.expander("REKAP PPL"):
+        st.dataframe(usaha_ppl, width='stretch', hide_index=True)
+        kol4aa, kol4bb = st.columns(2)
+        with kol4aa:
+            with st.container(border=True):
+                st.subheader("BKU Tertinggi")
+                st.success(f"Baru: {' | '.join(maks_bku_baru.astype(str).values)}")
+                st.info(f"Ganda: {' | '.join(maks_bku_ganda.astype(str).values)}")
+                st.warning(f"Tutup: {' | '.join(maks_bku_tutup.astype(str).values)}")
+                st.caption(f"Tidak Ditemukan: {' | '.join(maks_bku_tdketemu.astype(str).values)}")
+                st.caption(f"Ditemukan: {' | '.join(maks_bku_ketemu.astype(str).values)}")
+    
+        with kol4bb:
+            with st.container(border=True):
+                st.subheader("BKU Terendah")
+                st.success(f"Baru: {' | '.join(min_bku_baru.astype(str).values)}")
+                st.info(f"Ganda: {' | '.join(min_bku_ganda.astype(str).values)}")
+                st.warning(f"Tutup: {' | '.join(min_bku_tutup.astype(str).values)}")
+                st.caption(f"Tidak Ditemukan: {' | '.join(min_bku_tdketemu.astype(str).values)}")
+                st.caption(f"Ditemukan: {' | '.join(min_bku_ketemu.astype(str).values)}")
 
 with tab_qc:
     st.subheader("Pendataan Keluarga")
@@ -277,25 +295,7 @@ with tab_qc:
        with st.container(border=True):
            st.plotly_chart(grafik_kk, width='stretch') 
        st.dataframe(df_kk, width='stretch', hide_index=True)
-       kol4aa, kol4bb = st.columns(2)
-       with kol4aa:
-           with st.container(border=True):
-                st.subheader("BKU Tertinggi")
-                st.success(f"Baru: {' | '.join(maks_bku_baru.astype(str).values)}")
-                st.info(f"Ganda: {' | '.join(maks_bku_ganda.astype(str).values)}")
-                st.warning(f"Tutup: {' | '.join(maks_bku_tutup.astype(str).values)}")
-                st.caption(f"Tidak Ditemukan: {' | '.join(maks_bku_tdketemu.astype(str).values)}")
-                st.caption(f"Ditemukan: {' | '.join(maks_bku_ketemu.astype(str).values)}")
-    
-       with kol4bb:
-           with st.container(border=True):
-                st.subheader("BKU Terendah")
-                st.success(f"Baru: {' | '.join(min_bku_baru.astype(str).values)}")
-                st.info(f"Ganda: {' | '.join(min_bku_ganda.astype(str).values)}")
-                st.warning(f"Tutup: {' | '.join(min_bku_tutup.astype(str).values)}")
-                st.caption(f"Tidak Ditemukan: {' | '.join(min_bku_tdketemu.astype(str).values)}")
-                st.caption(f"Ditemukan: {' | '.join(min_bku_ketemu.astype(str).values)}")
-    
+  
     with st.expander("HASIL PENDATAAN ANGGOTA KELUARGA"):
        grafik_art = px.bar(rekap_art_kab, x='kab', y=['art_baru', 'art_khusus', 'art_meninggal', 'art_pindah_dn', 'art_pindah_ln', 'art_prelist', 'art_tidak_ditemukan', 'art_tinggal_bersama'], barmode='group')
        with st.container(border=True):
