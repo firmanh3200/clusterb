@@ -31,6 +31,19 @@ df_ppl = df_ppl.sort_values(by=['kec_petugas', 'kel_petugas', 'nama_petugas'])
 
 df_ppl2 = df_ppl.groupby(by=['kec_petugas', 'kel_petugas', 'nama_petugas'])[['target', 'open_val', 'draft', 'submit', 'pendataan']].sum().reset_index()
 
+#TERTINGGI
+target_tertinggi = df_ppl2.loc[df_ppl2['target'].idxmax(), ['nama_petugas', 'kec_petugas']]
+open_tertinggi = df_ppl2.loc[df_ppl2['open_val'].idxmax(), ['nama_petugas', 'kec_petugas']]
+draft_tertinggi = df_ppl2.loc[df_ppl2['draft'].idxmax(), ['nama_petugas', 'kec_petugas']]
+submit_tertinggi = df_ppl2.loc[df_ppl2['submit'].idxmax(), ['nama_petugas', 'kec_petugas']]
+mendata_tertinggi = df_ppl2.loc[df_ppl2['pendataan'].idxmax(), ['nama_petugas', 'kec_petugas']]
+
+#TERENDAH
+target_terendah = df_ppl2.loc[df_ppl2['target'].idxmin(), ['nama_petugas', 'kec_petugas']]
+open_terendah = df_ppl2.loc[df_ppl2['open_val'].idxmin(), ['nama_petugas', 'kec_petugas']]
+draft_terendah = df_ppl2.loc[df_ppl2['draft'].idxmin(), ['nama_petugas', 'kec_petugas']]
+submit_terendah = df_ppl2.loc[df_ppl2['submit'].idxmin(), ['nama_petugas', 'kec_petugas']]
+mendata_terendah = df_ppl2.loc[df_ppl2['pendataan'].idxmin(), ['nama_petugas', 'kec_petugas']]
 
 ## SLS
 url_sls = "https://simpul-jabar.32net.id/api/um-rekap?kdkab=3210%20-%20KAB.%20MAJALENGKA&kdkec=&kdkel=&level_view=SLS"
@@ -132,6 +145,25 @@ tab_ppl, tab_sls, tab_usaha, tab_qc = st.tabs(['PPL', 'SLS', 'PENDATAAN USAHA', 
 
 with tab_ppl:
     st.subheader("Progress PPL")
+    kol1a, kol1b = st.columns(2)
+    with kol1a:
+        with st.container(border=True):
+            st.subheader("Tertinggi")
+            st.write(f"Target: {target_tertinggi}")
+            st.write(f"Open: {open_tertinggi}")
+            st.write(f"Draft: {draft_tertinggi}")
+            st.write(f"Submit: {submit_tertinggi}")
+            st.write(f"Pendataan: {mendata_tertinggi}")
+
+    with kol1b:
+        with st.container(border=True):
+            st.subheader("Terendah")
+            st.write(f"Target: {target_terendah}")
+            st.write(f"Open: {open_terendah}")
+            st.write(f"Draft: {draft_terendah}")
+            st.write(f"Submit: {submit_terendah}")
+            st.write(f"Pendataan: {mendata_terendah}")
+    
     st.dataframe(df_ppl2, width='stretch', hide_index=True)
 
 with tab_sls:
