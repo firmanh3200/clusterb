@@ -158,8 +158,8 @@ with tab_ppl:
             st.success(f"Pendataan: {' | '.join(mendata_tertinggi.astype(str).values)}")
             st.info(f"Submit: {' | '.join(submit_tertinggi.astype(str).values)}")
             st.warning(f"Draft: {' | '.join(draft_tertinggi.astype(str).values)}")
-            st.write(f"Target: {' | '.join(target_tertinggi.astype(str).values)}")
-            st.write(f"Open: {' | '.join(open_tertinggi.astype(str).values)}")
+            st.caption(f"Target: {' | '.join(target_tertinggi.astype(str).values)}")
+            st.caption(f"Open: {' | '.join(open_tertinggi.astype(str).values)}")
 
     with kol1b:
         with st.container(border=True):
@@ -167,8 +167,8 @@ with tab_ppl:
             st.success(f"Pendataan: {' | '.join(mendata_terendah.astype(str).values)}")
             st.info(f"Submit: {' | '.join(submit_terendah.astype(str).values)}")
             st.warning(f"Draft: {' | '.join(draft_terendah.astype(str).values)}")
-            st.write(f"Target: {' | '.join(target_terendah.astype(str).values)}")
-            st.write(f"Open: {' | '.join(open_terendah.astype(str).values)}")
+            st.caption(f"Target: {' | '.join(target_terendah.astype(str).values)}")
+            st.caption(f"Open: {' | '.join(open_terendah.astype(str).values)}")
     
     st.dataframe(df_ppl2, width='stretch', hide_index=True)
 
