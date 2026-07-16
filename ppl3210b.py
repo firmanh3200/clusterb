@@ -31,6 +31,12 @@ df_ppl = df_ppl.sort_values(by=['kec_petugas', 'kel_petugas', 'nama_petugas'])
 
 df_ppl2 = df_ppl.groupby(by=['kec_petugas', 'kel_petugas', 'nama_petugas'])[['target', 'open_val', 'draft', 'submit', 'pendataan']].sum().reset_index()
 
+df_ppl2['target'] = df_ppl2['target'].astype('Int64')
+df_ppl2['open_val'] = df_ppl2['open_val'].astype('Int64')
+df_ppl2['draft'] = df_ppl2['draft'].astype('Int64')
+df_ppl2['submit'] = df_ppl2['submit'].astype('Int64')
+df_ppl2['pendataan'] = df_ppl2['pendataan'].astype('Int64')
+
 #TERTINGGI
 target_tertinggi = df_ppl2.loc[df_ppl2['target'].idxmax(), ['target', 'nama_petugas', 'kec_petugas']]
 open_tertinggi = df_ppl2.loc[df_ppl2['open_val'].idxmax(), ['open_val', 'nama_petugas', 'kec_petugas']]
@@ -149,20 +155,20 @@ with tab_ppl:
     with kol1a:
         with st.container(border=True):
             st.subheader("Tertinggi")
+            st.write(f"Pendataan: {'| '.join(mendata_tertinggi.astype(str).values)}")
+            st.write(f"Submit: {'| '.join(submit_tertinggi.astype(str).values)}")
+            st.write(f"Draft: {'| '.join(draft_tertinggi.astype(str).values)}")
             st.write(f"Target: {'| '.join(target_tertinggi.astype(str).values)}")
             st.write(f"Open: {'| '.join(open_tertinggi.astype(str).values)}")
-            st.write(f"Draft: {'| '.join(draft_tertinggi.astype(str).values)}")
-            st.write(f"Submit: {'| '.join(submit_tertinggi.astype(str).values)}")
-            st.write(f"Pendataan: {'| '.join(mendata_tertinggi.astype(str).values)}")
 
     with kol1b:
         with st.container(border=True):
             st.subheader("Terendah")
+            st.write(f"Pendataan: {'| '.join(mendata_terendah.astype(str).values)}")
+            st.write(f"Submit: {'| '.join(submit_terendah.astype(str).values)}")
+            st.write(f"Draft: {'| '.join(draft_terendah.astype(str).values)}")
             st.write(f"Target: {'| '.join(target_terendah.astype(str).values)}")
             st.write(f"Open: {'| '.join(open_terendah.astype(str).values)}")
-            st.write(f"Draft: {'| '.join(draft_terendah.astype(str).values)}")
-            st.write(f"Submit: {'| '.join(submit_terendah.astype(str).values)}")
-            st.write(f"Pendataan: {'| '.join(mendata_terendah.astype(str).values)}")
     
     st.dataframe(df_ppl2, width='stretch', hide_index=True)
 
