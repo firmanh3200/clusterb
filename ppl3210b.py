@@ -157,6 +157,22 @@ usaha_ppl['bku_tdk_ditemukan'] = usaha_ppl['bku_tdk_ditemukan'].astype('Int64')
 usaha_ppl['bku_ditemukan'] = usaha_ppl['bku_ditemukan'].astype('Int64')
 
 
+#TERTINGGI
+maks_bku_baru = usaha_ppl.loc[usaha_ppl['bku_baru'].idxmax(), ['bku_baru', 'nama_lengkap', 'kec']]
+maks_bku_ganda = usaha_ppl.loc[usaha_ppl['bku_ganda'].idxmax(), ['bku_ganda', 'nama_lengkap', 'kec']]
+maks_bku_tutup = usaha_ppl.loc[usaha_ppl['bku_tutup'].idxmax(), ['bku_tutup', 'nama_lengkap', 'kec']]
+maks_bku_tdketemu = usaha_ppl.loc[usaha_ppl['bku_tdk_ditemukan'].idxmax(), ['bku_tdk_ditemukan', 'nama_lengkap', 'kec']]
+maks_bku_ketemu = usaha_ppl.loc[usaha_ppl['bku_ditemukan'].idxmax(), ['bku_ditemukan', 'nama_lengkap', 'kec']]
+
+
+#TERENDAH
+min_bku_baru = usaha_ppl.loc[usaha_ppl['bku_baru'].idxmin(), ['bku_baru', 'nama_lengkap', 'kec']]
+min_bku_ganda = usaha_ppl.loc[usaha_ppl['bku_ganda'].idxmin(), ['bku_ganda', 'nama_lengkap', 'kec']]
+min_bku_tutup = usaha_ppl.loc[usaha_ppl['bku_tutup'].idxmin(), ['bku_tutup', 'nama_lengkap', 'kec']]
+min_bku_tdketemu = usaha_ppl.loc[usaha_ppl['bku_tdk_ditemukan'].idxmin(), ['bku_tdk_ditemukan', 'nama_lengkap', 'kec']]
+min_bku_ketemu = usaha_ppl.loc[usaha_ppl['bku_ditemukan'].idxmin(), ['bku_ditemukan', 'nama_lengkap', 'kec']]
+
+
 with st.container(border=True):
        st.header("Progress SE2026 Kabupaten Majalengka")
        st.caption("Sumber: simpul-jabar.32net.id")
@@ -250,21 +266,6 @@ with tab_usaha:
     
     with st.expander("PER SLS"):
         st.dataframe(df_bku, width='stretch', hide_index=True)
-
-#TERTINGGI
-maks_bku_baru = usaha_ppl.loc[usaha_ppl['bku_baru'].idxmax(), ['bku_baru', 'nama_lengkap', 'kec']]
-maks_bku_ganda = usaha_ppl.loc[usaha_ppl['bku_ganda'].idxmax(), ['bku_ganda', 'nama_lengkap', 'kec']]
-maks_bku_tutup = usaha_ppl.loc[usaha_ppl['bku_tutup'].idxmax(), ['bku_tutup', 'nama_lengkap', 'kec']]
-maks_bku_tdketemu = usaha_ppl.loc[usaha_ppl['bku_tdk_ditemukan'].idxmax(), ['bku_tdk_ditemukan', 'nama_lengkap', 'kec']]
-maks_bku_ketemu = usaha_ppl.loc[usaha_ppl['bku_ditemukan'].idxmax(), ['bku_ditemukan', 'nama_lengkap', 'kec']]
-
-
-#TERENDAH
-min_bku_baru = usaha_ppl.loc[usaha_ppl['bku_baru'].idxmin(), ['bku_baru', 'nama_lengkap', 'kec']]
-min_bku_ganda = usaha_ppl.loc[usaha_ppl['bku_ganda'].idxmin(), ['bku_ganda', 'nama_lengkap', 'kec']]
-min_bku_tutup = usaha_ppl.loc[usaha_ppl['bku_tutup'].idxmin(), ['bku_tutup', 'nama_lengkap', 'kec']]
-min_bku_tdketemu = usaha_ppl.loc[usaha_ppl['bku_tdk_ditemukan'].idxmin(), ['bku_tdk_ditemukan', 'nama_lengkap', 'kec']]
-min_bku_ketemu = usaha_ppl.loc[usaha_ppl['bku_ditemukan'].idxmin(), ['bku_ditemukan', 'nama_lengkap', 'kec']]
     
     with st.expander("REKAP PPL"):
         st.dataframe(usaha_ppl, width='stretch', hide_index=True)
