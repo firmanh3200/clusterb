@@ -268,7 +268,7 @@ if pilihan:
 
         if kec_terpilih:
             df_ppl3 = df_ppl2[df_ppl2['kec_petugas'] == kec_terpilih]
-            df_ppl3 = df_ppl.sort_values(by=['kec_petugas', 'kel_petugas', 'pendataan'])
+            df_ppl3 = df_ppl3.sort_values(by=['kec_petugas', 'kel_petugas', 'pendataan'])
             st.dataframe(df_ppl3, width='stretch', hide_index=True)
             st.caption(f"PPL: {len(df_ppl3)}")
 
