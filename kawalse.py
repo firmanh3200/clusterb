@@ -268,6 +268,7 @@ if pilihan:
 
         if kec_terpilih:
             df_ppl3 = df_ppl2[df_ppl2['kec_petugas'] == kec_terpilih]
+            df_ppl3 = df_ppl.sort_values(by=['kec_petugas', 'kel_petugas', 'pendataan'])
             st.dataframe(df_ppl3, width='stretch', hide_index=True)
             st.caption(f"PPL: {len(df_ppl3)}")
 
@@ -373,8 +374,19 @@ if pilihan:
             kec_terpilih3 = st.selectbox("Filter Kecamatan", pilihankec3, key="pilihan4")
             if kec_terpilih3:
                 usaha_ppl2 = usaha_ppl[usaha_ppl['kec'] == kec_terpilih3]
-                st.dataframe(usaha_ppl2, width='stretch', hide_index=True)
 
+                usaha_ppl2_bku = usaha_ppl2[['kec', 'nama_lengkap', 'email', 'bku_baru', 'bku_baru_non', 'bku_baru_pertanian', 'bku_ditemukan', 'bku_ganda', 'bku_tdk_ditemukan', 'bku_temu_non', 'bku_temu_pertanian', 'bku_tutup']]
+
+                usaha_ppl2_uk = usaha_ppl2[['kec', 'nama_lengkap', 'email', 'uk_baru', 'uk_baru_non', 'uk_baru_pertanian', 'uk_ditemukan', 'uk_ganda', 'uk_tdk_ditemukan', 'uk_temu_non', 'uk_temu_pertanian', 'uk_tutup']]
+                
+                st.dataframe(usaha_ppl2, width='stretch', hide_index=True)
+                st.divider()
+                st.warning("B K U")
+                st.dataframe(usaha_ppl2_bku, width='stretch', hide_index=True)
+                st.divider()
+                st.warning("USAHA KELUARGA")
+                st.dataframe(usaha_ppl2_uk, width='stretch', hide_index=True)
+                
     with tab_qc:
         st.subheader("Pendataan Keluarga")
         
