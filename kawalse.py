@@ -10,7 +10,7 @@ from datetime import datetime
 # PAGE CONFIG
 # ============================================================
 st.set_page_config(
-    page_title="Dashboard SE2026 Kota Bandung",
+    page_title="Dashboard SE2026 Jabar",
     page_icon="🏗️",
     layout="wide",
     initial_sidebar_state="collapsed",
