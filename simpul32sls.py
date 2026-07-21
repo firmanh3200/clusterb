@@ -3,386 +3,551 @@ import pandas as pd
 import requests
 import plotly.express as px
 import plotly.graph_objects as go
+import lxml
+from datetime import datetime
 
 # ============================================================
 # PAGE CONFIG
 # ============================================================
 st.set_page_config(
-    page_title="Dashboard UMKM SLS — Jawa Barat",
+    page_title="Dashboard SE2026 Jabar",
     page_icon="🏗️",
     layout="wide",
     initial_sidebar_state="collapsed",
 )
 
-# ============================================================
-# DATA WILAYAH
-# ============================================================
-DAFTAR_WILAYAH = {
-    "3202": "Kabupaten Sukabumi",
-    "3209": "Kabupaten Cirebon",
-    "3210": "Kabupaten Majalengka",
-    "3213": "Kabupaten Subang",
-    "3217": "Kabupaten Bandung Barat",
-    "3276": "Kota Depok",
-    "3277": "Kota Cimahi",
-}
+tanggal_mulai = datetime(2026, 6, 14)
+tanggal_target = datetime(2026, 8, 31)
+hari_ini = datetime.now()
 
-if "selected_kab" not in st.session_state:
-    st.session_state.selected_kab = None
+hari_ke = (hari_ini - tanggal_mulai).days
+menuju = (tanggal_target - hari_ini).days
 
-# ============================================================
-# CUSTOM CSS
-# ============================================================
-st.markdown(
-    """
-<style>
-    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
-    html, body, [class*="st-"] { font-family: 'Plus Jakarta Sans', sans-serif !important; }
-    [data-testid="stSidebar"], [data-testid="stSidebarCollapsedControl"] { display: none !important; }
-    #MainMenu { visibility: hidden !important; }
-    footer { visibility: hidden !important; }
+data_wilayah = [
+    {"kode": 3201, "tipe": "-", "nama": "KAB. BOGOR"},
+    {"kode": 3202, "tipe": "-", "nama": "KAB. SUKABUMI"},
+    {"kode": 3203, "tipe": "-", "nama": "KAB. CIANJUR"},
+    {"kode": 3204, "tipe": "-", "nama": "KAB. BANDUNG"},
+    {"kode": 3205, "tipe": "-", "nama": "KAB. GARUT"},
+    {"kode": 3206, "tipe": "-", "nama": "KAB. TASIKMALAYA"},
+    {"kode": 3207, "tipe": "-", "nama": "KAB. CIAMIS"},
+    {"kode": 3208, "tipe": "-", "nama": "KAB. KUNINGAN"},
+    {"kode": 3209, "tipe": "-", "nama": "KAB. CIREBON"},
+    {"kode": 3210, "tipe": "-", "nama": "KAB. MAJALENGKA"},
+    {"kode": 3211, "tipe": "-", "nama": "KAB. SUMEDANG"},
+    {"kode": 3212, "tipe": "-", "nama": "KAB. INDRAMAYU"},
+    {"kode": 3213, "tipe": "-", "nama": "KAB. SUBANG"},
+    {"kode": 3214, "tipe": "-", "nama": "KAB. PURWAKARTA"},
+    {"kode": 3215, "tipe": "-", "nama": "KAB. KARAWANG"},
+    {"kode": 3216, "tipe": "-", "nama": "KAB. BEKASI"},
+    {"kode": 3217, "tipe": "-", "nama": "KAB. BANDUNG BARAT"},
+    {"kode": 3218, "tipe": "-", "nama": "KAB. PANGANDARAN"},
+    {"kode": 3271, "tipe": "-", "nama": "BOGOR"},
+    {"kode": 3272, "tipe": "-", "nama": "SUKABUMI"},
+    {"kode": 3273, "tipe": "-", "nama": "BANDUNG"},
+    {"kode": 3274, "tipe": "-", "nama": "CIREBON"},
+    {"kode": 3275, "tipe": "-", "nama": "BEKASI"},
+    {"kode": 3276, "tipe": "-", "nama": "DEPOK"},
+    {"kode": 3277, "tipe": "-", "nama": "CIMAHI"},
+    {"kode": 3278, "tipe": "-", "nama": "TASIKMALAYA"},
+    {"kode": 3279, "tipe": "-", "nama": "BANJAR"},
+]
 
-    .landing-container { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 80vh; text-align: center; padding: 2rem; }
-    .landing-icon { font-size: 4rem; margin-bottom: 1.5rem; animation: float 3s ease-in-out infinite; }
-    @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
-    .landing-title { font-size: 2.25rem; font-weight: 800; color: #0f172a; margin: 0 0 0.5rem 0; letter-spacing: -0.03em; }
-    .landing-subtitle { font-size: 1rem; color: #64748b; margin: 0 0 2.5rem 0; font-weight: 500; max-width: 500px; }
-    .landing-card { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 1.25rem; padding: 2.5rem; box-shadow: 0 4px 24px rgba(0,0,0,0.06); width: 100%; max-width: 480px; }
-    .landing-card label { font-size: 0.8rem; font-weight: 700; color: #0f766e; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.5rem; display: block; text-align: left; }
-    .landing-card .stSelectbox > div > div { border-radius: 0.75rem !important; border: 2px solid #e2e8f0 !important; padding: 0.65rem 1rem !important; font-size: 0.95rem !important; font-weight: 600 !important; }
-    .landing-footer { margin-top: 3rem; font-size: 0.78rem; color: #94a3b8; }
-    .landing-footer a { color: #0f766e; text-decoration: none; font-weight: 600; }
+# Buat label
+labels = [f"{d['kode']} {d['tipe']} {d['nama']}" for d in data_wilayah]
 
-    .main-header { background: linear-gradient(135deg, #0f766e 0%, #134e4a 50%, #1e293b 100%); padding: 1.5rem 2.5rem; border-radius: 1rem; margin-bottom: 1.5rem; position: relative; overflow: hidden; }
-    .main-header::before { content: ''; position: absolute; top: -50%; right: -20%; width: 400px; height: 400px; background: radial-gradient(circle, rgba(20,184,166,0.15) 0%, transparent 70%); border-radius: 50%; }
-    .main-header::after { content: ''; position: absolute; bottom: -40%; left: 10%; width: 300px; height: 300px; background: radial-gradient(circle, rgba(245,158,11,0.1) 0%, transparent 70%); border-radius: 50%; }
-    .main-header h1 { color: #f0fdfa; font-size: 1.75rem; font-weight: 800; margin: 0 0 0.25rem 0; letter-spacing: -0.02em; }
-    .main-header p { color: #99f6e4; font-size: 0.9rem; margin: 0; font-weight: 500; }
-    .btn-ganti { display: inline-block; margin-top: 0.75rem; padding: 0.4rem 1rem; background: rgba(255,255,255,0.15); color: #ccfbf1; border: 1px solid rgba(255,255,255,0.2); border-radius: 0.5rem; font-size: 0.78rem; font-weight: 600; cursor: pointer; text-decoration: none; }
-    .btn-ganti:hover { background: rgba(255,255,255,0.25); }
+with st.container(border=True):
+    pilihan = st.selectbox("Pilih Wilayah:", options=labels, key="pilihan1")
 
-    .metric-card { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 0.875rem; padding: 1.25rem 1.5rem; box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.03); transition: all 0.25s ease; position: relative; overflow: hidden; }
-    .metric-card:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
-    .metric-card .metric-icon { width: 42px; height: 42px; border-radius: 0.625rem; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; margin-bottom: 0.75rem; }
-    .metric-card .metric-label { font-size: 0.75rem; color: #64748b; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.25rem; }
-    .metric-card .metric-value { font-size: 1.75rem; font-weight: 800; color: #0f172a; line-height: 1; }
-    .metric-card .metric-sub { font-size: 0.72rem; color: #94a3b8; margin-top: 0.35rem; font-weight: 500; }
-    [data-testid="stHorizontalBlock"] .stHorizontalBlock { gap: 0.75rem !important; }
+# Cari index yang dipilih
+idx = labels.index(pilihan)
 
-    .filter-bar { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 0.875rem; padding: 1.25rem 1.5rem; box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.03); margin-bottom: 1.5rem; }
-    .filter-bar .filter-title { font-size: 0.78rem; color: #64748b; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.4rem; }
-    .filter-bar .filter-summary { display: flex; gap: 1.5rem; margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px solid #f1f5f9; flex-wrap: wrap; }
-    .filter-bar .filter-summary-item { font-size: 0.78rem; color: #475569; font-weight: 500; }
-    .filter-bar .filter-summary-item b { color: #0f766e; font-weight: 700; }
+v1 = data_wilayah[idx]["kode"]
+v2 = data_wilayah[idx]["tipe"]
+v3 = data_wilayah[idx]["nama"]
 
-    .chart-box { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 0.875rem; padding: 1.5rem; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
-    .chart-box h3 { font-size: 0.95rem; font-weight: 700; color: #1e293b; margin: 0 0 0.15rem 0; }
-    .chart-box .chart-subtitle { font-size: 0.78rem; color: #94a3b8; margin: 0 0 1rem 0; }
+if pilihan:
+    ## PPL
+    url_ppl = f"https://simpul-jabar.32net.id/api/um-rekap?kdkab={v1}%20{v2}%20{v3}&kdkec=&kdkel=&level_view=PETUGAS"
 
-    .section-title { font-size: 1.05rem; font-weight: 700; color: #0f172a; margin: 1.5rem 0 0.75rem 0; display: flex; align-items: center; gap: 0.5rem; }
-    .section-title::before { content: ''; width: 4px; height: 20px; background: linear-gradient(180deg, #0f766e, #14b8a6); border-radius: 2px; }
-    .divider { height: 1px; background: linear-gradient(90deg, transparent, #e2e8f0, transparent); margin: 1.5rem 0; }
-</style>
-""",
-    unsafe_allow_html=True,
-)
 
-# ============================================================
-# HALAMAN PEMILIHAN WILAYAH
-# ============================================================
-if st.session_state.selected_kab is None:
-    st.markdown("""
-    <div class="landing-container">
-        <div class="landing-icon">🏗️</div>
-        <h1 class="landing-title">Dashboard UMKM SLS</h1>
-        <p class="landing-subtitle">Pantau progress pendataan UMKM di tingkat Kabupaten/Kota CLUSTER B</p>
-        <div class="landing-card">
-    """, unsafe_allow_html=True)
+    response_ppl = requests.get(url_ppl)
+    response_ppl.raise_for_status()  # raise error jika gagal
 
-    opsi_dropdown = {f"{kode} — {nama}": kode for kode, nama in DAFTAR_WILAYAH.items()}
-    pilihan_label = st.selectbox("Pilih Wilayah", options=list(opsi_dropdown.keys()), index=None, placeholder="— Pilih Kabupaten / Kota —", label_visibility="visible")
-    submitted = st.button("Tampilkan Dashboard", type="primary", use_container_width=True)
+    json_data_ppl = response_ppl.json()
+
+    # Ambil key "data" yang berisi list of dict
+    df_ppl = pd.DataFrame(json_data_ppl["data"])
+
+    df_ppl = df_ppl.sort_values(by=['kec_petugas', 'kel_petugas', 'nama_petugas'])
+
+    df_ppl2 = df_ppl.groupby(by=['kec_petugas', 'kel_petugas', 'nama_petugas'])[['target', 'open_val', 'draft', 'submit', 'pendataan']].sum().reset_index()
+
+    df_ppl2['target'] = df_ppl2['target'].astype('Int64')
+    df_ppl2['open_val'] = df_ppl2['open_val'].astype('Int64')
+    df_ppl2['draft'] = df_ppl2['draft'].astype('Int64')
+    df_ppl2['submit'] = df_ppl2['submit'].astype('Int64')
+    df_ppl2['pendataan'] = df_ppl2['pendataan'].astype('Int64')
+
+    #TERTINGGI
+    target_tertinggi = df_ppl2.loc[df_ppl2['target'].idxmax(), ['target', 'nama_petugas', 'kec_petugas']]
+    open_tertinggi = df_ppl2.loc[df_ppl2['open_val'].idxmax(), ['open_val', 'nama_petugas', 'kec_petugas']]
+    draft_tertinggi = df_ppl2.loc[df_ppl2['draft'].idxmax(), ['draft', 'nama_petugas', 'kec_petugas']]
+    submit_tertinggi = df_ppl2.loc[df_ppl2['submit'].idxmax(), ['submit', 'nama_petugas', 'kec_petugas']]
+    mendata_tertinggi = df_ppl2.loc[df_ppl2['pendataan'].idxmax(), ['pendataan', 'nama_petugas', 'kec_petugas']]
+
+    #TERENDAH
+    target_terendah = df_ppl2.loc[df_ppl2['target'].idxmin(), ['target', 'nama_petugas', 'kec_petugas']]
+    open_terendah = df_ppl2.loc[df_ppl2['open_val'].idxmin(), ['open_val', 'nama_petugas', 'kec_petugas']]
+    draft_terendah = df_ppl2.loc[df_ppl2['draft'].idxmin(), ['draft', 'nama_petugas', 'kec_petugas']]
+    submit_terendah = df_ppl2.loc[df_ppl2['submit'].idxmin(), ['submit', 'nama_petugas', 'kec_petugas']]
+    mendata_terendah = df_ppl2.loc[df_ppl2['pendataan'].idxmin(), ['pendataan', 'nama_petugas', 'kec_petugas']]
+
+    ## SLS
+    url_sls = f"https://simpul-jabar.32net.id/api/um-rekap?kdkab={v1}%20{v2}%20{v3}&kdkec=&kdkel=&level_view=SLS"
+
+    response_sls = requests.get(url_sls)
+    response_sls.raise_for_status()  # raise error jika gagal
+
+    json_data_sls = response_sls.json()
+
+    # Ambil key "data" yang berisi list of dict
+    df_sls = pd.DataFrame(json_data_sls["data"])
+
+    df_sls["sls"]  = df_sls["kdkab"]
+    df_sls = df_sls.sort_values(by=['nama_kab', 'nama_kec', 'nama_kel', 'sls'])
+
+    df_sls2 = df_sls[['nama_kec', 'nama_kel', 'sls', 'nama_lengkap', 'email', 'no_telp', 'target', 'open_val', 'submit', 'pendataan', 'percentage', 'percentage_pendataan', 'progress_difference', 'rerata_per_24_jam', 'selisih_jam']]
+    df_sls2 = df_sls2.sort_values(by=['nama_kec', 'nama_kel', 'sls'])
+
+    df_sls2['sls2'] = df_sls2['sls'].str.replace(r'\s*\([^)]*\)\s*$', '', regex=True)
+
+    sls_didata = df_sls2[df_sls2['pendataan'] != 0].copy()
+    sls_belum = df_sls2[df_sls2['pendataan'] == 0].copy()
+
+    ## USAHA
+    url_usaha = f"https://simpul-jabar.32net.id/api/usaha-data-rekap?kdkab={v1}%20{v2}%20{v3}&kdkec=&kdkel=&level=sls"
+
+    response_usaha = requests.get(url_usaha)
+    response_usaha.raise_for_status()  # raise error jika gagal
+
+    json_data_usaha = response_usaha.json()
+
+    # Ambil key "data" yang berisi list of dict
+    df_usaha = pd.DataFrame(json_data_usaha["data"])
+
+    df_usaha["desa"] = df_usaha["parent_wilayah"].str.extract(r"^(.+?)\s*\|\s*(.+)$")[0]
+    df_usaha["kec"]  = df_usaha["parent_wilayah"].str.extract(r"^(.+?)\s*\|\s*(.+)$")[1]
+    df_usaha["sls"]  = df_usaha["wilayah"]
+    df_usaha = df_usaha.sort_values(by=['kec', 'desa', 'sls'])
+
+    df_bku = df_usaha[['kec', 'desa', 'sls', 'target_usaha', 'bku_baru', 'bku_baru_non', 'bku_baru_pertanian', 'bku_ditemukan', 'bku_ganda', 'bku_tdk_ditemukan', 'bku_temu_non', 'bku_temu_pertanian', 'bku_tutup', 'uk_baru', 'uk_baru_non', 'uk_baru_pertanian', 'uk_ditemukan', 'uk_ganda', 'uk_tdk_ditemukan', 'uk_temu_non', 'uk_temu_pertanian', 'uk_tutup']]
+
+
+    ## PENDATAAN KELUARGA
+    url_qk = f"https://simpul-jabar.32net.id/api/kualitas-data-rekap?kdkab={v1}%20{v2}%20{v3}&kdkec=&kdkel=&level=sls"
+
+    response_qk = requests.get(url_qk)
+    response_qk.raise_for_status()  # raise error jika gagal
+
+    json_data_qk = response_qk.json()
+
+    # Ambil key "data" yang berisi list of dict
+    df_qk = pd.DataFrame(json_data_qk["data"])
+
+    df_qk["desa"] = df_qk["parent_wilayah"].str.extract(r"^(.+?)\s*\|\s*(.+)$")[0]
+    df_qk["kec"]  = df_qk["parent_wilayah"].str.extract(r"^(.+?)\s*\|\s*(.+)$")[1]
+    df_qk["sls"]  = df_qk["wilayah"]
+
+    df_art = df_qk[['kec', 'desa', 'sls', 'art_baru', 'art_khusus', 'art_meninggal', 'art_pindah_dn', 'art_pindah_ln', 'art_prelist', 'art_tidak_ditemukan', 'art_tinggal_bersama']]
+    df_art = df_art.sort_values(by=['kec', 'desa', 'sls'])
+    df_art["kab"]  = f"{v1}"
+
+    rekap_art_kab = df_art.groupby(by='kab')[['art_baru', 'art_khusus', 'art_meninggal', 'art_pindah_dn', 'art_pindah_ln', 'art_prelist', 'art_tidak_ditemukan', 'art_tinggal_bersama']].sum().reset_index()
+
+    df_kk = df_qk[['kec', 'desa', 'sls', 'target_keluarga', 'k_baru', 'k_bersedia', 'k_ditemukan',
+        'k_khusus', 'k_meninggal', 'k_menolak',
+        'k_tidak_ditemui', 'k_tidak_ditemukan', 'k_tidak_eligible']]
+    df_kk = df_kk.sort_values(by=['kec', 'desa', 'sls'])
+    df_kk["kab"]  = f"{v1}"
+
+    rekap_kk_kab = df_kk.groupby(by='kab')[['target_keluarga', 'k_baru', 'k_bersedia', 'k_ditemukan',
+        'k_khusus', 'k_meninggal', 'k_menolak', 'k_tidak_ditemui', 'k_tidak_ditemukan', 'k_tidak_eligible']].sum().reset_index()
+
+    # Samakan tipe data menjadi string terlebih dahulu
+    df_kk['sls'] = df_kk['sls'].astype(str)
     
-    st.markdown("</div>", unsafe_allow_html=True)
-    if submitted and pilihan_label:
-        st.session_state.selected_kab = opsi_dropdown[pilihan_label]
-        st.rerun()
-    elif submitted and not pilihan_label:
-        st.warning("Silakan pilih wilayah terlebih dahulu.")
-        
-    st.markdown("""<p class="landing-footer">Sumber data: <a href="https://simpul-jabar.32net.id" target="_blank">simpul-jabar.32net.id</a></p></div>""", unsafe_allow_html=True)
-    st.stop()
+    df_bku['kec'] = df_bku['kec'].astype(str)
+    df_bku['desa'] = df_bku['desa'].astype(str)
+    df_bku['sls'] = df_bku['sls'].astype(str)
 
-# ============================================================
-# INISIALISASI VARIABEL DASHBOARD
-# ============================================================
-KODE_TERPILIH = st.session_state.selected_kab
-NAMA_TERPILIH = DAFTAR_WILAYAH.get(KODE_TERPILIH, "Unknown")
-URL_API = f"https://simpul-jabar.32net.id/api/umkm-sls-by-kab/{KODE_TERPILIH}"
+    df_sls2['nama_kec'] = df_sls2['nama_kec'].astype(str).str.strip()
+    df_sls2['nama_kel'] = df_sls2['nama_kel'].astype(str).str.strip()
+    df_sls2['sls2'] = df_sls2['sls2'].astype(str)
 
-STATUS_COLUMNS = ["APPROVED BY Pengawas","SUBMITTED BY Pencacah","OPEN","EDITED BY Pengawas","REJECTED BY Pengawas","REVOKED BY Pengawas","DRAFT","SUBMITTED RESPONDENT"]
-STATUS_LABELS = {"APPROVED BY Pengawas":"Approved","SUBMITTED BY Pencacah":"Submitted Pencacah","OPEN":"Open","EDITED BY Pengawas":"Edited","REJECTED BY Pengawas":"Rejected","REVOKED BY Pengawas":"Revoked","DRAFT":"Draft","SUBMITTED RESPONDENT":"Submitted Respondent"}
-STATUS_COLORS = {"Approved":"#10b981","Submitted Pencacah":"#3b82f6","Open":"#f59e0b","Edited":"#8b5cf6","Rejected":"#ef4444","Revoked":"#6b7280","Draft":"#06b6d4","Submitted Respondent":"#ec4899"}
-STATUS_ICONS = {"TOTAL":("📦","#0f766e"),"APPROVED BY Pengawas":("✅","#10b981"),"SUBMITTED BY Pencacah":("📤","#3b82f6"),"OPEN":("🔓","#f59e0b"),"EDITED BY Pengawas":("✏️","#8b5cf6"),"REJECTED BY Pengawas":("❌","#ef4444"),"REVOKED BY Pengawas":("🚫","#6b7280"),"DRAFT":("📝","#06b6d4"),"SUBMITTED RESPONDENT":("👤","#ec4899")}
+    # Langkah 1: Merge berdasarkan 3 kolom kunci
+    kolom_yang_diperlukan = ['nama_kec', 'nama_kel', 'sls2', 'nama_lengkap', 'email', 'no_telp']
+    df_sls2_subset = df_sls2[kolom_yang_diperlukan]
 
-def process_data(raw):
-    df = pd.DataFrame(raw["data"])
-    for col in STATUS_COLUMNS: df[col] = pd.to_numeric(df[col].replace("-", 0), errors="coerce").fillna(0).astype(int)
-    df["tanggal"] = pd.to_datetime(df["tanggal"])
-    df["kec_raw"] = df["kdkec"].astype(str); df["desa_raw"] = df["kddesa"].astype(str); df["sls_raw"] = df["kdsls"].astype(str)
-    df["kec_name"] = df["kec_raw"].str.split(" - ").str[1].str.strip(); df["desa_name"] = df["desa_raw"].str.split(" - ").str[1].str.strip(); df["sls_name"] = df["sls_raw"].str.split(" - ").str[1].str.strip()
-    df["kec_label"] = df["kec_name"].str.title(); df["desa_label"] = df["desa_name"].str.title(); df["sls_label"] = df["sls_name"]
-    return df
-
-@st.cache_data(ttl=300)
-def fetch_data():
-    resp = requests.get(URL_API, timeout=30)
-    resp.raise_for_status()
-    return resp.json()
-
-try:
-    raw = fetch_data()
-    df = process_data(raw)
-except Exception as e:
-    st.error(f"Gagal memuat data: {e}")
-    st.stop()
-
-# ============================================================
-# HEADER & FILTER UTAMA
-# ============================================================
-last_update = df["tanggal"].max().strftime("%d %B %Y, %H:%M WIB")
-st.markdown(f"""<div class="main-header"><h1>📊 Dashboard Monitoring UMKM SLS</h1><p>{NAMA_TERPILIH} — Kode: {KODE_TERPILIH} | Data diperbarui: {last_update}</p><a href="javascript:void(0)" onclick="document.querySelector('[data-testid=\"stBaseButton-secondary\"]')?.click();" class="btn-ganti">↩ Ganti Wilayah</a></div>""", unsafe_allow_html=True)
-
-if st.button("Ganti Wilayah", key="btn_ganti_hidden"):
-    st.session_state.selected_kab = None
-    st.rerun()
-
-kec_options = sorted(df["kec_raw"].unique())
-fcol1, fcol2, fcol3 = st.columns(3)
-
-with fcol1:
-    selected_kec = st.selectbox("Kecamatan", ["Semua Kecamatan"] + kec_options, index=0, label_visibility="collapsed")
-    st.markdown(f'<div style="font-size:0.72rem;color:{"#0f766e" if selected_kec != "Semua Kecamatan" else "#64748b"};margin-top:-0.75rem;margin-bottom:0.5rem;">📍 {selected_kec if selected_kec != "Semua Kecamatan" else "Semua Kecamatan"}</div>', unsafe_allow_html=True)
-
-selected_desa = "Semua Desa/Kelurahan"; selected_sls = "Semua SLS"
-with fcol2:
-    if selected_kec != "Semua Kecamatan":
-        df_kec = df[df["kec_raw"] == selected_kec]; desa_options = sorted(df_kec["desa_raw"].unique())
-        selected_desa = st.selectbox("Desa/Kelurahan", ["Semua Desa/Kelurahan"] + desa_options, index=0, label_visibility="collapsed")
-        st.markdown(f'<div style="font-size:0.72rem;color:{"#0f766e" if selected_desa != "Semua Desa/Kelurahan" else "#64748b"};margin-top:-0.75rem;margin-bottom:0.5rem;">🏘️ {selected_desa if selected_desa != "Semua Desa/Kelurahan" else "Semua Desa/Kelurahan"}</div>', unsafe_allow_html=True)
-    else:
-        st.selectbox("Desa/Kelurahan", ["Semua Desa/Kelurahan"], index=0, label_visibility="collapsed", disabled=True)
-        st.markdown('<div style="font-size:0.72rem;color:#cbd5e1;margin-top:-0.75rem;margin-bottom:0.5rem;">🏘️ Pilih kec. terlebih dahulu</div>', unsafe_allow_html=True)
-
-with fcol3:
-    if selected_kec != "Semua Kecamatan" and selected_desa != "Semua Desa/Kelurahan":
-        df_desa = df_kec[df_kec["desa_raw"] == selected_desa]; sls_options = sorted(df_desa["sls_raw"].unique())
-        selected_sls = st.selectbox("SLS", ["Semua SLS"] + sls_options, index=0, label_visibility="collapsed")
-        st.markdown(f'<div style="font-size:0.72rem;color:{"#0f766e" if selected_sls != "Semua SLS" else "#64748b"};margin-top:-0.75rem;margin-bottom:0.5rem;">📋 {selected_sls if selected_sls != "Semua SLS" else "Semua SLS"}</div>', unsafe_allow_html=True)
-    else:
-        st.selectbox("SLS", ["Semua SLS"], index=0, label_visibility="collapsed", disabled=True)
-        st.markdown('<div style="font-size:0.72rem;color:#cbd5e1;margin-top:-0.75rem;margin-bottom:0.5rem;">📋 Pilih desa terlebih dahulu</div>', unsafe_allow_html=True)
-
-if selected_kec != "Semua Kecamatan":
-    df_f = df[df["kec_raw"] == selected_kec]
-    if selected_desa != "Semua Desa/Kelurahan":
-        df_f = df_f[df_f["desa_raw"] == selected_desa]
-        if selected_sls != "Semua SLS": df_f = df_f[df_f["sls_raw"] == selected_sls]
-else: df_f = df.copy()
-
-filter_parts = [NAMA_TERPILIH]
-if selected_kec != "Semua Kecamatan": filter_parts.append(selected_kec.split(" - ")[1].strip().title())
-if selected_desa != "Semua Desa/Kelurahan": filter_parts.append(selected_desa.split(" - ")[1].strip().title())
-if selected_sls != "Semua SLS": filter_parts.append(selected_sls.split(" - ")[1].strip())
-
-total_preview = int(df_f["TOTAL"].sum()); approved_preview = int(df_f["APPROVED BY Pengawas"].sum())
-st.markdown(f"""<div class="filter-bar"><div class="filter-title">🔍 Filter Aktif</div><div style="font-size:0.82rem; color:#334155; font-weight:600; margin-bottom:0.5rem;">📍 {' > '.join(filter_parts)}</div><div class="filter-summary"><div class="filter-summary-item">📊 Jumlah SLS: <b>{len(df_f):,}</b></div><div class="filter-summary-item">📦 Total UMKM: <b>{total_preview:,}</b></div><div class="filter-summary-item">✅ Approved: <b>{approved_preview:,}</b></div><div class="filter-summary-item">📈 Tingkat Kelengkapan: <b>{(approved_preview/total_preview*100) if total_preview else 0:.1f}%</b></div></div></div>""", unsafe_allow_html=True)
-
-# ============================================================
-# METRIC CARDS
-# ============================================================
-total = int(df_f["TOTAL"].sum()); approved = int(df_f["APPROVED BY Pengawas"].sum()); submitted = int(df_f["SUBMITTED BY Pencacah"].sum()); open_count = int(df_f["OPEN"].sum()); edited = int(df_f["EDITED BY Pengawas"].sum()); rejected = int(df_f["REJECTED BY Pengawas"].sum()); revoked = int(df_f["REVOKED BY Pengawas"].sum()); draft = int(df_f["DRAFT"].sum()); resp = int(df_f["SUBMITTED RESPONDENT"].sum())
-pct_approved = (approved / total * 100) if total > 0 else 0; pct_submitted = (submitted / total * 100) if total > 0 else 0
-
-card_configs = [("TOTAL", total, f"dari {len(df_f)} SLS tercatat", "#0f766e"),("APPROVED BY Pengawas", approved, f"{pct_approved:.1f}% dari total", "#10b981"),("SUBMITTED BY Pencacah", submitted, f"{pct_submitted:.1f}% dari total", "#3b82f6"),("OPEN", open_count, f"{(open_count/total*100) if total else 0:.1f}% dari total", "#f59e0b"),("EDITED BY Pengawas", edited, f"{(edited/total*100) if total else 0:.1f}% dari total", "#8b5cf6"),("REJECTED BY Pengawas", rejected, f"{(rejected/total*100) if total else 0:.1f}% dari total", "#ef4444"),("REVOKED BY Pengawas", revoked, f"{(revoked/total*100) if total else 0:.1f}% dari total", "#6b7280"),("DRAFT", draft, f"{(draft/total*100) if total else 0:.1f}% dari total", "#06b6d4"),("SUBMITTED RESPONDENT", resp, f"{(resp/total*100) if total else 0:.1f}% dari total", "#ec4899")]
-
-def render_card(key, value, sub, color):
-    icon, _ = STATUS_ICONS[key]; label = STATUS_LABELS.get(key, key)
-    return f'<div class="metric-card" style="border-bottom: 3px solid {color};"><div class="metric-icon" style="background: {color}15; color: {color};">{icon}</div><div class="metric-label">{label}</div><div class="metric-value">{value:,}</div><div class="metric-sub">{sub}</div></div>'
-
-for row_start in range(0, len(card_configs), 3):
-    row_items = card_configs[row_start : row_start + 3]; cols = st.columns(3)
-    for idx, (key, value, sub, color) in enumerate(row_items):
-        with cols[idx]: st.markdown(render_card(key, value, sub, color), unsafe_allow_html=True)
-
-# ============================================================
-# PROGRESS BAR
-# ============================================================
-st.markdown("<div class='divider'></div>", unsafe_allow_html=True)
-st.markdown('<div class="section-title">Progress Pengisian UMKM</div>', unsafe_allow_html=True)
-progress_data = [("Approved", approved, "#10b981"),("Submitted", submitted, "#3b82f6"),("Open / Belum Diisi", open_count, "#f59e0b"),("Lainnya", total - approved - submitted - open_count, "#94a3b8")]
-pcol1, pcol2 = st.columns([1, 2])
-
-with pcol1:
-    st.markdown(f'<div style="text-align:center; padding:1rem;"><div style="font-size:2.5rem; font-weight:800; color:#0f766e; line-height:1;">{pct_approved:.1f}%</div><div style="font-size:0.8rem; color:#64748b; margin-top:0.25rem;">Tingkat Kelengkapan</div><div style="font-size:0.75rem; color:#94a3b8; margin-top:0.15rem;">(Approved / Total)</div></div>', unsafe_allow_html=True)
-with pcol2:
-    bar_parts = []
-    for label, val, clr in progress_data:
-        pct = (val / total * 100) if total > 0 else 0
-        bar_parts.append(f'<div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.35rem;"><div style="width:8px; height:8px; border-radius:50%; background:{clr}; flex-shrink:0;"></div><div style="width:140px; font-size:0.78rem; color:#475569; font-weight:500;">{label}</div><div style="flex:1; background:#f1f5f9; border-radius:999px; height:8px; overflow:hidden;"><div style="width:{pct}%; height:100%; background:{clr}; border-radius:999px;"></div></div><div style="width:50px; text-align:right; font-size:0.78rem; color:#64748b; font-weight:600;">{val:,} <span style="color:#94a3b8;">({pct:.1f}%)</span></div></div>')
-    st.markdown('<div style="padding: 0.75rem 0;">' + "".join(bar_parts) + "</div>", unsafe_allow_html=True)
-
-# ============================================================
-# CHARTS
-# ============================================================
-st.markdown("<div class='divider'></div>", unsafe_allow_html=True)
-st.markdown('<div class="section-title">Analisis Distribusi Status</div>', unsafe_allow_html=True)
-status_sum = {STATUS_LABELS[col]: int(df_f[col].sum()) for col in STATUS_COLUMNS}
-status_df = pd.DataFrame(list(status_sum.items()), columns=["Status", "Jumlah"])
-status_df = status_df[status_df["Jumlah"] > 0].sort_values("Jumlah", ascending=False)
-status_df["Color"] = status_df["Status"].map(STATUS_COLORS)
-
-ch1, ch2 = st.columns([1, 2])
-with ch1:
-    st.markdown('<div class="chart-box"><h3>Komposisi Status</h3><p class="chart-subtitle">Proporsi tiap status pengisian</p></div>', unsafe_allow_html=True)
-    fig_donut = go.Figure(go.Pie(labels=status_df["Status"], values=status_df["Jumlah"], hole=0.62, marker=dict(colors=status_df["Color"], line=dict(color="#ffffff", width=2.5)), textinfo="percent", textfont=dict(size=11, color="#334155", family="Plus Jakarta Sans"), sort=False))
-    fig_donut.update_layout(showlegend=True, legend=dict(orientation="h", yanchor="bottom", y=-0.15, xanchor="center", x=0.5, font=dict(size=10, color="#64748b", family="Plus Jakarta Sans"), itemwidth=30), margin=dict(t=10, b=10, l=10, r=10), height=340, paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)", annotations=[dict(text=f"<b>{total:,}</b><br><span style='font-size:10px;color:#94a3b8;'>Total UMKM</span>", x=0.5, y=0.5, font=dict(size=18, color="#0f172a", family="Plus Jakarta Sans"), showarrow=False)])
-    st.plotly_chart(fig_donut, use_container_width=True)
-
-with ch2:
-    st.markdown('<div class="chart-box"><h3>Status per Kecamatan</h3><p class="chart-subtitle">Perbandingan horizontal antar kecamatan</p></div>', unsafe_allow_html=True)
-    kec_group = df_f.groupby("kec_label")[STATUS_COLUMNS].sum().reset_index()
-    kec_group_melted = kec_group.melt(id_vars="kec_label", value_vars=STATUS_COLUMNS, var_name="Status", value_name="Jumlah")
-    kec_group_melted["Status"] = kec_group_melted["Status"].map(STATUS_LABELS)
-    fig_bar = px.bar(kec_group_melted, x="Jumlah", y="kec_label", color="Status", orientation="h", color_discrete_map=STATUS_COLORS, title="")
-    fig_bar.update_layout(barmode="stack", xaxis_title="Jumlah UMKM", yaxis_title="", legend=dict(orientation="h", yanchor="bottom", y=-0.25, xanchor="center", x=0.5, font=dict(size=9, color="#64748b"), itemwidth=30), margin=dict(t=5, b=60, l=5, r=5), height=340, paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)", font=dict(family="Plus Jakarta Sans", size=11, color="#475569"), xaxis=dict(gridcolor="#f1f5f9", zerolinecolor="#e2e8f0"), yaxis=dict(gridcolor="#f1f5f9", tickfont=dict(size=10)))
-    st.plotly_chart(fig_bar, use_container_width=True)
-
-st.markdown("<div class='divider'></div>", unsafe_allow_html=True)
-st.markdown('<div class="section-title">Peringkat & Funnel Proses</div>', unsafe_allow_html=True)
-ch3, ch4 = st.columns(2)
-
-with ch3:
-    st.markdown('<div class="chart-box"><h3>Top 10 Kecamatan (Total UMKM)</h3><p class="chart-subtitle">Kecamatan dengan jumlah UMKM terbanyak</p></div>', unsafe_allow_html=True)
-    kec_total = df_f.groupby("kec_label")["TOTAL"].sum().reset_index().sort_values("TOTAL", ascending=True).tail(10)
-    fig_top = go.Figure(go.Bar(x=kec_total["TOTAL"], y=kec_total["kec_label"], orientation="h", marker=dict(color=kec_total["TOTAL"], colorscale=[[0, "#ccfbf1"], [0.5, "#14b8a6"], [1, "#0f766e"]], line=dict(color="#ffffff", width=1), cornerradius=4), text=kec_total["TOTAL"], textposition="outside", textfont=dict(size=10, color="#334155", family="Plus Jakarta Sans")))
-    fig_top.update_layout(xaxis_title="", yaxis_title="", margin=dict(t=5, b=10, l=5, r=40), height=360, paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)", font=dict(family="Plus Jakarta Sans", size=11, color="#475569"), xaxis=dict(gridcolor="#f1f5f9", zeroline=False, showticklabels=False), yaxis=dict(gridcolor="#f1f5f9", tickfont=dict(size=10)))
-    st.plotly_chart(fig_top, use_container_width=True)
-
-with ch4:
-    st.markdown('<div class="chart-box"><h3>Funnel Proses Pengisian</h3><p class="chart-subtitle">Alur dari Open hingga Approved</p></div>', unsafe_allow_html=True)
-    funnel_data = [("Open", open_count, "#f59e0b"), ("Submitted Pencacah", submitted, "#3b82f6"), ("Edited Pengawas", edited, "#8b5cf6"), ("Approved", approved, "#10b981")]
-    fig_funnel = go.Figure(go.Funnel(y=[f[0] for f in funnel_data], x=[f[1] for f in funnel_data], textinfo="value+percent initial", textfont=dict(size=12, color="#ffffff", family="Plus Jakarta Sans"), marker=dict(color=[f[2] for f in funnel_data], line=dict(color="#ffffff", width=2))))
-    fig_funnel.update_layout(margin=dict(t=5, b=10, l=100, r=20), height=360, paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)", font=dict(family="Plus Jakarta Sans"))
-    st.plotly_chart(fig_funnel, use_container_width=True)
-
-st.markdown("<div class='divider'></div>", unsafe_allow_html=True)
-st.markdown('<div class="section-title">Heatmap & Distribusi per Desa</div>', unsafe_allow_html=True)
-ch5, ch6 = st.columns(2)
-
-with ch5:
-    st.markdown('<div class="chart-box"><h3>Heatmap: Kecamatan × Status</h3><p class="chart-subtitle">Intensitas tiap status di setiap kecamatan</p></div>', unsafe_allow_html=True)
-    kec_heat = df_f.groupby("kec_label")[STATUS_COLUMNS].sum().rename(columns=STATUS_LABELS)
-    kec_heat["_sort"] = kec_heat.sum(axis=1); kec_heat = kec_heat.sort_values("_sort", ascending=False).drop("_sort", axis=1)
-    kec_heat = kec_heat.loc[:, (kec_heat != 0).any(axis=0)]
-    fig_heat = go.Figure(go.Heatmap(z=kec_heat.values, x=kec_heat.columns, y=kec_heat.index, colorscale=[[0, "#f0fdfa"], [0.3, "#99f6e4"], [0.6, "#14b8a6"], [1, "#0f766e"]], text=kec_heat.values, texttemplate="%{text}", textfont=dict(size=10, color="#334155", family="Plus Jakarta Sans"), xgap=3, ygap=3))
-    fig_heat.update_layout(margin=dict(t=5, b=60, l=5, r=5), height=max(300, len(kec_heat) * 32 + 80), paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)", font=dict(family="Plus Jakarta Sans", size=10, color="#475569"), xaxis=dict(tickangle=35, side="bottom", tickfont=dict(size=9)), yaxis=dict(tickfont=dict(size=10)))
-    st.plotly_chart(fig_heat, use_container_width=True)
-
-with ch6:
-    st.markdown('<div class="chart-box"><h3>Distribusi per Desa</h3><p class="chart-subtitle">Treemap jumlah UMKM per desa</p></div>', unsafe_allow_html=True)
-    desa_total = df_f.groupby(["kec_label", "desa_label"])["TOTAL"].sum().reset_index().sort_values("TOTAL", ascending=False)
-    fig_treemap = px.treemap(desa_total, path=[px.Constant(NAMA_TERPILIH), "kec_label", "desa_label"], values="TOTAL", color="TOTAL", color_continuous_scale=["#ccfbf1", "#14b8a6", "#0f766e"])
-    fig_treemap.update_layout(margin=dict(t=5, b=10, l=5, r=5), height=max(300, len(kec_heat) * 32 + 80), paper_bgcolor="rgba(0,0,0,0)", font=dict(family="Plus Jakarta Sans", size=10, color="#ffffff"), treemapcolorway=["#0f766e", "#14b8a6", "#2dd4bf", "#5eead4", "#99f6e4", "#ccfbf1"])
-    fig_treemap.update_traces(textfont=dict(size=10), hovertemplate="<b>%{label}</b><br>Total: %{value:,}<extra></extra>")
-    st.plotly_chart(fig_treemap, use_container_width=True)
-
-
-# ============================================================
-# DATA TABLE (DIPERBAIKI: DROPDOWN DEPENDENT & TANPA STYLING)
-# ============================================================
-st.markdown("<div class='divider'></div>", unsafe_allow_html=True)
-st.markdown('<div class="section-title">Tabel Detail Data SLS</div>', unsafe_allow_html=True)
-
-# Filter Khusus Tabel
-tcol1, tcol2 = st.columns(2)
-kec_table_opts = sorted(df_f["kec_raw"].unique())
-
-with tcol1:
-    st.markdown('<div style="font-size:0.72rem;color:#64748b;margin-bottom:0.25rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;">Filter Kecamatan</div>', unsafe_allow_html=True)
-    default_kec = kec_table_opts[0] if kec_table_opts else None
-    selected_table_kec = st.selectbox(
-        "TabelKec", 
-        kec_table_opts, 
-        index=0 if default_kec else 0, 
-        key="t_kec", 
-        label_visibility="collapsed"
+    # 2. Lakukan merge dengan menyesuaikan nama kolom kuncinya
+    df_bku = df_bku.merge(
+        df_sls2_subset,
+        how='left', 
+        left_on=['kec', 'desa', 'sls'],           # Nama kolom di df_bku
+        right_on=['nama_kec', 'nama_kel', 'sls2'] # Nama kolom di df_sls2
     )
 
-# Filter Desa (Dependent)
-df_t_kec = df_f[df_f["kec_raw"] == selected_table_kec] if selected_table_kec else pd.DataFrame()
-desa_table_opts = sorted(df_t_kec["desa_raw"].unique()) if not df_t_kec.empty else []
+    df_kk2 = df_kk.merge(
+        df_sls2_subset,
+        how='left', 
+        left_on=['kec', 'desa', 'sls'],           # Nama kolom di df_bku
+        right_on=['nama_kec', 'nama_kel', 'sls2'] # Nama kolom di df_sls2
+    )
 
-with tcol2:
-    st.markdown('<div style="font-size:0.72rem;color:#64748b;margin-bottom:0.25rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;">Filter Desa/Kelurahan</div>', unsafe_allow_html=True)
-    if desa_table_opts:
-        selected_table_desa = st.selectbox(
-            "TabelDesa", 
-            desa_table_opts, 
-            index=0, # Default desa terkecil
-            key="t_desa", 
-            label_visibility="collapsed"
-        )
-    else:
-        selected_table_desa = None
-        st.selectbox("TabelDesa", ["Tidak ada data"], index=0, key="t_desa_empty", label_visibility="collapsed", disabled=True)
+    df_lk = df_kk2.merge(
+        df_bku,
+        how='left', 
+        left_on=['kec', 'desa', 'sls'],           # Nama kolom di df_bku
+        right_on=['kec', 'desa', 'sls'] # Nama kolom di df_sls2
+    )
 
-# Terapkan filter ke dataframe tabel
-df_t_final = df_t_kec.copy()
-if selected_table_desa and not df_t_final.empty:
-    df_t_final = df_t_final[df_t_final["desa_raw"] == selected_table_desa]
+    df_kk2 = df_kk2.sort_values(by=['kec', 'nama_lengkap', 'desa', 'sls'])
 
-# Siapkan kolom untuk ditampilkan
-table_cols = ["kec_label", "desa_label", "sls_label"] + STATUS_COLUMNS + ["TOTAL"]
-table_df = df_t_final[table_cols].copy()
-table_df.columns = ["Kecamatan", "Desa/Kelurahan", "SLS"] + [STATUS_LABELS[c] for c in STATUS_COLUMNS] + ["Total"]
+    # 3. Buang kolom kunci bawaan df_sls2 yang sudah tidak diperlukan lagi
+    # Karena nama kolomnya berbeda, merge akan menghasilkan 6 kolom kunci.
+    # Kita hapus 3 kolom milik df_sls2 ('nama_kec', 'nama_kel', 'sls2') karena sudah diwakili oleh 'kec', 'desa', 'sls'
+    df_bku = df_bku.drop(columns=['nama_kec', 'nama_kel', 'sls2'])
+    df_kk2 = df_kk2.drop(columns=['nama_kec', 'nama_kel', 'sls2'])
 
-# Tampilkan dataframe langsung tanpa styling (menghindari error applymap)
-st.dataframe(table_df, use_container_width=True, height=450, hide_index=True)
+    kk_ppl = df_kk2.groupby(by=['kec', 'nama_lengkap', 'email'])[['target_keluarga', 'k_baru', 'k_bersedia', 'k_ditemukan', 'k_khusus', 'k_meninggal', 'k_menolak', 'k_tidak_ditemui', 'k_tidak_ditemukan', 'k_tidak_eligible']].sum().reset_index()
 
-# 1. Ekstrak nama dalam kurung ke kolom baru "PPL" dari kolom sls_label
-df_f['PPL'] = df_f['sls_label'].str.extract(r'\(\s*([^)]+)\s*\)')
+    kk_ppl['k_baru'] = kk_ppl['k_baru'].astype('Int64')
+    kk_ppl['k_ditemukan'] = kk_ppl['k_ditemukan'].astype('Int64')
+    kk_ppl['k_meninggal'] = kk_ppl['k_meninggal'].astype('Int64')
+    kk_ppl['k_menolak'] = kk_ppl['k_menolak'].astype('Int64')
+    kk_ppl['k_tidak_ditemukan'] = kk_ppl['k_tidak_ditemukan'].astype('Int64')
 
-# 2. Definisikan kolom-kolom yang akan diagregasi (nama asli dari API)
-kolom_agregasi = STATUS_COLUMNS + ['TOTAL']
 
-# 3. Groupby berdasarkan kec_label dan PPL, lalu sum
-df_baru = df_f.groupby(['kec_label', 'PPL'])[kolom_agregasi].sum().reset_index()
+    #TERTINGGI
+    maks_kk_baru = kk_ppl.loc[kk_ppl['k_baru'].idxmax(), ['k_baru', 'nama_lengkap', 'kec']]
+    maks_kk_ketemu = kk_ppl.loc[kk_ppl['k_ditemukan'].idxmax(), ['k_ditemukan', 'nama_lengkap', 'kec']]
+    maks_kk_meninggal = kk_ppl.loc[kk_ppl['k_meninggal'].idxmax(), ['k_meninggal', 'nama_lengkap', 'kec']]
+    maks_kk_menolak = kk_ppl.loc[kk_ppl['k_menolak'].idxmax(), ['k_menolak', 'nama_lengkap', 'kec']]
+    maks_kk_gaketemu = kk_ppl.loc[kk_ppl['k_tidak_ditemukan'].idxmax(), ['k_tidak_ditemukan', 'nama_lengkap', 'kec']]
 
-# 4. Rename kolom agar sesuai dengan label yang diinginkan
-df_baru.columns = ['Kecamatan', 'PPL'] + [STATUS_LABELS[c] for c in STATUS_COLUMNS] + ['Total']
 
-# 5. Atur ulang urutan kolom sesuai keinginan
-df_baru = df_baru[['Kecamatan', 'PPL', 'Approved', 'Submitted Pencacah', 'Open', 'Edited', 'Rejected', 'Revoked', 'Draft', 'Submitted Respondent', 'Total']]
+    #TERENDAH
+    min_kk_baru = kk_ppl.loc[kk_ppl['k_baru'].idxmin(), ['k_baru', 'nama_lengkap', 'kec']]
+    min_kk_ketemu = kk_ppl.loc[kk_ppl['k_ditemukan'].idxmin(), ['k_ditemukan', 'nama_lengkap', 'kec']]
+    min_kk_meninggal = kk_ppl.loc[kk_ppl['k_meninggal'].idxmin(), ['k_meninggal', 'nama_lengkap', 'kec']]
+    min_kk_menolak = kk_ppl.loc[kk_ppl['k_menolak'].idxmin(), ['k_menolak', 'nama_lengkap', 'kec']]
+    min_kk_gaketemu = kk_ppl.loc[kk_ppl['k_tidak_ditemukan'].idxmin(), ['k_tidak_ditemukan', 'nama_lengkap', 'kec']]
 
-st.divider()
-st.subheader("PROGRESS PPL")
-st.dataframe(df_baru, use_container_width=False, height=450, hide_index=True)
+    
+    ## B K U
+    usaha_ppl = df_bku.groupby(by=['kec', 'nama_lengkap', 'email'])[['target_usaha', 'bku_baru', 'bku_baru_non', 'bku_baru_pertanian', 'bku_ditemukan', 'bku_ganda', 'bku_tdk_ditemukan', 'bku_temu_non', 'bku_temu_pertanian', 'bku_tutup', 'uk_baru', 'uk_baru_non', 'uk_baru_pertanian', 'uk_ditemukan', 'uk_ganda', 'uk_tdk_ditemukan', 'uk_temu_non', 'uk_temu_pertanian', 'uk_tutup']].sum().reset_index()
 
-df_baru['DIKERJAKAN'] = df_baru['Total'] - df_baru['Open']
-df_baru['CAPAIAN BRUTO (%)'] = (df_baru['DIKERJAKAN']/df_baru['Total']*100).round(2)
-df_baru['CAPAIAN NETTO (%)'] = (df_baru['Approved']/df_baru['Total']*100).round(2)
+    usaha_ppl['bku_baru'] = usaha_ppl['bku_baru'].astype('Int64')
+    usaha_ppl['bku_ganda'] = usaha_ppl['bku_ganda'].astype('Int64')
+    usaha_ppl['bku_tutup'] = usaha_ppl['bku_tutup'].astype('Int64')
+    usaha_ppl['bku_tdk_ditemukan'] = usaha_ppl['bku_tdk_ditemukan'].astype('Int64')
+    usaha_ppl['bku_ditemukan'] = usaha_ppl['bku_ditemukan'].astype('Int64')
 
-st.divider()
-df_baru2 = df_baru[['Kecamatan', 'PPL', 'DIKERJAKAN', 'CAPAIAN BRUTO (%)', 'CAPAIAN NETTO (%)']]
 
-st.subheader("CAPAIAN PPL")
-st.dataframe(df_baru2, use_container_width=False, hide_index=True)
-st.warning("CAPAIAN BRUTO = DIKERJAKAN = ASSIGNMENT SELAIN OPEN")
-st.success("CAPAIAN NETTO = Approved/Total")
+    #TERTINGGI
+    maks_bku_baru = usaha_ppl.loc[usaha_ppl['bku_baru'].idxmax(), ['bku_baru', 'nama_lengkap', 'kec']]
+    maks_bku_ganda = usaha_ppl.loc[usaha_ppl['bku_ganda'].idxmax(), ['bku_ganda', 'nama_lengkap', 'kec']]
+    maks_bku_tutup = usaha_ppl.loc[usaha_ppl['bku_tutup'].idxmax(), ['bku_tutup', 'nama_lengkap', 'kec']]
+    maks_bku_tdketemu = usaha_ppl.loc[usaha_ppl['bku_tdk_ditemukan'].idxmax(), ['bku_tdk_ditemukan', 'nama_lengkap', 'kec']]
+    maks_bku_ketemu = usaha_ppl.loc[usaha_ppl['bku_ditemukan'].idxmax(), ['bku_ditemukan', 'nama_lengkap', 'kec']]
+
+
+    #TERENDAH
+    min_bku_baru = usaha_ppl.loc[usaha_ppl['bku_baru'].idxmin(), ['bku_baru', 'nama_lengkap', 'kec']]
+    min_bku_ganda = usaha_ppl.loc[usaha_ppl['bku_ganda'].idxmin(), ['bku_ganda', 'nama_lengkap', 'kec']]
+    min_bku_tutup = usaha_ppl.loc[usaha_ppl['bku_tutup'].idxmin(), ['bku_tutup', 'nama_lengkap', 'kec']]
+    min_bku_tdketemu = usaha_ppl.loc[usaha_ppl['bku_tdk_ditemukan'].idxmin(), ['bku_tdk_ditemukan', 'nama_lengkap', 'kec']]
+    min_bku_ketemu = usaha_ppl.loc[usaha_ppl['bku_ditemukan'].idxmin(), ['bku_ditemukan', 'nama_lengkap', 'kec']]
+
+    ## USAHA KELUARGA
+    usaha_ppl['uk_baru'] = usaha_ppl['uk_baru'].astype('Int64')
+    usaha_ppl['uk_ganda'] = usaha_ppl['uk_ganda'].astype('Int64')
+    usaha_ppl['uk_tutup'] = usaha_ppl['uk_tutup'].astype('Int64')
+    usaha_ppl['uk_tdk_ditemukan'] = usaha_ppl['uk_tdk_ditemukan'].astype('Int64')
+    usaha_ppl['uk_ditemukan'] = usaha_ppl['uk_ditemukan'].astype('Int64')
+
+
+    #TERTINGGI
+    maks_uk_baru = usaha_ppl.loc[usaha_ppl['uk_baru'].idxmax(), ['uk_baru', 'nama_lengkap', 'kec']]
+    maks_uk_ganda = usaha_ppl.loc[usaha_ppl['uk_ganda'].idxmax(), ['uk_ganda', 'nama_lengkap', 'kec']]
+    maks_uk_tutup = usaha_ppl.loc[usaha_ppl['uk_tutup'].idxmax(), ['uk_tutup', 'nama_lengkap', 'kec']]
+    maks_uk_tdketemu = usaha_ppl.loc[usaha_ppl['uk_tdk_ditemukan'].idxmax(), ['uk_tdk_ditemukan', 'nama_lengkap', 'kec']]
+    maks_uk_ketemu = usaha_ppl.loc[usaha_ppl['uk_ditemukan'].idxmax(), ['uk_ditemukan', 'nama_lengkap', 'kec']]
+
+
+    #TERENDAH
+    min_uk_baru = usaha_ppl.loc[usaha_ppl['uk_baru'].idxmin(), ['uk_baru', 'nama_lengkap', 'kec']]
+    min_uk_ganda = usaha_ppl.loc[usaha_ppl['uk_ganda'].idxmin(), ['uk_ganda', 'nama_lengkap', 'kec']]
+    min_uk_tutup = usaha_ppl.loc[usaha_ppl['uk_tutup'].idxmin(), ['uk_tutup', 'nama_lengkap', 'kec']]
+    min_uk_tdketemu = usaha_ppl.loc[usaha_ppl['uk_tdk_ditemukan'].idxmin(), ['uk_tdk_ditemukan', 'nama_lengkap', 'kec']]
+    min_uk_ketemu = usaha_ppl.loc[usaha_ppl['uk_ditemukan'].idxmin(), ['uk_ditemukan', 'nama_lengkap', 'kec']]
+
+
+    df_bku['kab'] = f'{v1}'
+    df_bku_kab = df_bku.groupby(by=['kab'])[['target_usaha', 'bku_baru', 'bku_baru_non', 'bku_baru_pertanian', 'bku_ditemukan', 'bku_ganda', 'bku_tdk_ditemukan', 'bku_temu_non', 'bku_temu_pertanian', 'bku_tutup', 'uk_baru', 'uk_baru_non', 'uk_baru_pertanian', 'uk_ditemukan', 'uk_ganda', 'uk_tdk_ditemukan', 'uk_temu_non', 'uk_temu_pertanian', 'uk_tutup']].sum().reset_index()
+    
+    grafik_bku_kab = px.bar(df_bku_kab, x='kab', y=['bku_ditemukan', 'bku_tdk_ditemukan', 'bku_ganda', 'bku_tutup', 'bku_baru'], barmode='group', title="Capaian Pendataan BKU", labels={'value':'Jumlah', 'variable':'Status'})
+    grafik_bku_kab.update_yaxes(
+        range=[0, df_bku_kab['target_usaha'].max()],
+        tickformat=",.0f" # Menambahkan koma sebagai pemisah ribuan
+    )
+    
+    df_uk_kab = df_bku.groupby(by=['kab'])[['target_usaha', 'uk_baru', 'uk_baru_non', 'uk_baru_pertanian', 'uk_ditemukan', 'uk_ganda', 'uk_tdk_ditemukan', 'uk_temu_non', 'uk_temu_pertanian', 'uk_tutup']].sum().reset_index()
+    
+    grafik_uk_kab = px.bar(df_uk_kab, x='kab', y=['uk_ditemukan', 'uk_tdk_ditemukan', 'uk_ganda', 'uk_tutup', 'uk_baru'], barmode='group', title="Capaian Pendataan Usaha Keluarga", labels={'value':'Jumlah', 'variable':'Status'})
+    grafik_uk_kab.update_yaxes(
+        range=[0, df_uk_kab['target_usaha'].max()],
+        tickformat=",.0f" # Menambahkan koma sebagai pemisah ribuan
+    )
+
+    grafik_target_usaha = px.bar(df_bku_kab, x='kab', y='target_usaha', title="Target Usaha")
+    grafik_target_usaha.update_yaxes(
+        range=[0, df_bku_kab['target_usaha'].max()],
+        tickformat=",.0f" # Menambahkan koma sebagai pemisah ribuan
+    )
+
+    grafik_kk_kab = px.bar(rekap_kk_kab, x='kab', y=['target_keluarga', 'k_ditemukan', 'k_tidak_ditemukan', 'k_menolak', 'k_meninggal', 'k_baru', 'k_tidak_eligible'], barmode='group', title="Capaian Pendataan Keluarga", labels={'value':'Jumlah', 'variable':'Status'})
+    grafik_kk_kab.update_yaxes(
+        range=[0, rekap_kk_kab['target_keluarga'].max()],
+        tickformat=",.0f" # Menambahkan koma sebagai pemisah ribuan
+    )
+
+
+    df_bku_kec = df_bku.groupby(by=['kec'])[['target_usaha', 'bku_baru', 'bku_baru_non', 'bku_baru_pertanian', 'bku_ditemukan', 'bku_ganda', 'bku_tdk_ditemukan', 'bku_temu_non', 'bku_temu_pertanian', 'bku_tutup', 'uk_baru', 'uk_baru_non', 'uk_baru_pertanian', 'uk_ditemukan', 'uk_ganda', 'uk_tdk_ditemukan', 'uk_temu_non', 'uk_temu_pertanian', 'uk_tutup']].sum().reset_index()
+    #st.dataframe(df_bku_kec, width='stretch', hide_index=True)
+    
+    grafik_bku_kec = px.bar(df_bku_kec, x='kec', y=['target_usaha', 'bku_ditemukan', 'bku_tdk_ditemukan', 'bku_ganda', 'bku_tutup', 'bku_baru'], barmode='group', title="Rekap Pendataan BKU per Kecamatan", labels={'value':'Jumlah', 'variable':'Status'})
+
+    grafik_uk_kec = px.bar(df_bku_kec, x='kec', y=['target_usaha', 'uk_ditemukan', 'uk_tdk_ditemukan', 'uk_ganda', 'uk_tutup', 'uk_tutup', 'uk_baru'], barmode='group', title="Rekap Pendataan Usaha Keluarga per Kecamatan", labels={'value':'Jumlah', 'variable':'Status'})
+    
+    df_bku_desa = df_bku.groupby(by=['kec', 'desa'])[['target_usaha', 'bku_baru', 'bku_baru_non', 'bku_baru_pertanian', 'bku_ditemukan', 'bku_ganda', 'bku_tdk_ditemukan', 'bku_temu_non', 'bku_temu_pertanian', 'bku_tutup', 'uk_baru', 'uk_baru_non', 'uk_baru_pertanian', 'uk_ditemukan', 'uk_ganda', 'uk_tdk_ditemukan', 'uk_temu_non', 'uk_temu_pertanian', 'uk_tutup']].sum().reset_index()
+            
+
+    with st.container(border=True):
+        with st.container(border=True):
+            st.header(f"MONITORING KINERJA PPL: {v1} {v2} {v3}")
+            kol1, kol2 = st.columns(2)
+            with kol1:
+                st.success(f"Hari ke: {hari_ke}")
+            with kol2:
+                st.warning(f"Sisa Waktu: {menuju} Hari")
+            st.caption("Sumber: simpul-jabar.32net.id")
+
+    dashboard, tab_ppl = st.tabs(['DASHBOARD', 'KINERJA PPL'])
+
+    with dashboard:
+        kol1c, kol2c, kol3c = st.columns([3, 2, 3])
+        
+        with kol1c:
+            with st.container(border=True):    
+                st.plotly_chart(grafik_bku_kab, width="content")
+        
+        with kol2c:
+            with st.container(border=True):
+                st.plotly_chart(grafik_target_usaha, width="stretch")
+        
+        with kol3c:
+            with st.container(border=True):
+                st.plotly_chart(grafik_uk_kab, width="content")
+
+        st.divider()
+        with st.expander("PENDATAAN BKU"):
+            kol4aa, kol4bb = st.columns(2)
+            with kol4aa:
+                with st.container(border=True):
+                    st.subheader("Pendataan BKU Tertinggi")
+                    st.success(f"Baru: {' | '.join(maks_bku_baru.astype(str).values)}")
+                    st.info(f"Ganda: {' | '.join(maks_bku_ganda.astype(str).values)}")
+                    st.warning(f"Tutup: {' | '.join(maks_bku_tutup.astype(str).values)}")
+                    st.text(f"Tidak Ditemukan: {' | '.join(maks_bku_tdketemu.astype(str).values)}")
+                    st.caption(f"Ditemukan: {' | '.join(maks_bku_ketemu.astype(str).values)}")
+        
+            with kol4bb:
+                with st.container(border=True):
+                    st.subheader("Pendataan BKU Terendah")
+                    st.success(f"Baru: {' | '.join(min_bku_baru.astype(str).values)}")
+                    st.info(f"Ganda: {' | '.join(min_bku_ganda.astype(str).values)}")
+                    st.warning(f"Tutup: {' | '.join(min_bku_tutup.astype(str).values)}")
+                    st.caption(f"Tidak Ditemukan: {' | '.join(min_bku_tdketemu.astype(str).values)}")
+                    st.text(f"Ditemukan: {' | '.join(min_bku_ketemu.astype(str).values)}")
+
+        st.divider()
+        with st.expander("PENDATAAN USAHA KELUARGA"):
+            kol4cc, kol4dd = st.columns(2)
+            with kol4cc:
+                with st.container(border=True):
+                    st.subheader("Pendataan Usaha Keluarga Tertinggi")
+                    st.success(f"Baru: {' | '.join(maks_uk_baru.astype(str).values)}")
+                    st.info(f"Ganda: {' | '.join(maks_uk_ganda.astype(str).values)}")
+                    st.warning(f"Tutup: {' | '.join(maks_uk_tutup.astype(str).values)}")
+                    st.text(f"Tidak Ditemukan: {' | '.join(maks_uk_tdketemu.astype(str).values)}")
+                    st.caption(f"Ditemukan: {' | '.join(maks_uk_ketemu.astype(str).values)}")
+        
+            with kol4dd:
+                with st.container(border=True):
+                    st.subheader("Pendataan Usaha Keluarga Terendah")
+                    st.success(f"Baru: {' | '.join(min_uk_baru.astype(str).values)}")
+                    st.info(f"Ganda: {' | '.join(min_uk_ganda.astype(str).values)}")
+                    st.warning(f"Tutup: {' | '.join(min_uk_tutup.astype(str).values)}")
+                    st.caption(f"Tidak Ditemukan: {' | '.join(min_uk_tdketemu.astype(str).values)}")
+                    st.text(f"Ditemukan: {' | '.join(min_uk_ketemu.astype(str).values)}")
+
+        st.divider()
+        with st.expander("PENDATAAN KELUARGA"):
+            kolom1, kolom2, kolom3 = st.columns(3)
+            with kolom1:
+                with st.container(border=True):
+                    st.subheader("Pendataan Keluarga Tertinggi")
+                    st.success(f"Baru: {' | '.join(maks_kk_baru.astype(str).values)}")
+                    st.info(f"Ditemukan: {' | '.join(maks_kk_ketemu.astype(str).values)}")
+                    st.warning(f"Meninggal: {' | '.join(maks_kk_meninggal.astype(str).values)}")
+                    st.text(f"Tidak Ditemukan: {' | '.join(maks_kk_gaketemu.astype(str).values)}")
+                    st.caption(f"Menolak: {' | '.join(maks_kk_menolak.astype(str).values)}")
+        
+            with kolom2:
+                with st.container(border=True):    
+                    st.plotly_chart(grafik_kk_kab, width="content")
+            
+            with kolom3:
+                with st.container(border=True):
+                    st.subheader("Pendataan Keluarga Terendah")
+                    st.success(f"Baru: {' | '.join(min_kk_baru.astype(str).values)}")
+                    st.info(f"Ditemukan: {' | '.join(min_kk_ketemu.astype(str).values)}")
+                    st.warning(f"Meninggal: {' | '.join(min_kk_meninggal.astype(str).values)}")
+                    st.text(f"Tidak Ditemukan: {' | '.join(min_kk_gaketemu.astype(str).values)}")
+                    st.caption(f"Menolak: {' | '.join(min_kk_menolak.astype(str).values)}")
+
+
+        st.divider()
+        with st.expander("TOTAL ASSIGNMENT"):
+            kol1a, kol1b = st.columns(2)
+            with kol1a:
+                with st.container(border=True):
+                    st.subheader("Pendataan Tertinggi")
+                    st.success(f"Pendataan: {' | '.join(mendata_tertinggi.astype(str).values)}")
+                    st.info(f"Submit: {' | '.join(submit_tertinggi.astype(str).values)}")
+                    st.warning(f"Draft: {' | '.join(draft_tertinggi.astype(str).values)}")
+                    st.caption(f"Target: {' | '.join(target_tertinggi.astype(str).values)}")
+                    st.caption(f"Open: {' | '.join(open_tertinggi.astype(str).values)}")
+
+            with kol1b:
+                with st.container(border=True):
+                    st.subheader("Pendataan Terendah")
+                    st.success(f"Pendataan: {' | '.join(mendata_terendah.astype(str).values)}")
+                    st.info(f"Submit: {' | '.join(submit_terendah.astype(str).values)}")
+                    st.warning(f"Draft: {' | '.join(draft_terendah.astype(str).values)}")
+                    st.caption(f"Target: {' | '.join(target_terendah.astype(str).values)}")
+                    st.caption(f"Open: {' | '.join(open_terendah.astype(str).values)}")
+
+        st.divider()
+        with st.expander("SLS Belum Didata"):
+            st.subheader("SLS Belum Didata")
+            st.dataframe(sls_belum, width='stretch', hide_index=True)
+            st.caption(f"Jumlah SLS: {len(sls_belum)}")
+            st.divider()
+            pilihankec2 = sls_belum['nama_kec'].unique()
+            kec_terpilih2 = st.selectbox("Pilih Kecamatan", pilihankec2, key="pilihan3")
+
+            if kec_terpilih2:
+                sls_belum2 = sls_belum[sls_belum['nama_kec'] == kec_terpilih2]
+                st.dataframe(sls_belum2, width='stretch', hide_index=True)
+                st.caption(f"Jumlah SLS: {len(sls_belum2)}")
+        
+        
+
+    with tab_ppl:
+        st.subheader("Monitoring Kinerja PPL")
+        st.dataframe(df_ppl2, width='stretch', hide_index=True)
+        st.caption(f"PPL: {len(df_ppl2)}")
+        
+        pilihankec = df_ppl2['kec_petugas'].unique()
+
+        with st.expander("Filter per Kecamatan"):
+            kec_terpilih = st.selectbox("Filter Kecamatan", pilihankec, key="pilihan2")
+            if kec_terpilih:
+                df_ppl3 = df_ppl2[df_ppl2['kec_petugas'] == kec_terpilih]
+                df_ppl3['%_capaian'] = round(df_ppl3['pendataan'] / df_ppl3['target'] * 100, 2)
+                df_ppl3 = df_ppl3.sort_values(by=['kec_petugas', 'kel_petugas', 'pendataan'])
+                
+                st.dataframe(df_ppl3, width='stretch', hide_index=True)
+                st.caption(f"PPL: {len(df_ppl3)}")
+        
+        st.divider()
+
+        st.subheader('CAPAIAN PENDATAAN')
+        
+        df_lk2 = df_lk.drop(columns=['no_telp_y', 'email_y', 'nama_lengkap_y', 'sls2_y', 'nama_kel_y', 'nama_kec_y', 'no_telp_x', 'sls2_x', 'nama_kel_x', 'nama_kec_x', 'kab'])
+
+        df_lk2['realisasi_keluarga'] = df_lk2['k_baru'] + df_lk2['k_ditemukan'] + df_lk2['k_khusus'] + df_lk2['k_meninggal'] + df_lk2['k_menolak'] + df_lk2['k_tidak_ditemukan'] + df_lk2['k_tidak_eligible']
+
+        df_lk2['realisasi_usaha'] = df_lk2['bku_baru'] + df_lk2['bku_ditemukan'] + df_lk2['bku_ganda'] + df_lk2['bku_tdk_ditemukan'] + df_lk2['bku_tutup'] + df_lk2['uk_baru'] + df_lk2['uk_ditemukan'] + df_lk2['uk_ganda'] + df_lk2['uk_tdk_ditemukan'] + df_lk2['uk_tutup']
+
+        df_lk2['total_target'] = df_lk2['target_keluarga'] + df_lk2['target_usaha']
+
+        df_lk2['total_realisasi'] = df_lk2['realisasi_keluarga'] + df_lk2['realisasi_usaha']
+
+        df_lk2['persentase'] = round(df_lk2['total_realisasi'] / df_lk2['total_target'] * 100, 2)
+
+        susunan_lk = ['nama_lengkap_x', 'email_x', 'kec', 'desa', 'sls', 'target_keluarga', 'target_usaha', 'total_target', 'realisasi_keluarga', 'realisasi_usaha', 'total_realisasi', 'persentase']
+
+        df_lk_final = df_lk2[susunan_lk]
+        df_lk_final = df_lk_final.rename(columns={'nama_lengkap_x':'nama_lengkap', 'email_x':'email'})
+
+        df_lk_final = df_lk_final.sort_values(by=['kec', 'nama_lengkap', 'desa', 'sls'])
+
+        st.dataframe(df_lk_final, width='stretch', hide_index=True)
+
+        st.divider()
+
+        rekap_lk = df_lk_final.groupby(['kec', 'nama_lengkap'])[['target_keluarga', 'target_usaha', 'total_target', 'realisasi_keluarga', 'realisasi_usaha', 'total_realisasi']].sum().reset_index()
+        rekap_lk['persentase'] = round(rekap_lk['total_realisasi'] / rekap_lk['total_target'] * 100, 2)
+        st.info("REKAP CAPAIAN PPL")
+        st.dataframe(rekap_lk, width='stretch', hide_index=True)
+
+        st.divider()
+        st.subheader("CATATAN PETUGAS")
+        
+        with st.expander("CATATAN PADA PENDATAAN KELUARGA"):
+            st.warning("PADA PENDATAAN KELUARGA")
+            df_lk2 = df_lk2.rename(columns={'nama_lengkap_x':'nama_lengkap', 'email_x':'email'})
+            df_lk2 = df_lk2.sort_values(by=['kec', 'nama_lengkap', 'desa', 'sls'])
+
+            kolom_catatan1 = ['nama_lengkap', 'email', 'kec', 'desa', 'sls', 'target_keluarga', 'k_baru', 'k_bersedia', 'k_ditemukan', 'k_khusus', 'k_meninggal', 'k_menolak', 'k_tidak_ditemui', 'k_tidak_ditemukan', 'k_tidak_eligible']
+
+            df_catatan1 = df_lk2[kolom_catatan1]
+            st.dataframe(df_catatan1, width='stretch', hide_index=True)
+
+        st.divider()
+        kolom_catatan2 = ['nama_lengkap', 'email', 'kec', 'desa', 'sls', 'bku_baru', 'bku_baru_non', 'bku_baru_pertanian', 'bku_ditemukan', 'bku_ganda', 'bku_tdk_ditemukan', 'bku_temu_non', 'bku_temu_pertanian', 'bku_tutup']
+
+        df_catatan2 = df_lk2[kolom_catatan2]
+        
+        with st.expander("CATATAN PADA PENDATAAN BKU"):
+            st.warning("PADA PENDATAAN BKU")
+            st.dataframe(df_catatan2, width='stretch', hide_index=True)
+
+        st.divider()
+        kolom_catatan3 = ['nama_lengkap', 'email', 'kec', 'desa', 'sls', 'uk_baru', 'uk_baru_non', 'uk_baru_pertanian', 'uk_ditemukan', 'uk_ganda', 'uk_tdk_ditemukan', 'uk_temu_non', 'uk_temu_pertanian', 'uk_tutup']
+
+        df_catatan3 = df_lk2[kolom_catatan3]
+
+        with st.expander("CATATAN PADA PENDATAAN USAHA KELUARGA"):
+            st.warning("PADA PENDATAAN USAHA KELUARGA")
+            st.dataframe(df_catatan3, width='stretch', hide_index=True)
+
 
 # ============================================================
 # FOOTER
 # ============================================================
 st.markdown("<div class='divider'></div>", unsafe_allow_html=True)
-st.markdown(f"""<div style="text-align:center; padding:1rem 0;"><p style="font-size:0.78rem; color:#94a3b8; margin:0;">🏗️ Dashboard UMKM SLS — {NAMA_TERPILIH} | Sumber: simpul-jabar.32net.id</p><p style="font-size:0.7rem; color:#cbd5e1; margin:0.25rem 0 0 0;">Data di-cache selama 5 menit. Klik <b>Rerun</b> di menu untuk memperbarui.</p></div>""", unsafe_allow_html=True)
+st.markdown(f"""<div style="text-align:center; padding:1rem 0;"><p style="font-size:0.78rem; color:#94a3b8; margin:0;">🏗️ | Sumber: simpul-jabar.32net.id</p><p style="font-size:0.7rem; color:#cbd5e1; margin:0.25rem 0 0 0;">Data di-cache selama 5 menit. Klik <b>Rerun</b> di menu untuk memperbarui.</p></div>""", unsafe_allow_html=True)
