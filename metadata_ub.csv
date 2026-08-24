@@ -1,0 +1,531 @@
+tabel,kolom,DataKey,Urutan,Blok,Nomor Rincian,label,tipe,keterangan
+tcz_37526b20.base_table_assignment,email,email,131,SE2026 - L BLOK II,,• Email,Text Input,
+tcz_37526b20.base_table_assignment,mode,mode,483,,,Mode,Variable,Moda Survei
+tcz_37526b20.base_table_assignment,assignment_id,assignment_id,,,,,,ID Assignment
+tcz_37526b20.base_table_assignment,level_1_full_code,level_1_full_code,,,,,,Kode Lengkap Provinsi
+tcz_37526b20.base_table_assignment,level_2_full_code,level_2_full_code,,,,,,Kode Lengkap Kabupaten/Kota
+tcz_37526b20.base_table_assignment,is_active,is_active,,,,,,"1 = Aktif, 0 = Dihapus"
+tcz_37526b20.base_table_assignment,approved_by_creator,approved_by_creator,,,,,,
+tcz_37526b20.base_table_assignment,assignment_error_status_type,assignment_error_status_type,,,,,,
+tcz_37526b20.base_table_assignment,assignment_id_timestamp,assignment_id_timestamp,,,,,,ID Assignment + Timestamp
+tcz_37526b20.base_table_assignment,assignment_responsibility_admin,assignment_responsibility_admin,,,,,,
+tcz_37526b20.base_table_assignment,assignment_status_alias,assignment_status_alias,,,,,,Status Assignment
+tcz_37526b20.base_table_assignment,assignment_status_id,assignment_status_id,,,,,,ID Status Assignment
+tcz_37526b20.base_table_assignment,code_identity,code_identity,,,,,,Kode Identitas
+tcz_37526b20.base_table_assignment,current_user_fullname,current_user_fullname,,,,,,
+tcz_37526b20.base_table_assignment,current_user_id,current_user_id,,,,,,
+tcz_37526b20.base_table_assignment,current_user_survey_role_can_pull_sample,current_user_survey_role_can_pull_sample,,,,,,
+tcz_37526b20.base_table_assignment,current_user_survey_role_id,current_user_survey_role_id,,,,,,
+tcz_37526b20.base_table_assignment,current_user_survey_role_is_pencacah,current_user_survey_role_is_pencacah,,,,,,
+tcz_37526b20.base_table_assignment,current_user_survey_role_name,current_user_survey_role_name,,,,,,
+tcz_37526b20.base_table_assignment,current_user_username,current_user_username,,,,,,
+tcz_37526b20.base_table_assignment,data1,data1,,,,,,Data Principal Kolom 1
+tcz_37526b20.base_table_assignment,data10,data10,,,,,,Data Principal Kolom 10
+tcz_37526b20.base_table_assignment,data2,data2,,,,,,Data Principal Kolom 2
+tcz_37526b20.base_table_assignment,data3,data3,,,,,,Data Principal Kolom 3
+tcz_37526b20.base_table_assignment,data4,data4,,,,,,Data Principal Kolom 4
+tcz_37526b20.base_table_assignment,data5,data5,,,,,,Data Principal Kolom 5
+tcz_37526b20.base_table_assignment,data6,data6,,,,,,Data Principal Kolom 6
+tcz_37526b20.base_table_assignment,data7,data7,,,,,,Data Principal Kolom 7
+tcz_37526b20.base_table_assignment,data8,data8,,,,,,Data Principal Kolom 8
+tcz_37526b20.base_table_assignment,data9,data9,,,,,,Data Principal Kolom 9
+tcz_37526b20.base_table_assignment,date_created,date_created,,,,,,
+tcz_37526b20.base_table_assignment,date_modified,date_modified,,,,,,
+tcz_37526b20.base_table_assignment,done,done,,,,,,
+tcz_37526b20.base_table_assignment,external_done,external_done,,,,,,
+tcz_37526b20.base_table_assignment,is_target,is_target,,,,,,
+tcz_37526b20.base_table_assignment,is_tarik_sample,is_tarik_sample,,,,,,
+tcz_37526b20.base_table_assignment,latitude,latitude,,,,,,
+tcz_37526b20.base_table_assignment,level_1_code,level_1_code,,,,,,Kode Provinsi
+tcz_37526b20.base_table_assignment,level_1_name,level_1_name,,,,,,Provinsi
+tcz_37526b20.base_table_assignment,level_10_code,level_10_code,,,,,,
+tcz_37526b20.base_table_assignment,level_10_full_code,level_10_full_code,,,,,,
+tcz_37526b20.base_table_assignment,level_10_name,level_10_name,,,,,,
+tcz_37526b20.base_table_assignment,level_2_code,level_2_code,,,,,,Kode Kabupaten/Kota
+tcz_37526b20.base_table_assignment,level_2_name,level_2_name,,,,,,Kabupaten/Kota
+tcz_37526b20.base_table_assignment,level_3_code,level_3_code,,,,,,Kode Kecamatan
+tcz_37526b20.base_table_assignment,level_3_full_code,level_3_full_code,,,,,,Kode Lengkap Kecamatan
+tcz_37526b20.base_table_assignment,level_3_name,level_3_name,,,,,,Kecamatan
+tcz_37526b20.base_table_assignment,level_4_code,level_4_code,,,,,,Kode Kelurahan/Desa
+tcz_37526b20.base_table_assignment,level_4_full_code,level_4_full_code,,,,,,Kode Lengkap Kelurahan/Desa
+tcz_37526b20.base_table_assignment,level_4_name,level_4_name,,,,,,Kelurahan/Desa
+tcz_37526b20.base_table_assignment,level_5_code,level_5_code,,,,,,Kode SLS
+tcz_37526b20.base_table_assignment,level_5_full_code,level_5_full_code,,,,,,Kode Lengkap SLS
+tcz_37526b20.base_table_assignment,level_5_name,level_5_name,,,,,,SLS
+tcz_37526b20.base_table_assignment,level_6_code,level_6_code,,,,,,Kode Sub-SLS
+tcz_37526b20.base_table_assignment,level_6_full_code,level_6_full_code,,,,,,Kode Lengkap Sub-SLS
+tcz_37526b20.base_table_assignment,level_6_name,level_6_name,,,,,,Sub-SLS
+tcz_37526b20.base_table_assignment,level_7_code,level_7_code,,,,,,
+tcz_37526b20.base_table_assignment,level_7_full_code,level_7_full_code,,,,,,
+tcz_37526b20.base_table_assignment,level_7_name,level_7_name,,,,,,
+tcz_37526b20.base_table_assignment,level_8_code,level_8_code,,,,,,
+tcz_37526b20.base_table_assignment,level_8_full_code,level_8_full_code,,,,,,
+tcz_37526b20.base_table_assignment,level_8_name,level_8_name,,,,,,
+tcz_37526b20.base_table_assignment,level_9_code,level_9_code,,,,,,
+tcz_37526b20.base_table_assignment,level_9_full_code,level_9_full_code,,,,,,
+tcz_37526b20.base_table_assignment,level_9_name,level_9_name,,,,,,
+tcz_37526b20.base_table_assignment,listing,listing,,,,,,
+tcz_37526b20.base_table_assignment,longitude,longitude,,,,,,
+tcz_37526b20.base_table_assignment,referenced_id,referenced_id,,,,,,
+tcz_37526b20.base_table_assignment,sample_type,sample_type,,,,,,
+tcz_37526b20.base_table_assignment,secondary,secondary,,,,,,
+tcz_37526b20.base_table_assignment,source_from,source_from,,,,,,-
+tcz_37526b20.base_table_assignment,strata,strata,,,,,,
+tcz_37526b20.base_table_assignment,substituted_by,substituted_by,,,,,,
+tcz_37526b20.base_table_assignment,substituted_for,substituted_for,,,,,,
+tcz_37526b20.base_table_assignment,substituted_with,substituted_with,,,,,,
+tcz_37526b20.base_table_assignment,sum_clean,sum_clean,,,,,,
+tcz_37526b20.base_table_assignment,sum_error,sum_error,,,,,,
+tcz_37526b20.base_table_assignment,sum_remark,sum_remark,,,,,,
+tcz_37526b20.base_table_assignment,survey_period_id,survey_period_id,,,,,,ID Periode Survei
+tcz_37526b20.base_table_assignment,survey_period_name,survey_period_name,,,,,,
+tcz_37526b20.base_table_assignment,user_id_responsibility,user_id_responsibility,,,,,,
+tcz_37526b20.base_table_assignment,assignment_date_modified,assignment_date_modified,,,,,,Tanggal Assignment Terakhir Diubah
+tcz_37526b20.base_table_assignment_history,mode,mode,483,,,Mode,Variable,Moda Survei
+tcz_37526b20.base_table_assignment_history,assignment_id,assignment_id,,,,,,ID Assignment
+tcz_37526b20.base_table_assignment_history,date_created,date_created,,,,,,
+tcz_37526b20.base_table_assignment_history,level_1_full_code,level_1_full_code,,,,,,Kode Lengkap Provinsi
+tcz_37526b20.base_table_assignment_history,level_2_full_code,level_2_full_code,,,,,,Kode Lengkap Kabupaten/Kota
+tcz_37526b20.base_table_assignment_history,assignment_id_date_created,assignment_id_date_created,,,,,,
+tcz_37526b20.base_table_assignment_history,assignment_id_timestamp,assignment_id_timestamp,,,,,,ID Assignment + Timestamp
+tcz_37526b20.base_table_assignment_history,remark,remark,,,,,,
+tcz_37526b20.base_table_assignment_history,user_id,user_id,,,,,,
+tcz_37526b20.base_table_assignment_history,status_id,status_id,,,,,,
+tcz_37526b20.base_table_assignment_history,status_alias,status_alias,,,,,,
+tcz_37526b20.base_table_assignment_history,assignment_date_modified,assignment_date_modified,,,,,,Tanggal Assignment Terakhir Diubah
+tcz_37526b20.base_table_assignment_responsibility,assignment_id,assignment_id,,,,,,ID Assignment
+tcz_37526b20.base_table_assignment_responsibility,id,id,,,,,,
+tcz_37526b20.base_table_assignment_responsibility,level_1_full_code,level_1_full_code,,,,,,Kode Lengkap Provinsi
+tcz_37526b20.base_table_assignment_responsibility,level_2_full_code,level_2_full_code,,,,,,Kode Lengkap Kabupaten/Kota
+tcz_37526b20.base_table_assignment_responsibility,assignment_id_timestamp,assignment_id_timestamp,,,,,,ID Assignment + Timestamp
+tcz_37526b20.base_table_assignment_responsibility,survey_user_before_id,survey_user_before_id,,,,,,
+tcz_37526b20.base_table_assignment_responsibility,survey_user_current_id,survey_user_current_id,,,,,,
+tcz_37526b20.base_table_assignment_responsibility,assignment_responsibility_status_id,assignment_responsibility_status_id,,,,,,
+tcz_37526b20.base_table_assignment_responsibility,date_created,date_created,,,,,,
+tcz_37526b20.base_table_assignment_responsibility,is_active,is_active,,,,,,"1 = Aktif, 0 = Dihapus"
+tcz_37526b20.base_table_assignment_responsibility,before_user_id,before_user_id,,,,,,
+tcz_37526b20.base_table_assignment_responsibility,before_survey_role_id,before_survey_role_id,,,,,,
+tcz_37526b20.base_table_assignment_responsibility,before_survey_role_name,before_survey_role_name,,,,,,
+tcz_37526b20.base_table_assignment_responsibility,before_survey_role_role_id,before_survey_role_role_id,,,,,,
+tcz_37526b20.base_table_assignment_responsibility,before_survey_role_can_pull_sample,before_survey_role_can_pull_sample,,,,,,
+tcz_37526b20.base_table_assignment_responsibility,before_survey_role_is_pencacah,before_survey_role_is_pencacah,,,,,,
+tcz_37526b20.base_table_assignment_responsibility,before_survey_role_sequence,before_survey_role_sequence,,,,,,
+tcz_37526b20.base_table_assignment_responsibility,current_user_id,current_user_id,,,,,,
+tcz_37526b20.base_table_assignment_responsibility,current_survey_role_id,current_survey_role_id,,,,,,
+tcz_37526b20.base_table_assignment_responsibility,current_survey_rolename,current_survey_rolename,,,,,,
+tcz_37526b20.base_table_assignment_responsibility,current_survey_rolerole_id,current_survey_rolerole_id,,,,,,
+tcz_37526b20.base_table_assignment_responsibility,current_survey_role_can_pull_sample,current_survey_role_can_pull_sample,,,,,,
+tcz_37526b20.base_table_assignment_responsibility,current_survey_role_is_pencacah,current_survey_role_is_pencacah,,,,,,
+tcz_37526b20.base_table_assignment_responsibility,current_survey_role_sequence,current_survey_role_sequence,,,,,,
+tcz_37526b20.base_table_assignment_responsibility,survey_period_id,survey_period_id,,,,,,ID Periode Survei
+tcz_37526b20.base_table_assignment_responsibility,assignment_date_modified,assignment_date_modified,,,,,,Tanggal Assignment Terakhir Diubah
+tcz_37526b20.base_table_paradata_action_log,assignment_id,assignment_id,,,,,,ID Assignment
+tcz_37526b20.base_table_paradata_action_log,timestamp,timestamp,,,,,,
+tcz_37526b20.base_table_paradata_action_log,level_1_full_code,level_1_full_code,,,,,,Kode Lengkap Provinsi
+tcz_37526b20.base_table_paradata_action_log,level_2_full_code,level_2_full_code,,,,,,Kode Lengkap Kabupaten/Kota
+tcz_37526b20.base_table_paradata_action_log,assignment_id_timestamp,assignment_id_timestamp,,,,,,ID Assignment + Timestamp
+tcz_37526b20.base_table_paradata_action_log,action,action,,,,,,
+tcz_37526b20.base_table_paradata_action_log,action_log_index,action_log_index,,,,,,
+tcz_37526b20.base_table_paradata_action_log,battery_info_battery_level,battery_info_battery_level,,,,,,
+tcz_37526b20.base_table_paradata_action_log,battery_info_battery_temperature,battery_info_battery_temperature,,,,,,
+tcz_37526b20.base_table_paradata_action_log,is_mock,is_mock,,,,,,
+tcz_37526b20.base_table_paradata_action_log,latitude,latitude,,,,,,
+tcz_37526b20.base_table_paradata_action_log,longitude,longitude,,,,,,
+tcz_37526b20.base_table_paradata_action_log,user_id,user_id,,,,,,
+tcz_37526b20.base_table_paradata_action_log,user_name,user_name,,,,,,
+tcz_37526b20.base_table_paradata_action_log,assignment_date_modified,assignment_date_modified,,,,,,Tanggal Assignment Terakhir Diubah
+tcz_37526b20.base_table_user_allocation,email,email,131,SE2026 - L BLOK II,,• Email,Text Input,
+tcz_37526b20.base_table_user_allocation,id,id,,,,,,
+tcz_37526b20.base_table_user_allocation,allocation_id,allocation_id,,,,,,
+tcz_37526b20.base_table_user_allocation,assignment_id_timestamp,assignment_id_timestamp,,,,,,ID Assignment + Timestamp
+tcz_37526b20.base_table_user_allocation,blocks,blocks,,,,,,
+tcz_37526b20.base_table_user_allocation,fullname,fullname,,,,,,
+tcz_37526b20.base_table_user_allocation,region_id,region_id,,,,,,
+tcz_37526b20.base_table_user_allocation,role_sequence,role_sequence,,,,,,
+tcz_37526b20.base_table_user_allocation,role_description,role_description,,,,,,
+tcz_37526b20.base_table_user_allocation,survey_role_id,survey_role_id,,,,,,
+tcz_37526b20.base_table_user_allocation,survey_period_id,survey_period_id,,,,,,ID Periode Survei
+tcz_37526b20.base_table_user_allocation,survey_role_group_id,survey_role_group_id,,,,,,
+tcz_37526b20.base_table_user_allocation,smallest_area_order,smallest_area_order,,,,,,
+tcz_37526b20.base_table_user_allocation,user_id,user_id,,,,,,
+tcz_37526b20.base_table_user_allocation,user_region_id,user_region_id,,,,,,
+tcz_37526b20.base_table_user_allocation,username,username,,,,,,
+tcz_37526b20.base_table_user_allocation,is_active,is_active,,,,,,"1 = Aktif, 0 = Dihapus"
+tcz_37526b20.base_table_user_allocation,created_at,created_at,,,,,,
+tcz_37526b20.base_table_user_allocation,updated_at,updated_at,,,,,,
+tcz_37526b20.base_table_user_allocation_new,email,email,131,SE2026 - L BLOK II,,• Email,Text Input,
+tcz_37526b20.base_table_user_allocation_new,level_1_full_code,level_1_full_code,,,,,,Kode Lengkap Provinsi
+tcz_37526b20.base_table_user_allocation_new,level_2_full_code,level_2_full_code,,,,,,Kode Lengkap Kabupaten/Kota
+tcz_37526b20.base_table_user_allocation_new,user_id,user_id,,,,,,
+tcz_37526b20.base_table_user_allocation_new,region_id,region_id,,,,,,
+tcz_37526b20.pair_label_value_0,assignment_id,assignment_id,,,,,,ID Assignment
+tcz_37526b20.pair_label_value_0,level_1_full_code,level_1_full_code,,,,,,Kode Lengkap Provinsi
+tcz_37526b20.pair_label_value_0,level_2_full_code,level_2_full_code,,,,,,Kode Lengkap Kabupaten/Kota
+tcz_37526b20.pair_label_value_0,assignment_date_modified,assignment_date_modified,,,,,,Tanggal Assignment Terakhir Diubah
+tcz_37526b20.pair_label_value_0,assignment_id_timestamp,assignment_id_timestamp,,,,,,ID Assignment + Timestamp
+tcz_37526b20.pair_label_value_0,assignment_listing,assignment_listing,,,,,,"1 = Assignment Tambahan, 0 = Assignment Prelist"
+tcz_37526b20.pair_label_value_0,assignment_status_alias,assignment_status_alias,,,,,,Status Assignment
+tcz_37526b20.pair_label_value_0,assignment_status_id,assignment_status_id,,,,,,ID Status Assignment
+tcz_37526b20.pair_label_value_0,data_key,data_key,,,,,,
+tcz_37526b20.pair_label_value_0,is_active,is_active,,,,,,"1 = Aktif, 0 = Dihapus"
+tcz_37526b20.pair_label_value_0,level_1_code,level_1_code,,,,,,Kode Provinsi
+tcz_37526b20.pair_label_value_0,level_1_name,level_1_name,,,,,,Provinsi
+tcz_37526b20.pair_label_value_0,level_10_code,level_10_code,,,,,,
+tcz_37526b20.pair_label_value_0,level_10_full_code,level_10_full_code,,,,,,
+tcz_37526b20.pair_label_value_0,level_10_name,level_10_name,,,,,,
+tcz_37526b20.pair_label_value_0,level_2_code,level_2_code,,,,,,Kode Kabupaten/Kota
+tcz_37526b20.pair_label_value_0,level_2_name,level_2_name,,,,,,Kabupaten/Kota
+tcz_37526b20.pair_label_value_0,level_3_code,level_3_code,,,,,,Kode Kecamatan
+tcz_37526b20.pair_label_value_0,level_3_full_code,level_3_full_code,,,,,,Kode Lengkap Kecamatan
+tcz_37526b20.pair_label_value_0,level_3_name,level_3_name,,,,,,Kecamatan
+tcz_37526b20.pair_label_value_0,level_4_code,level_4_code,,,,,,Kode Kelurahan/Desa
+tcz_37526b20.pair_label_value_0,level_4_full_code,level_4_full_code,,,,,,Kode Lengkap Kelurahan/Desa
+tcz_37526b20.pair_label_value_0,level_4_name,level_4_name,,,,,,Kelurahan/Desa
+tcz_37526b20.pair_label_value_0,level_5_code,level_5_code,,,,,,Kode SLS
+tcz_37526b20.pair_label_value_0,level_5_full_code,level_5_full_code,,,,,,Kode Lengkap SLS
+tcz_37526b20.pair_label_value_0,level_5_name,level_5_name,,,,,,SLS
+tcz_37526b20.pair_label_value_0,level_6_code,level_6_code,,,,,,Kode Sub-SLS
+tcz_37526b20.pair_label_value_0,level_6_full_code,level_6_full_code,,,,,,Kode Lengkap Sub-SLS
+tcz_37526b20.pair_label_value_0,level_6_name,level_6_name,,,,,,Sub-SLS
+tcz_37526b20.pair_label_value_0,level_7_code,level_7_code,,,,,,
+tcz_37526b20.pair_label_value_0,level_7_full_code,level_7_full_code,,,,,,
+tcz_37526b20.pair_label_value_0,level_7_name,level_7_name,,,,,,
+tcz_37526b20.pair_label_value_0,level_8_code,level_8_code,,,,,,
+tcz_37526b20.pair_label_value_0,level_8_full_code,level_8_full_code,,,,,,
+tcz_37526b20.pair_label_value_0,level_8_name,level_8_name,,,,,,
+tcz_37526b20.pair_label_value_0,level_9_code,level_9_code,,,,,,
+tcz_37526b20.pair_label_value_0,level_9_full_code,level_9_full_code,,,,,,
+tcz_37526b20.pair_label_value_0,level_9_name,level_9_name,,,,,,
+tcz_37526b20.pair_label_value_0,pair_label,pair,,,,,,
+tcz_37526b20.pair_label_value_0,pair_value,pair,,,,,,
+tcz_37526b20.pair_label_value_0,survey_period_id,survey_period_id,,,,,,ID Periode Survei
+tcz_37526b20.pair_label_value_0,survey_period_name,survey_period_name,,,,,,
+tcz_37526b20.pusat_nested,kp_jenis_label,kp_jenis,101,SE2026 - L BLOK II,,Jenis Unit,Radio Group,
+tcz_37526b20.pusat_nested,kp_jenis_value,kp_jenis,101,SE2026 - L BLOK II,,Jenis Unit,Radio Group,
+tcz_37526b20.pusat_nested,kp_prov_label,kp_prov,102,SE2026 - L BLOK II,,Provinsi,Select,
+tcz_37526b20.pusat_nested,kp_prov_value,kp_prov,102,SE2026 - L BLOK II,,Provinsi,Select,
+tcz_37526b20.pusat_nested,kp_kab_label,kp_kab,104,SE2026 - L BLOK II,,Kabupaten,Select,
+tcz_37526b20.pusat_nested,kp_kab_value,kp_kab,104,SE2026 - L BLOK II,,Kabupaten,Select,
+tcz_37526b20.pusat_nested,kp_tk,kp_tk,109,SE2026 - L BLOK II,,Jumlah Pekerja (per 31 Desember 2025) (orang),Number,
+tcz_37526b20.pusat_nested,kp_kbli_label,kp_kbli,111,SE2026 - L BLOK II,,KBLI,Select,
+tcz_37526b20.pusat_nested,kp_kbli_value,kp_kbli,111,SE2026 - L BLOK II,,KBLI,Select,
+tcz_37526b20.pusat_nested,kp_cabang,kp_cabang,113,BLOK I,,Nama Kantor/ Unit,Text Input,
+tcz_37526b20.pusat_nested,kp_cat,kp_cat,118,SE2026 - L BLOK II,,CATATAN,Text Input,
+tcz_37526b20.pusat_nested,kp_pengeluaran,kp_pengeluaran,119,BLOK I,,Nilai Pengeluaran Tahun 2025,Currency,
+tcz_37526b20.pusat_nested,kp_pendapatan,kp_pendapatan,120,BLOK I,,Nilai produksi/penjualan/pendapatan Tahun 2025,Currency,
+tcz_37526b20.pusat_nested,kp_total_aset,kp_total_aset,121,BLOK I,,Nilai Aset Tahun 2025,Currency,
+tcz_37526b20.pusat_nested,kp_var,kp_var,,,,,,
+tcz_37526b20.pusat_nested,kode_jenis,kode_jenis,,,,,,
+tcz_37526b20.pusat_nested,assignment_id,assignment_id,,,,,,ID Assignment
+tcz_37526b20.pusat_nested,index1,index1,,,,,,ID Roster/Nested Level 1
+tcz_37526b20.pusat_nested,level_1_full_code,level_1_full_code,,,,,,Kode Lengkap Provinsi
+tcz_37526b20.pusat_nested,level_2_full_code,level_2_full_code,,,,,,Kode Lengkap Kabupaten/Kota
+tcz_37526b20.pusat_nested,assignment_id_timestamp,assignment_id_timestamp,,,,,,ID Assignment + Timestamp
+tcz_37526b20.pusat_nested,assignment_listing,assignment_listing,,,,,,"1 = Assignment Tambahan, 0 = Assignment Prelist"
+tcz_37526b20.pusat_nested,assignment_status_alias,assignment_status_alias,,,,,,Status Assignment
+tcz_37526b20.pusat_nested,assignment_status_id,assignment_status_id,,,,,,ID Status Assignment
+tcz_37526b20.pusat_nested,is_active,is_active,,,,,,"1 = Aktif, 0 = Dihapus"
+tcz_37526b20.pusat_nested,level_1_code,level_1_code,,,,,,Kode Provinsi
+tcz_37526b20.pusat_nested,level_1_name,level_1_name,,,,,,Provinsi
+tcz_37526b20.pusat_nested,level_10_code,level_10_code,,,,,,
+tcz_37526b20.pusat_nested,level_10_full_code,level_10_full_code,,,,,,
+tcz_37526b20.pusat_nested,level_10_name,level_10_name,,,,,,
+tcz_37526b20.pusat_nested,level_2_code,level_2_code,,,,,,Kode Kabupaten/Kota
+tcz_37526b20.pusat_nested,level_2_name,level_2_name,,,,,,Kabupaten/Kota
+tcz_37526b20.pusat_nested,level_3_code,level_3_code,,,,,,Kode Kecamatan
+tcz_37526b20.pusat_nested,level_3_full_code,level_3_full_code,,,,,,Kode Lengkap Kecamatan
+tcz_37526b20.pusat_nested,level_3_name,level_3_name,,,,,,Kecamatan
+tcz_37526b20.pusat_nested,level_4_code,level_4_code,,,,,,Kode Kelurahan/Desa
+tcz_37526b20.pusat_nested,level_4_full_code,level_4_full_code,,,,,,Kode Lengkap Kelurahan/Desa
+tcz_37526b20.pusat_nested,level_4_name,level_4_name,,,,,,Kelurahan/Desa
+tcz_37526b20.pusat_nested,level_5_code,level_5_code,,,,,,Kode SLS
+tcz_37526b20.pusat_nested,level_5_full_code,level_5_full_code,,,,,,Kode Lengkap SLS
+tcz_37526b20.pusat_nested,level_5_name,level_5_name,,,,,,SLS
+tcz_37526b20.pusat_nested,level_6_code,level_6_code,,,,,,Kode Sub-SLS
+tcz_37526b20.pusat_nested,level_6_full_code,level_6_full_code,,,,,,Kode Lengkap Sub-SLS
+tcz_37526b20.pusat_nested,level_6_name,level_6_name,,,,,,Sub-SLS
+tcz_37526b20.pusat_nested,level_7_code,level_7_code,,,,,,
+tcz_37526b20.pusat_nested,level_7_full_code,level_7_full_code,,,,,,
+tcz_37526b20.pusat_nested,level_7_name,level_7_name,,,,,,
+tcz_37526b20.pusat_nested,level_8_code,level_8_code,,,,,,
+tcz_37526b20.pusat_nested,level_8_full_code,level_8_full_code,,,,,,
+tcz_37526b20.pusat_nested,level_8_name,level_8_name,,,,,,
+tcz_37526b20.pusat_nested,level_9_code,level_9_code,,,,,,
+tcz_37526b20.pusat_nested,level_9_full_code,level_9_full_code,,,,,,
+tcz_37526b20.pusat_nested,level_9_name,level_9_name,,,,,,
+tcz_37526b20.pusat_nested,survey_period_id,survey_period_id,,,,,,ID Periode Survei
+tcz_37526b20.pusat_nested,survey_period_name,survey_period_name,,,,,,
+tcz_37526b20.pusat_nested,assignment_date_modified,assignment_date_modified,,,,,,Tanggal Assignment Terakhir Diubah
+tcz_37526b20.root_table,kunjungan_1,kunjungan_1,2,PENGANTAR,,Waktu Kunjungan I,NowInput,
+tcz_37526b20.root_table,catatan_1,catatan_1,3,PENGANTAR,,Catatan Kunjungan I,Text Area,
+tcz_37526b20.root_table,kunjungan_2,kunjungan_2,4,PENGANTAR,,Waktu Kunjungan II Waktu Kunjungan II Hanya Dapat Diisi Empat Jam setelah Kunjungan I,NowInput,
+tcz_37526b20.root_table,catatan_2,catatan_2,5,PENGANTAR,,Catatan Kunjungan II,Text Area,
+tcz_37526b20.root_table,kunjungan_3,kunjungan_3,6,PENGANTAR,,Waktu Kunjungan III Waktu Kunjungan III Hanya Dapat Diisi Empat Jam setelah Kunjungan II,NowInput,
+tcz_37526b20.root_table,alasan_nr_label,alasan_nr,7,PENGANTAR,,Alasan Nonrespon,Radio Group,
+tcz_37526b20.root_table,alasan_nr_value,alasan_nr,7,PENGANTAR,,Alasan Nonrespon,Radio Group,
+tcz_37526b20.root_table,catatan_3,catatan_3,8,PENGANTAR,,Catatan Kunjungan III,Text Area,
+tcz_37526b20.root_table,keberadaan_label,keberadaan,8,BLOK I,,Keadaan perusahaan saat dikunjungi:,Radio Group,
+tcz_37526b20.root_table,keberadaan_value,keberadaan,8,BLOK I,,Keadaan perusahaan saat dikunjungi:,Radio Group,
+tcz_37526b20.root_table,kunjungan_pml,kunjungan_pml,9,PENGANTAR,,Waktu Kunjungan PML,NowInput,
+tcz_37526b20.root_table,geotag_pml_accuracy,geotag_pml,10,PENGANTAR,,Geotaging oleh PML,GpsInput,
+tcz_37526b20.root_table,geotag_pml_latitude,geotag_pml,10,PENGANTAR,,Geotaging oleh PML,GpsInput,
+tcz_37526b20.root_table,geotag_pml_longitude,geotag_pml,10,PENGANTAR,,Geotaging oleh PML,GpsInput,
+tcz_37526b20.root_table,catatan_pml,catatan_pml,11,PENGANTAR,,Catatan Kunjungan PML,Text Area,
+tcz_37526b20.root_table,prov,prov,12,IDENTITAS WILAYAH,1,Provinsi,Text Input,
+tcz_37526b20.root_table,kab,kab,13,IDENTITAS WILAYAH,2,Kabupaten/Kota,Text Input,
+tcz_37526b20.root_table,kec,kec,14,IDENTITAS WILAYAH,3,Kecamatan,Text Input,
+tcz_37526b20.root_table,desa_baru,desa_baru,19,IDENTITAS WILAYAH,4,Desa/Kelurahan,Select,
+tcz_37526b20.root_table,alasan_nib_label,alasan_nib,26,BLOK I,6,c. Apa alasan utama tidak memiliki NIB?,Radio Group,
+tcz_37526b20.root_table,alasan_nib_value,alasan_nib,26,BLOK I,6,c. Apa alasan utama tidak memiliki NIB?,Radio Group,
+tcz_37526b20.root_table,tulis_alasan_nib,tulis_alasan_nib,27,BLOK I,,Tuliskan alasan,Text Input,
+tcz_37526b20.root_table,jenis_prelist,jenis_prelist,29,SE2026 - P,,Jenis Prelist,Variable,
+tcz_37526b20.root_table,nama_pj,nama_pj,32,BLOK I,8,a. Nama Pengusaha/Penanggung Jawab,Text Input,
+tcz_37526b20.root_table,jk_pj_label,jk_pj,33,BLOK I,8,b. Jenis Kelamin,Radio Group,
+tcz_37526b20.root_table,jk_pj_value,jk_pj,33,BLOK I,8,b. Jenis Kelamin,Radio Group,
+tcz_37526b20.root_table,umur_pj,umur_pj,34,BLOK I,8,c. Umur,Number,
+tcz_37526b20.root_table,nik_pj,nik_pj,35,BLOK I,8,d. Nomor Induk Kependudukan (NIK),Text Input,
+tcz_37526b20.root_table,jml_kc,jml_kc,51,BLOK I,10,b. Berapa jumlah seluruh kantor cabang dan unit usaha yang berada di bawah kantor pusat?,Number,
+tcz_37526b20.root_table,sertifikat_halal_label,sertifikat_halal,69,BLOK I,15a,Apakah perusahaan ini menghasilkan produk bersertifikat halal?,Radio Group,
+tcz_37526b20.root_table,sertifikat_halal_value,sertifikat_halal,69,BLOK I,15a,Apakah perusahaan ini menghasilkan produk bersertifikat halal?,Radio Group,
+tcz_37526b20.root_table,non_pddk_barang_label,non_pddk_barang,77,BLOK I,a,Penjualan dan/atau pembelian barang,Radio Group,
+tcz_37526b20.root_table,non_pddk_barang_value,non_pddk_barang,77,BLOK I,a,Penjualan dan/atau pembelian barang,Radio Group,
+tcz_37526b20.root_table,non_pddk_jasa_label,non_pddk_jasa,78,BLOK I,b,Penjualan jasa,Radio Group,
+tcz_37526b20.root_table,non_pddk_jasa_value,non_pddk_jasa,78,BLOK I,b,Penjualan jasa,Radio Group,
+tcz_37526b20.root_table,tk_perempuan,tk_perempuan,81,BLOK I,b,Jumlah pekerja perempuan,Number,
+tcz_37526b20.root_table,tk_total,tk_total,82,BLOK I,c,Total pekerja (a+b),Variable,
+tcz_37526b20.root_table,cek_tk_pml,cek_tk_pml,83,BLOK I,,Cek Rincian Pekerja (Diisi oleh PML),Checkbox,
+tcz_37526b20.root_table,cek_output_pml,cek_output_pml,91,BLOK I,,Cek Rincian Pengeluaran 2025 (Diisi oleh PML),Checkbox,
+tcz_37526b20.root_table,persen_online,persen_online,95,BLOK I,d,Berapa persentase pendapatan yang diperoleh dari usaha online ?,DecimalInput,
+tcz_37526b20.root_table,cek_input_pml,cek_input_pml,96,BLOK I,,Cek Rincian Pendapatan di satu bulan terakhir (Diisi oleh PML),Checkbox,
+tcz_37526b20.root_table,aset_tanah,aset_tanah,97,BLOK I,a,Nilai aset tanah dan bangunan pada 31 Desember 2025,Currency,
+tcz_37526b20.root_table,aset_non_tanah,aset_non_tanah,98,BLOK I,b,Nilai aset selain tanah dan bangunan pada 31 Desember 2025,Currency,
+tcz_37526b20.root_table,aset_total,aset_total,99,BLOK I,c,Nilai total aset pada 31 Desember 2025,Currency,
+tcz_37526b20.root_table,rentang_aset_label,rentang_aset,100,BLOK I,c1,"Jika tidak dapat mengisikan nilai nominal, pilih nilai total aset dalam rentang berikut:",Radio Group,
+tcz_37526b20.root_table,rentang_aset_value,rentang_aset,100,BLOK I,c1,"Jika tidak dapat mengisikan nilai nominal, pilih nilai total aset dalam rentang berikut:",Radio Group,
+tcz_37526b20.root_table,luas_tanah,luas_tanah,101,BLOK I,d,Berapa luas tanah yang dikuasai dan digunakan untuk kegiatan usaha pada 31 Desember 2025 (m 2 ) ?,Number,
+tcz_37526b20.root_table,cek_aset_pml,cek_aset_pml,102,BLOK I,,Cek Rincian aset pada akhir bulan yang lalu (Diisi oleh PML),Checkbox,
+tcz_37526b20.root_table,milik_sendiri,milik_sendiri,103,BLOK I,a,Pribadi/Perorangan (%),DecimalInput,
+tcz_37526b20.root_table,prov_l_label,prov_l,106,SE2026 - L BLOK II,1,Provinsi,Variable,
+tcz_37526b20.root_table,prov_l_value,prov_l,106,SE2026 - L BLOK II,1,Provinsi,Variable,
+tcz_37526b20.root_table,kab_l_label,kab_l,107,SE2026 - L BLOK II,2,Kabupaten/Kota,Variable,
+tcz_37526b20.root_table,kab_l_value,kab_l,107,SE2026 - L BLOK II,2,Kabupaten/Kota,Variable,
+tcz_37526b20.root_table,total_modal,total_modal,109,BLOK I,g,Total (a+b+c+d+e+f),DecimalInput,
+tcz_37526b20.root_table,kec_l_label,kec_l,110,SE2026 - L BLOK II,3,Kecamatan,Variable,
+tcz_37526b20.root_table,kec_l_value,kec_l,110,SE2026 - L BLOK II,3,Kecamatan,Variable,
+tcz_37526b20.root_table,desa_l_label,desa_l,112,SE2026 - L BLOK II,4,Kelurahan/Desa/Nagari,Variable,
+tcz_37526b20.root_table,desa_l_value,desa_l,112,SE2026 - L BLOK II,4,Kelurahan/Desa/Nagari,Variable,
+tcz_37526b20.root_table,nama_usaha,nama_usaha,120,SE2026 - L BLOK II,8,a. Nama usaha/perusahaan,Variable,
+tcz_37526b20.root_table,nama_komersial,nama_komersial,123,SE2026 - L BLOK II,8,"b. Nama komersial usaha/perusahaan Jika tidak memiliki nama komersial, maka tuliskan nama usaha/perusahaan.",Text Input,
+tcz_37526b20.root_table,nama_res,nama_res,124,BLOK III,,Nama,Text Input,
+tcz_37526b20.root_table,hp_res,hp_res,125,BLOK III,,Nomor HP/Telepon,Text Input,
+tcz_37526b20.root_table,rt,rt,125,SE2026 - L BLOK II,,• RT,Text Input,
+tcz_37526b20.root_table,email_res,email_res,126,BLOK III,,Email,Text Input,
+tcz_37526b20.root_table,rw,rw,126,SE2026 - L BLOK II,,• RW,Text Input,
+tcz_37526b20.root_table,kode_pos,kode_pos,127,SE2026 - L BLOK II,,• Kode Pos,Variable,
+tcz_37526b20.root_table,tgl_res,tgl_res,127,BLOK III,,Tanggal Pelaksanaan,Date,
+tcz_37526b20.root_table,kode_area,kode_area,128,SE2026 - L BLOK II,,- Kode Area,Text Input,
+tcz_37526b20.root_table,ttd_res,ttd_res,128,BLOK III,,Tanda Tangan,SignatureInput,
+tcz_37526b20.root_table,no_telp,no_telp,129,SE2026 - L BLOK II,,- Nomor Telepon,Text Input,
+tcz_37526b20.root_table,eks,eks,130,SE2026 - L BLOK II,,- Ekstensi,Text Input,
+tcz_37526b20.root_table,email,email,131,SE2026 - L BLOK II,,• Email,Text Input,
+tcz_37526b20.root_table,hp,hp,132,SE2026 - L BLOK II,,• Nomor HP/whatsapp:,Text Input,
+tcz_37526b20.root_table,website,website,133,SE2026 - L BLOK II,,• Homepage/website Alamat website diawali dengan www. Contoh : www.bps.go.id,Text Input,
+tcz_37526b20.root_table,jenis_kawasan_label,jenis_kawasan,134,SE2026 - L BLOK II,8,d. Jenis kawasan beroperasi,Radio Group,
+tcz_37526b20.root_table,jenis_kawasan_value,jenis_kawasan,134,SE2026 - L BLOK II,8,d. Jenis kawasan beroperasi,Radio Group,
+tcz_37526b20.root_table,nama_kek_ki_label,nama_kek_ki,135,SE2026 - L BLOK II,8,e. Nama KEK/KI,Select,
+tcz_37526b20.root_table,nama_kek_ki_value,nama_kek_ki,135,SE2026 - L BLOK II,8,e. Nama KEK/KI,Select,
+tcz_37526b20.root_table,nama_kawasan,nama_kawasan,136,SE2026 - L BLOK II,8,"e. Nama kawasan Contoh: KEK Mandalika, Kawasan Industri Jababeka, Stasiun Gambir, Bandara Soekarno-Hatta, Pelabuhan Tanjung Priok, Terminal Pulo Gebang, Rest Area KM 57 Tol Jakarta–Cikampek, Sentra Batik Laweyan, Kompleks Pertokoan ITC Mangga Dua",Text Input,
+tcz_37526b20.root_table,punya_nib_label,punya_nib,141,SE2026 - L BLOK II,10,a. Apakah memiliki Nomor Induk Berusaha (NIB)?,Radio Group,
+tcz_37526b20.root_table,punya_nib_value,punya_nib,141,SE2026 - L BLOK II,10,a. Apakah memiliki Nomor Induk Berusaha (NIB)?,Radio Group,
+tcz_37526b20.root_table,nib,nib,142,SE2026 - L BLOK II,10,b. Tuliskan NIB:,Text Input,
+tcz_37526b20.root_table,badan_usaha_label,badan_usaha,146,SE2026 - L BLOK II,11,a. Apa status badan usaha dari usaha/perusahaan ini?,Radio Group,
+tcz_37526b20.root_table,badan_usaha_value,badan_usaha,146,SE2026 - L BLOK II,11,a. Apa status badan usaha dari usaha/perusahaan ini?,Radio Group,
+tcz_37526b20.root_table,koperasi_kdkmp_label,koperasi_kdkmp,147,SE2026 - L BLOK II,11,b. Apakah koperasi ini merupakan Koperasi Desa/Kelurahan Merah Putih (KDKMP)?,Radio Group,
+tcz_37526b20.root_table,koperasi_kdkmp_value,koperasi_kdkmp,147,SE2026 - L BLOK II,11,b. Apakah koperasi ini merupakan Koperasi Desa/Kelurahan Merah Putih (KDKMP)?,Radio Group,
+tcz_37526b20.root_table,jenis_koperasi_label,jenis_koperasi,148,SE2026 - L BLOK II,11,c. Apa jenis koperasi ini berdasarkan layanannya?,Radio Group,
+tcz_37526b20.root_table,jenis_koperasi_value,jenis_koperasi,148,SE2026 - L BLOK II,11,c. Apa jenis koperasi ini berdasarkan layanannya?,Radio Group,
+tcz_37526b20.root_table,lap_keuangan_label,lap_keuangan,149,SE2026 - L BLOK II,11,d. Apakah mempunyai laporan/catatan keuangan?,Radio Group,
+tcz_37526b20.root_table,lap_keuangan_value,lap_keuangan,149,SE2026 - L BLOK II,11,d. Apakah mempunyai laporan/catatan keuangan?,Radio Group,
+tcz_37526b20.root_table,keg_utama,keg_utama,159,SE2026 - L BLOK II,13,a. Apa kegiatan utama usaha/perusahaan ini? Tuliskan selengkapnya,Text Input,
+tcz_37526b20.root_table,produk_sendiri_label,produk_sendiri,160,SE2026 - L BLOK II,13,b1. Apakah memproduksi barang di lokasi ini?,Radio Group,
+tcz_37526b20.root_table,produk_sendiri_value,produk_sendiri,160,SE2026 - L BLOK II,13,b1. Apakah memproduksi barang di lokasi ini?,Radio Group,
+tcz_37526b20.root_table,layanan_mamin_label,layanan_mamin,161,SE2026 - L BLOK II,13,"b2. Apakah menyediakan layanan makan minum? Ciri: terdapat kegiatan peracikkan, pemanasan ulang, atau pembuatan produk berdasarkan pesanan/permintaan pelanggan",Radio Group,
+tcz_37526b20.root_table,layanan_mamin_value,layanan_mamin,161,SE2026 - L BLOK II,13,"b2. Apakah menyediakan layanan makan minum? Ciri: terdapat kegiatan peracikkan, pemanasan ulang, atau pembuatan produk berdasarkan pesanan/permintaan pelanggan",Radio Group,
+tcz_37526b20.root_table,keg_penjualan_label,keg_penjualan,162,SE2026 - L BLOK II,13,b3. Apakah melakukan penjualan barang?,Radio Group,
+tcz_37526b20.root_table,keg_penjualan_value,keg_penjualan,162,SE2026 - L BLOK II,13,b3. Apakah melakukan penjualan barang?,Radio Group,
+tcz_37526b20.root_table,keg_jasa_label,keg_jasa,163,SE2026 - L BLOK II,13,b4. Pilih salah satu aktivitas yang dilakukan:,Radio Group,
+tcz_37526b20.root_table,keg_jasa_value,keg_jasa,163,SE2026 - L BLOK II,13,b4. Pilih salah satu aktivitas yang dilakukan:,Radio Group,
+tcz_37526b20.root_table,kab_prelist,kab_prelist,163,,,kab_prelist,Variable,
+tcz_37526b20.root_table,lokasi_usaha_label,lokasi_usaha,164,SE2026 - L BLOK II,13,c. Di mana usaha tersebut biasa dilakukan?,Radio Group,
+tcz_37526b20.root_table,lokasi_usaha_value,lokasi_usaha,164,SE2026 - L BLOK II,13,c. Di mana usaha tersebut biasa dilakukan?,Radio Group,
+tcz_37526b20.root_table,kab_l_loaded,kab_l_loaded,164,,,kab_l_loaded,Variable,
+tcz_37526b20.root_table,input,input,165,SE2026 - L BLOK II,13,"d. Apa input yang digunakan? Contoh: daging ikan, tepung; daging kebab, kulit kebab, sayuran; bambu; jagung pipil; kaca; kain; kulit sapi; kayu bulat; rotan; kunci polos",Text Area,
+tcz_37526b20.root_table,proses,proses,166,SE2026 - L BLOK II,13,e. Bagaimana proses mengubah input tersebut menjadi produk output (beserta alatnya)? Contoh: menggiling daging ikan menjadi sosis; membuat kebab di rumah dan sudah dikemasi kemudian dititipkan di warung; penggaraman; pengasapan; pemindangan; pembekuan.,Text Area,
+tcz_37526b20.root_table,produk,produk,167,SE2026 - L BLOK II,13,f. Apa produk utama yang dihasilkan?,Text Input,
+tcz_37526b20.root_table,set_kab_l,set_kab_l,167,,,set_kab_l,Variable,
+tcz_37526b20.root_table,kbli_genai_label,kbli_genai,168,SE2026 - L BLOK II,13,g. Kode KBLI,Radio Group,
+tcz_37526b20.root_table,kbli_genai_value,kbli_genai,168,SE2026 - L BLOK II,13,g. Kode KBLI,Radio Group,
+tcz_37526b20.root_table,kbli_label,kbli,169,SE2026 - L BLOK II,,Pilih dari Master KBLI,Select,
+tcz_37526b20.root_table,kbli_value,kbli,169,SE2026 - L BLOK II,,Pilih dari Master KBLI,Select,
+tcz_37526b20.root_table,kode_kab,kode_kab,169,,,kode_kab,Variable,
+tcz_37526b20.root_table,kategori,kategori,170,SE2026 - L BLOK II,13,h. Kategori Lapangan Usaha:,Variable,
+tcz_37526b20.root_table,kode_kab_full,kode_kab_full,170,,,kode_kab_full,Variable,
+tcz_37526b20.root_table,cek_kbli_pml,cek_kbli_pml,171,SE2026 - L BLOK II,,Cek Kategori & KBLI (Diisi oleh PML),Radio Group,
+tcz_37526b20.root_table,klasifikasi_label,klasifikasi,172,SE2026 - L BLOK II,13,"i. Jika usaha/perusahaan merupakan akomodasi jangka pendek, apa klasifikasi usaha/perusahaan ini?",Radio Group,
+tcz_37526b20.root_table,klasifikasi_value,klasifikasi,172,SE2026 - L BLOK II,13,"i. Jika usaha/perusahaan merupakan akomodasi jangka pendek, apa klasifikasi usaha/perusahaan ini?",Radio Group,
+tcz_37526b20.root_table,kec_l_loaded,kec_l_loaded,172,,,kec_l_loaded,Variable,
+tcz_37526b20.root_table,jaringan_label,jaringan,173,SE2026 - L BLOK II,14,a. Apa jaringan usaha dari usaha/perusahaan ini?,Radio Group,
+tcz_37526b20.root_table,jaringan_value,jaringan,173,SE2026 - L BLOK II,14,a. Apa jaringan usaha dari usaha/perusahaan ini?,Radio Group,
+tcz_37526b20.root_table,set_kec_l,set_kec_l,173,,,set_kec_l,Variable,
+tcz_37526b20.root_table,kode_kec_full,kode_kec_full,174,,,kode_kec_full,Variable,
+tcz_37526b20.root_table,desakel,desakel,175,,,Kelurahan/Desa/Nagari,Variable,
+tcz_37526b20.root_table,nama_kp,nama_kp,175,SE2026 - L BLOK II,15,a. Nama Kantor Pusat,Text Input,
+tcz_37526b20.root_table,alamat_kp,alamat_kp,176,SE2026 - L BLOK II,15,b. Alamat Kantor Pusat,Text Area,
+tcz_37526b20.root_table,desa_l_loaded,desa_l_loaded,176,,,desa_l_loaded,Variable,
+tcz_37526b20.root_table,email_kp,email_kp,177,SE2026 - L BLOK II,15,c. Email,Text Input,
+tcz_37526b20.root_table,negara_kp_label,negara_kp,178,SE2026 - L BLOK II,15,d. Negara,Select,
+tcz_37526b20.root_table,negara_kp_value,negara_kp,178,SE2026 - L BLOK II,15,d. Negara,Select,
+tcz_37526b20.root_table,set_desa_l,set_desa_l,178,,,set_desa_l,Variable,
+tcz_37526b20.root_table,prov_kp_label,prov_kp,179,SE2026 - L BLOK II,15,e. Provinsi,Select,
+tcz_37526b20.root_table,prov_kp_value,prov_kp,179,SE2026 - L BLOK II,15,e. Provinsi,Select,
+tcz_37526b20.root_table,kode_desa_full,kode_desa_full,179,,,kode_desa_full,Variable,
+tcz_37526b20.root_table,idsls,idsls,180,,,ID SLS,Variable,
+tcz_37526b20.root_table,kab_kp_label,kab_kp,180,SE2026 - L BLOK II,15,f. Kabupaten/Kota,Select,
+tcz_37526b20.root_table,kab_kp_value,kab_kp,180,SE2026 - L BLOK II,15,f. Kabupaten/Kota,Select,
+tcz_37526b20.root_table,internet_label,internet,181,SE2026 - L BLOK II,16,a. Apakah usaha/perusahaan ini menggunakan internet dalam menjalankan usaha?,Radio Group,
+tcz_37526b20.root_table,internet_value,internet,181,SE2026 - L BLOK II,16,a. Apakah usaha/perusahaan ini menggunakan internet dalam menjalankan usaha?,Radio Group,
+tcz_37526b20.root_table,idunik_PMSS,idunik_PMSS,182,,,ID PMSS,Variable,
+tcz_37526b20.root_table,internet_produksi_label,internet_produksi,182,SE2026 - L BLOK II,16,b2. Produksi barang/jasa,Radio Group,
+tcz_37526b20.root_table,internet_produksi_value,internet_produksi,182,SE2026 - L BLOK II,16,b2. Produksi barang/jasa,Radio Group,
+tcz_37526b20.root_table,internet_pesanan_label,internet_pesanan,183,SE2026 - L BLOK II,16,b1. Menerima pesanan barang/jasa,Radio Group,
+tcz_37526b20.root_table,internet_pesanan_value,internet_pesanan,183,SE2026 - L BLOK II,16,b1. Menerima pesanan barang/jasa,Radio Group,
+tcz_37526b20.root_table,wilayah_ngibar,wilayah_ngibar,183,,,Wilayah Ngibar,Variable,
+tcz_37526b20.root_table,internet_distribusi_label,internet_distribusi,184,SE2026 - L BLOK II,16,b3. Distribusi barang/jasa,Radio Group,
+tcz_37526b20.root_table,internet_distribusi_value,internet_distribusi,184,SE2026 - L BLOK II,16,b3. Distribusi barang/jasa,Radio Group,
+tcz_37526b20.root_table,tgl_ngibar,tgl_ngibar,184,,,Tanggal Ngibar,Variable,
+tcz_37526b20.root_table,email_prelist,email_prelist,185,,,Email Prelist,Variable,
+tcz_37526b20.root_table,internet_beli_label,internet_beli,185,SE2026 - L BLOK II,16,b4. Membeli bahan baku online,Radio Group,
+tcz_37526b20.root_table,internet_beli_value,internet_beli,185,SE2026 - L BLOK II,16,b4. Membeli bahan baku online,Radio Group,
+tcz_37526b20.root_table,internet_promosi_label,internet_promosi,186,SE2026 - L BLOK II,16,b5. Promosi,Radio Group,
+tcz_37526b20.root_table,internet_promosi_value,internet_promosi,186,SE2026 - L BLOK II,16,b5. Promosi,Radio Group,
+tcz_37526b20.root_table,internet_lainnya_label,internet_lainnya,187,SE2026 - L BLOK II,16,b6. Lainnya,Radio Group,
+tcz_37526b20.root_table,internet_lainnya_value,internet_lainnya,187,SE2026 - L BLOK II,16,b6. Lainnya,Radio Group,
+tcz_37526b20.root_table,digital_label,digital,188,SE2026 - L BLOK II,16,"c. Apakah usaha/perusahaan ini memanfaatkan teknologi digital Aritifical Intelligence (AI), Internet of Things (IoT), big data, printer 3D, blockchain, atau cloud computing ?",Radio Group,
+tcz_37526b20.root_table,digital_value,digital,188,SE2026 - L BLOK II,16,"c. Apakah usaha/perusahaan ini memanfaatkan teknologi digital Aritifical Intelligence (AI), Internet of Things (IoT), big data, printer 3D, blockchain, atau cloud computing ?",Radio Group,
+tcz_37526b20.root_table,produksi_lingkungan_label,produksi_lingkungan,189,SE2026 - L BLOK II,17,"a. Apakah usaha/perusahaan ini memproduksi barang/jasa yang ramah lingkungan ? Contoh: Produk efisiensi energi (lampu atau mesin hemat listrik); Energi terbarukan (panel surya, turbin angin, biogas); Kendaraan ramah lingkungan (kendaraan listrik/ hybrid); Produk berbahan daur ulang (kertas/plastik daur ulang, kemasan ramah lingkungan); Jasa pengelolaan dan pembersihan limbah dan sampah (pengolahan sampah/ air limbah, daur ulang)",Radio Group,
+tcz_37526b20.root_table,produksi_lingkungan_value,produksi_lingkungan,189,SE2026 - L BLOK II,17,"a. Apakah usaha/perusahaan ini memproduksi barang/jasa yang ramah lingkungan ? Contoh: Produk efisiensi energi (lampu atau mesin hemat listrik); Energi terbarukan (panel surya, turbin angin, biogas); Kendaraan ramah lingkungan (kendaraan listrik/ hybrid); Produk berbahan daur ulang (kertas/plastik daur ulang, kemasan ramah lingkungan); Jasa pengelolaan dan pembersihan limbah dan sampah (pengolahan sampah/ air limbah, daur ulang)",Radio Group,
+tcz_37526b20.root_table,perlindungan_lingkungan_label,perlindungan_lingkungan,190,SE2026 - L BLOK II,17,"b. Apakah usaha/perusahaan ini menggunakan input untuk tujuan perlindungan lingkungan dan/atau pembelian barang dan jasa yang ramah lingkungan? Contoh: Pengeluaran untuk pengelolaan dan pembersihan limbah dan sampah, pengendalian polusi udara, perbaikan tanah/ air tanah, pengurangan kebisingan, pelestarian alam/keanekaragaman hayati, audit/ penilaian lingkungan",Radio Group,
+tcz_37526b20.root_table,perlindungan_lingkungan_value,perlindungan_lingkungan,190,SE2026 - L BLOK II,17,"b. Apakah usaha/perusahaan ini menggunakan input untuk tujuan perlindungan lingkungan dan/atau pembelian barang dan jasa yang ramah lingkungan? Contoh: Pengeluaran untuk pengelolaan dan pembersihan limbah dan sampah, pengendalian polusi udara, perbaikan tanah/ air tanah, pengurangan kebisingan, pelestarian alam/keanekaragaman hayati, audit/ penilaian lingkungan",Radio Group,
+tcz_37526b20.root_table,kbli_2025,kbli_2025,191,,,kbli_2025,Variable,
+tcz_37526b20.root_table,produk_seni_label,produk_seni,191,SE2026 - L BLOK II,18,"Apakah usaha/perusahaan ini menggunakan produk karya seni, sastra, desain, teknologi atau warisan budaya , baik diproduksi sendiri maupun oleh pihak lain? Contoh produk karya seni: lukisan, patung, kerajinan, musik, tari, foto, film, ilustrasi, animasi, board game, dll. Contoh produk sastra: puisi, cerpen, novel, naskah drama, dll. Contoh produk desain: arsitektur, desain produk, desain interior, desain komunikasi visual, desain fesyen, dll. Contoh produk teknologi: perangkat lunak (software), aplikasi digital, aplikasi gim, perangkat elektronik, dll. Contoh produk warisan budaya: makanan tradisional, peralatan tradisional, obat tradisional, dll.",Radio Group,
+tcz_37526b20.root_table,produk_seni_value,produk_seni,191,SE2026 - L BLOK II,18,"Apakah usaha/perusahaan ini menggunakan produk karya seni, sastra, desain, teknologi atau warisan budaya , baik diproduksi sendiri maupun oleh pihak lain? Contoh produk karya seni: lukisan, patung, kerajinan, musik, tari, foto, film, ilustrasi, animasi, board game, dll. Contoh produk sastra: puisi, cerpen, novel, naskah drama, dll. Contoh produk desain: arsitektur, desain produk, desain interior, desain komunikasi visual, desain fesyen, dll. Contoh produk teknologi: perangkat lunak (software), aplikasi digital, aplikasi gim, perangkat elektronik, dll. Contoh produk warisan budaya: makanan tradisional, peralatan tradisional, obat tradisional, dll.",Radio Group,
+tcz_37526b20.root_table,sudah_halal,sudah_halal,193,SE2026 - L BLOK II,19,b. Berapa jumlah varian produk yang sudah bersertifikat halal BPJPH?,Number,
+tcz_37526b20.root_table,belum_halal,belum_halal,194,SE2026 - L BLOK II,19,c. Berapa jumlah varian produk yang belum bersertifikat halal BPJPH?,Number,
+tcz_37526b20.root_table,izin_edar_label,izin_edar,195,SE2026 - L BLOK II,20,a. Apakah usaha/perusahaan ini memiliki izin edar? Rincian 20 hanya ditanyakan kepada kategori usaha/perusahaan khusus berdasarkan BPOM.,Radio Group,
+tcz_37526b20.root_table,izin_edar_value,izin_edar,195,SE2026 - L BLOK II,20,a. Apakah usaha/perusahaan ini memiliki izin edar? Rincian 20 hanya ditanyakan kepada kategori usaha/perusahaan khusus berdasarkan BPOM.,Radio Group,
+tcz_37526b20.root_table,list_kbli_mbg,list_kbli_mbg,196,,,list_kbli_mbg,Variable,
+tcz_37526b20.root_table,sudah_bpom,sudah_bpom,196,SE2026 - L BLOK II,20,b. Berapa jumlah varian produk yang sudah memiliki izin edar BPOM?,Number,
+tcz_37526b20.root_table,belum_bpom,belum_bpom,197,SE2026 - L BLOK II,20,c. Berapa jumlah varian produk yang belum memiliki izin edar BPOM?,Number,
+tcz_37526b20.root_table,list_kbli_sekolah,list_kbli_sekolah,198,,,list_kbli_sekolah,Variable,
+tcz_37526b20.root_table,mitra_kdkmp_label,mitra_kdkmp,198,SE2026 - L BLOK II,21,Apakah usaha/perusahaan ini bermitra dengan Koperasi Desa/Kelurahan Merah Putih (KDKMP)?,Radio Group,
+tcz_37526b20.root_table,mitra_kdkmp_value,mitra_kdkmp,198,SE2026 - L BLOK II,21,Apakah usaha/perusahaan ini bermitra dengan Koperasi Desa/Kelurahan Merah Putih (KDKMP)?,Radio Group,
+tcz_37526b20.root_table,peran_mbg_label,peran_mbg,199,SE2026 - L BLOK II,22,Apakah usaha/perusahaan ini terlibat dalam program Makan Bergizi Gratis (MBG)?,Radio Group,
+tcz_37526b20.root_table,peran_mbg_value,peran_mbg,199,SE2026 - L BLOK II,22,Apakah usaha/perusahaan ini terlibat dalam program Makan Bergizi Gratis (MBG)?,Radio Group,
+tcz_37526b20.root_table,var_b1r9b,var_b1r9b,,,,,,
+tcz_37526b20.root_table,beli_jasa_non_pddk_label,beli_jasa_non_pddk,202,SE2026 - L BLOK II,23,c. Pembelian jasa,Radio Group,
+tcz_37526b20.root_table,beli_jasa_non_pddk_value,beli_jasa_non_pddk,202,SE2026 - L BLOK II,23,c. Pembelian jasa,Radio Group,
+tcz_37526b20.root_table,narasi,narasi,,,,,,
+tcz_37526b20.root_table,tk_laki,tk_laki,203,SE2026 - L BLOK II,24,a1. Pekerja laki-laki,Number,
+tcz_37526b20.root_table,aset_total_var,aset_total_var,,,,,,
+tcz_37526b20.root_table,total_modal_var,total_modal_var,,,,,,
+tcz_37526b20.root_table,b1r9b_ket,b1r9b_ket,,,,,,
+tcz_37526b20.root_table,tahun_operasi,tahun_operasi,211,SE2026 - L BLOK II,25,Tahun berapa usaha/perusahaan ini mulai beroperasi secara komersial ? Tahun beroperasi komersial terdiri dari 4 angka. Contoh: 1990; 2025;dsb.,Masking,
+tcz_37526b20.root_table,gaji,gaji,212,SE2026 - L BLOK II,26,"a. Total upah dan gaji, serta jaminan sosial pegawai",Currency,
+tcz_37526b20.root_table,biaya_produksi,biaya_produksi,213,SE2026 - L BLOK II,26,b. Biaya produksi,Currency,
+tcz_37526b20.root_table,biaya_pembelian,biaya_pembelian,214,SE2026 - L BLOK II,26,c. Biaya pembelian barang yang terjual,Currency,
+tcz_37526b20.root_table,operasional,operasional,215,SE2026 - L BLOK II,26,"d. Biaya operasional (air, listrik, gas, internet, pulsa, pemeliharaan, biaya angkutan, dll.)",Currency,
+tcz_37526b20.root_table,non_operasional,non_operasional,216,SE2026 - L BLOK II,26,e. Biaya non-operasional,Currency,
+tcz_37526b20.root_table,total_pengeluaran,total_pengeluaran,217,SE2026 - L BLOK II,26,f. Total pengeluaran (a+b+c+d+e),Currency,
+tcz_37526b20.root_table,nilai_pendapatan,nilai_pendapatan,219,SE2026 - L BLOK II,27,a. Nilai $narasi barang dan jasa,Currency,
+tcz_37526b20.root_table,pendapatan_lain,pendapatan_lain,220,SE2026 - L BLOK II,27,b. Pendapatan lainnya yang dihasilkan perusahaan,Currency,
+tcz_37526b20.root_table,total_pendapatan,total_pendapatan,221,SE2026 - L BLOK II,27,c. Total nilai $narasi (a+b),Currency,
+tcz_37526b20.root_table,non_profit,non_profit,231,SE2026 - L BLOK II,29,b. Lembaga Nonprofit yang Melayani Rumah Tangga,DecimalInput,
+tcz_37526b20.root_table,publik,publik,232,SE2026 - L BLOK II,29,c. Korporasi Publik,DecimalInput,
+tcz_37526b20.root_table,non_publik,non_publik,233,SE2026 - L BLOK II,29,d. Korporasi Non Publik,DecimalInput,
+tcz_37526b20.root_table,pemerintah,pemerintah,234,SE2026 - L BLOK II,29,e. Pemerintah,DecimalInput,
+tcz_37526b20.root_table,asing,asing,235,SE2026 - L BLOK II,29,f. Asing,DecimalInput,
+tcz_37526b20.root_table,metod_isi_label,metod_isi,263,SE2026 - L BLOK II,,Metode pengisian kantor cabang,Radio Group,
+tcz_37526b20.root_table,metod_isi_value,metod_isi,263,SE2026 - L BLOK II,,Metode pengisian kantor cabang,Radio Group,
+tcz_37526b20.root_table,file_input,file_input,264,SE2026 - L BLOK II,,Import CSV Daftar Kantor Cabang,CsvInput,
+tcz_37526b20.root_table,catatan,catatan,379,CATATAN,,Catatan,Text Area,
+tcz_37526b20.root_table,kode_prov,kode_prov,451,,,kode_prov,Variable,
+tcz_37526b20.root_table,tahun_survei,tahun_survei,480,,,Tahun Survei,Variable,
+tcz_37526b20.root_table,mode,mode,483,,,Mode,Variable,Moda Survei
+tcz_37526b20.root_table,skala_usaha,skala_usaha,576,,,skala_usaha,Variable,
+tcz_37526b20.root_table,idsbr,idsbr,581,,,ID SBR,Variable,
+tcz_37526b20.root_table,alamat_usaha,alamat_usaha,583,,,alamat_usaha,Variable,
+tcz_37526b20.root_table,var_kbli,var_kbli,595,,,Pilihan untuk KBLI,Variable,
+tcz_37526b20.root_table,result_gen_ai,result_gen_ai,596,,,Result Gen AI,Variable,
+tcz_37526b20.root_table,kbli_prelist,kbli_prelist,597,,,kbli_prelist,Variable,
+tcz_37526b20.root_table,kbli_akhir,kbli_akhir,601,,,KBLI Akhir,Variable,
+tcz_37526b20.root_table,kategori_2025,kategori_2025,602,,,kategori_2025,Variable,
+tcz_37526b20.root_table,msg_error_kategori,msg_error_kategori,603,,,,Variable,
+tcz_37526b20.root_table,ec_halal,ec_halal,608,,,ec_halal,Variable,
+tcz_37526b20.root_table,ec_bpom,ec_bpom,609,,,ec_bpom,Variable,
+tcz_37526b20.root_table,total_pengeluaran_var,total_pengeluaran_var,614,,,total_pengeluaran_var,Variable,
+tcz_37526b20.root_table,total_pendapatan_var,total_pendapatan_var,616,,,total_pendapatan_var,Variable,
+tcz_37526b20.root_table,list_kc,list_kc,623,,,List KC,Variable,
+tcz_37526b20.root_table,list_error_csv_html,list_error_csv_html,624,,,List Error Kantor Cabang,Variable,
+tcz_37526b20.root_table,list_error_csv,list_error_csv,625,,,List Error CSV,Variable,
+tcz_37526b20.root_table,assignment_id,assignment_id,,,,,,ID Assignment
+tcz_37526b20.root_table,level_1_full_code,level_1_full_code,,,,,,Kode Lengkap Provinsi
+tcz_37526b20.root_table,level_2_full_code,level_2_full_code,,,,,,Kode Lengkap Kabupaten/Kota
+tcz_37526b20.root_table,assignment_date_modified,assignment_date_modified,,,,,,Tanggal Assignment Terakhir Diubah
+tcz_37526b20.root_table,assignment_id_timestamp,assignment_id_timestamp,,,,,,ID Assignment + Timestamp
+tcz_37526b20.root_table,assignment_listing,assignment_listing,,,,,,"1 = Assignment Tambahan, 0 = Assignment Prelist"
+tcz_37526b20.root_table,assignment_status_alias,assignment_status_alias,,,,,,Status Assignment
+tcz_37526b20.root_table,assignment_status_id,assignment_status_id,,,,,,ID Status Assignment
+tcz_37526b20.root_table,genai_button,genai_button,,,,,,
+tcz_37526b20.root_table,is_active,is_active,,,,,,"1 = Aktif, 0 = Dihapus"
+tcz_37526b20.root_table,level_1_code,level_1_code,,,,,,Kode Provinsi
+tcz_37526b20.root_table,level_1_name,level_1_name,,,,,,Provinsi
+tcz_37526b20.root_table,level_10_code,level_10_code,,,,,,
+tcz_37526b20.root_table,level_10_full_code,level_10_full_code,,,,,,
+tcz_37526b20.root_table,level_10_name,level_10_name,,,,,,
+tcz_37526b20.root_table,level_2_code,level_2_code,,,,,,Kode Kabupaten/Kota
+tcz_37526b20.root_table,level_2_name,level_2_name,,,,,,Kabupaten/Kota
+tcz_37526b20.root_table,level_3_code,level_3_code,,,,,,Kode Kecamatan
+tcz_37526b20.root_table,level_3_full_code,level_3_full_code,,,,,,Kode Lengkap Kecamatan
+tcz_37526b20.root_table,level_3_name,level_3_name,,,,,,Kecamatan
+tcz_37526b20.root_table,level_4_code,level_4_code,,,,,,Kode Kelurahan/Desa
+tcz_37526b20.root_table,level_4_full_code,level_4_full_code,,,,,,Kode Lengkap Kelurahan/Desa
+tcz_37526b20.root_table,level_4_name,level_4_name,,,,,,Kelurahan/Desa
+tcz_37526b20.root_table,level_5_code,level_5_code,,,,,,Kode SLS
+tcz_37526b20.root_table,level_5_full_code,level_5_full_code,,,,,,Kode Lengkap SLS
+tcz_37526b20.root_table,level_5_name,level_5_name,,,,,,SLS
+tcz_37526b20.root_table,level_6_code,level_6_code,,,,,,Kode Sub-SLS
+tcz_37526b20.root_table,level_6_full_code,level_6_full_code,,,,,,Kode Lengkap Sub-SLS
+tcz_37526b20.root_table,level_6_name,level_6_name,,,,,,Sub-SLS
+tcz_37526b20.root_table,level_7_code,level_7_code,,,,,,
+tcz_37526b20.root_table,level_7_full_code,level_7_full_code,,,,,,
+tcz_37526b20.root_table,level_7_name,level_7_name,,,,,,
+tcz_37526b20.root_table,level_8_code,level_8_code,,,,,,
+tcz_37526b20.root_table,level_8_full_code,level_8_full_code,,,,,,
+tcz_37526b20.root_table,level_8_name,level_8_name,,,,,,
+tcz_37526b20.root_table,level_9_code,level_9_code,,,,,,
+tcz_37526b20.root_table,level_9_full_code,level_9_full_code,,,,,,
+tcz_37526b20.root_table,level_9_name,level_9_name,,,,,,
+tcz_37526b20.root_table,pusat_nested,pusat_nested,,,,,,
+tcz_37526b20.root_table,survey_period_id,survey_period_id,,,,,,ID Periode Survei
+tcz_37526b20.root_table,survey_period_name,survey_period_name,,,,,,
+tcz_37526b20.root_table,list_kbli_halal,list_kbli_halal,,,,,,
+tcz_37526b20.root_table,panduan_genai,panduan_genai,,,,,,
+tcz_37526b20.root_table,list_kbli_bpom,list_kbli_bpom,,,,,,
+tcz_37526b20.root_table,total_pendapatan_float,total_pendapatan_float,,,,,,
+tcz_37526b20.root_table,aset_total_float,aset_total_float,,,,,,
+tcz_37526b20.root_table,total_pengeluaran_float,total_pengeluaran_float,,,,,,
+tcz_37526b20.root_table,total_modal_int,total_modal_int,,,,,,
+tcz_37526b20.root_table,aset_total_nvarchar512,aset_total_nvarchar512,,,,,,
+tcz_37526b20.root_table,total_modal_nvarchar512,total_modal_nvarchar512,,,,,,
+tcz_37526b20.root_table,total_pendapatan_nvarchar512,total_pendapatan_nvarchar512,,,,,,
+tcz_37526b20.root_table,total_pengeluaran_nvarchar512,total_pengeluaran_nvarchar512,,,,,,
