@@ -401,7 +401,7 @@ pesanan,total,Total Nilai,DECIMAL(15,2)"""
 
 st.set_page_config(page_title="SQL Query Builder", page_icon="🔧", layout="wide")
 st.title("🔧 SQL Query Builder")
-st.caption("Generate query SQL dari file metadata CSV — 2 tab terpisah untuk UMK & UB")
+st.caption("Generate query SQL untuk Anda Copas ke SQL-LAB")
 
 st.markdown("""<style>
     div[data-testid="stTabsTablist"] { gap: 8px; }
@@ -411,15 +411,21 @@ st.markdown("""<style>
 # Load kedua file
 tables_umk = load_metadata("metadata_umk.csv")
 tables_ub = load_metadata("metadata_ub.csv")
+tables_keluarga = load_metadata("metadata_keluarga.csv")
 
-tab_umk, tab_ub = st.tabs(["📄 UMK", "📄 UB"])
+tab_umk, tab_umb, tab_kel = st.tabs(["📄 UMK", "📄 UB", "📄 KELUARGA"])
 
 with tab_umk:
     st.markdown(f"**Data:** `metadata_umk.csv`  —  "
                 f"{'✅ ' + str(len(tables_umk)) + ' tabel' if tables_umk else '❌ file tidak ditemukan'}")
     render_tab("umk", "metadata_umk.csv", tables_umk)
 
-with tab_ub:
-    st.markdown(f"**Data:** `metadata_ub.csv`  —  "
+with tab_umb:
+    st.markdown(f"**Data:** `metadata_umb.csv`  —  "
                 f"{'✅ ' + str(len(tables_ub)) + ' tabel' if tables_ub else '❌ file tidak ditemukan'}")
-    render_tab("ub", "metadata_ub.csv", tables_ub)
+    render_tab("umb", "metadata_umb.csv", tables_ub)
+
+with tab_kel:
+    st.markdown(f"**Data:** `metadata_keluarga.csv`  —  "
+                f"{'✅ ' + str(len(tables_keluarga)) + ' tabel' if tables_keluarga else '❌ file tidak ditemukan'}")
+    render_tab("kel", "metadata_keluarga.csv", tables_keluarga)
