@@ -214,246 +214,6 @@ tgr_fd68e454.kp_nested,level_9_full_code,level_9_full_code,,,,,,
 tgr_fd68e454.kp_nested,level_9_name,level_9_name,,,,,,
 tgr_fd68e454.kp_nested,survey_period_id,survey_period_id,,,,,,ID Periode Survei
 tgr_fd68e454.kp_nested,survey_period_name,survey_period_name,,,,,,
-tgr_fd68e454.nested_dtsen,nama_dtsen,nama_dtsen,70,SE2026 - L BLOK I,6,Nama anggota keluarga,Variable,
-tgr_fd68e454.nested_dtsen,nik_dtsen,nik_dtsen,72,SE2026 - L BLOK I,7,Nomor Induk Kependudukan (NIK) $NAME$ (Tulis sesuai yang tercantum di KK atau KTP paling mutakhir),Text Input,
-tgr_fd68e454.nested_dtsen,hubungan_label,hubungan,74,SE2026 - L BLOK I,8,Hubungan $NAME$ dengan Kepala Keluarga,Radio Group,
-tgr_fd68e454.nested_dtsen,hubungan_value,hubungan,74,SE2026 - L BLOK I,8,Hubungan $NAME$ dengan Kepala Keluarga,Radio Group,
-tgr_fd68e454.nested_dtsen,keberadaan_dtsen_label,keberadaan_dtsen,75,SE2026 - L BLOK I,9,a. Keberadaan (status) anggota keluarga saat ini,Radio Group,
-tgr_fd68e454.nested_dtsen,keberadaan_dtsen_value,keberadaan_dtsen,75,SE2026 - L BLOK I,9,a. Keberadaan (status) anggota keluarga saat ini,Radio Group,
-tgr_fd68e454.nested_dtsen,alamat_dn_label,alamat_dn,76,SE2026 - L BLOK I,9,b. Alamat domisili:,Radio Group,
-tgr_fd68e454.nested_dtsen,alamat_dn_value,alamat_dn,76,SE2026 - L BLOK I,9,b. Alamat domisili:,Radio Group,
-tgr_fd68e454.nested_dtsen,prov_dn_label,prov_dn,77,SE2026 - L BLOK I,a,Provinsi,Select,
-tgr_fd68e454.nested_dtsen,prov_dn_value,prov_dn,77,SE2026 - L BLOK I,a,Provinsi,Select,
-tgr_fd68e454.nested_dtsen,kab_dn_label,kab_dn,78,SE2026 - L BLOK I,b,Kabupaten/Kota,Select,
-tgr_fd68e454.nested_dtsen,kab_dn_value,kab_dn,78,SE2026 - L BLOK I,b,Kabupaten/Kota,Select,
-tgr_fd68e454.nested_dtsen,domisili_ln_label,domisili_ln,79,SE2026 - L BLOK I,10LN,Negara domisili Individu (luar negeri),Select,
-tgr_fd68e454.nested_dtsen,domisili_ln_value,domisili_ln,79,SE2026 - L BLOK I,10LN,Negara domisili Individu (luar negeri),Select,
-tgr_fd68e454.nested_dtsen,status_kawin_label,status_kawin,80,SE2026 - L BLOK I,11,Apakah status perkawinan $NAME$,Radio Group,
-tgr_fd68e454.nested_dtsen,status_kawin_value,status_kawin,80,SE2026 - L BLOK I,11,Apakah status perkawinan $NAME$,Radio Group,
-tgr_fd68e454.nested_dtsen,jk_dtsen_label,jk_dtsen,81,SE2026 - L BLOK I,12,Jenis Kelamin $NAME$,Radio Group,
-tgr_fd68e454.nested_dtsen,jk_dtsen_value,jk_dtsen,81,SE2026 - L BLOK I,12,Jenis Kelamin $NAME$,Radio Group,
-tgr_fd68e454.nested_dtsen,tgl_lahir,tgl_lahir,82,SE2026 - L BLOK I,,• Tanggal Lahir,Text Input,
-tgr_fd68e454.nested_dtsen,bln_lahir_label,bln_lahir,83,SE2026 - L BLOK I,,• Bulan Lahir,Select,
-tgr_fd68e454.nested_dtsen,bln_lahir_value,bln_lahir,83,SE2026 - L BLOK I,,• Bulan Lahir,Select,
-tgr_fd68e454.nested_dtsen,thn_lahir,thn_lahir,84,SE2026 - L BLOK I,,• Tahun Lahir,Masking,
-tgr_fd68e454.nested_dtsen,umur_ak,umur_ak,85,SE2026 - L BLOK I,13,b. Umur $NAME$,Number,
-tgr_fd68e454.nested_dtsen,art_ada_usaha_label,art_ada_usaha,86,SE2026 - L BLOK I,,Apakah $NAME$ memiliki usaha$label_berikut? $daftar_usaha,Radio Group,
-tgr_fd68e454.nested_dtsen,art_ada_usaha_value,art_ada_usaha,86,SE2026 - L BLOK I,,Apakah $NAME$ memiliki usaha$label_berikut? $daftar_usaha,Radio Group,
-tgr_fd68e454.nested_dtsen,isprelistart,isprelistart,552,,,Apakah prelist art,Variable,
-tgr_fd68e454.nested_dtsen,no_urut_kk,no_urut_kk,553,,5,Nomor urut anggota keluarga,Variable,
-tgr_fd68e454.nested_dtsen,nik_dtsen_prelist,nik_dtsen_prelist,564,,,nik_dtsen_prelist,Variable,
-tgr_fd68e454.nested_dtsen,hasilPemadananNIK,hasilPemadananNIK,566,,,Hasil Pengecekkan NIK,Variable,
-tgr_fd68e454.nested_dtsen,jk_prelist,jk_prelist,580,,,jk_prelist,Variable,
-tgr_fd68e454.nested_dtsen,assignment_id,assignment_id,,,,,,ID Assignment
-tgr_fd68e454.nested_dtsen,index1,index1,,,,,,ID Roster/Nested Level 1
-tgr_fd68e454.nested_dtsen,level_1_full_code,level_1_full_code,,,,,,Kode Lengkap Provinsi
-tgr_fd68e454.nested_dtsen,level_2_full_code,level_2_full_code,,,,,,Kode Lengkap Kabupaten/Kota
-tgr_fd68e454.nested_dtsen,assignment_date_modified,assignment_date_modified,,,,,,Tanggal Assignment Terakhir Diubah
-tgr_fd68e454.nested_dtsen,assignment_id_timestamp,assignment_id_timestamp,,,,,,ID Assignment + Timestamp
-tgr_fd68e454.nested_dtsen,assignment_listing,assignment_listing,,,,,,"1 = Assignment Tambahan, 0 = Assignment Prelist"
-tgr_fd68e454.nested_dtsen,assignment_status_alias,assignment_status_alias,,,,,,Status Assignment
-tgr_fd68e454.nested_dtsen,assignment_status_id,assignment_status_id,,,,,,ID Status Assignment
-tgr_fd68e454.nested_dtsen,is_active,is_active,,,,,,"1 = Aktif, 0 = Dihapus"
-tgr_fd68e454.nested_dtsen,level_1_code,level_1_code,,,,,,Kode Provinsi
-tgr_fd68e454.nested_dtsen,level_1_name,level_1_name,,,,,,Provinsi
-tgr_fd68e454.nested_dtsen,level_10_code,level_10_code,,,,,,
-tgr_fd68e454.nested_dtsen,level_10_full_code,level_10_full_code,,,,,,
-tgr_fd68e454.nested_dtsen,level_10_name,level_10_name,,,,,,
-tgr_fd68e454.nested_dtsen,level_2_code,level_2_code,,,,,,Kode Kabupaten/Kota
-tgr_fd68e454.nested_dtsen,level_2_name,level_2_name,,,,,,Kabupaten/Kota
-tgr_fd68e454.nested_dtsen,level_3_code,level_3_code,,,,,,Kode Kecamatan
-tgr_fd68e454.nested_dtsen,level_3_full_code,level_3_full_code,,,,,,Kode Lengkap Kecamatan
-tgr_fd68e454.nested_dtsen,level_3_name,level_3_name,,,,,,Kecamatan
-tgr_fd68e454.nested_dtsen,level_4_code,level_4_code,,,,,,Kode Kelurahan/Desa
-tgr_fd68e454.nested_dtsen,level_4_full_code,level_4_full_code,,,,,,Kode Lengkap Kelurahan/Desa
-tgr_fd68e454.nested_dtsen,level_4_name,level_4_name,,,,,,Kelurahan/Desa
-tgr_fd68e454.nested_dtsen,level_5_code,level_5_code,,,,,,Kode SLS
-tgr_fd68e454.nested_dtsen,level_5_full_code,level_5_full_code,,,,,,Kode Lengkap SLS
-tgr_fd68e454.nested_dtsen,level_5_name,level_5_name,,,,,,SLS
-tgr_fd68e454.nested_dtsen,level_6_code,level_6_code,,,,,,Kode Sub-SLS
-tgr_fd68e454.nested_dtsen,level_6_full_code,level_6_full_code,,,,,,Kode Lengkap Sub-SLS
-tgr_fd68e454.nested_dtsen,level_6_name,level_6_name,,,,,,Sub-SLS
-tgr_fd68e454.nested_dtsen,level_7_code,level_7_code,,,,,,
-tgr_fd68e454.nested_dtsen,level_7_full_code,level_7_full_code,,,,,,
-tgr_fd68e454.nested_dtsen,level_7_name,level_7_name,,,,,,
-tgr_fd68e454.nested_dtsen,level_8_code,level_8_code,,,,,,
-tgr_fd68e454.nested_dtsen,level_8_full_code,level_8_full_code,,,,,,
-tgr_fd68e454.nested_dtsen,level_8_name,level_8_name,,,,,,
-tgr_fd68e454.nested_dtsen,level_9_code,level_9_code,,,,,,
-tgr_fd68e454.nested_dtsen,level_9_full_code,level_9_full_code,,,,,,
-tgr_fd68e454.nested_dtsen,level_9_name,level_9_name,,,,,,
-tgr_fd68e454.nested_dtsen,survey_period_id,survey_period_id,,,,,,ID Periode Survei
-tgr_fd68e454.nested_dtsen,survey_period_name,survey_period_name,,,,,,
-tgr_fd68e454.nested_dtsen_var,no_urut_kk_var,no_urut_kk_var,270,SE2026 - L BLOK III,,Nomor urut anggota keluarga,Variable,
-tgr_fd68e454.nested_dtsen_var,nama_dtsen_var,nama_dtsen_var,271,SE2026 - L BLOK III,,Nama anggota keluarga,Variable,
-tgr_fd68e454.nested_dtsen_var,sekolah_label,sekolah,272,SE2026 - L BLOK III,14,Partisipasi sekolah $NAME$,Radio Group,
-tgr_fd68e454.nested_dtsen_var,sekolah_value,sekolah,272,SE2026 - L BLOK III,14,Partisipasi sekolah $NAME$,Radio Group,
-tgr_fd68e454.nested_dtsen_var,ijazah_label,ijazah,273,SE2026 - L BLOK III,15,Ijazah/STTB tertinggi yang dimiliki $NAME$ (usia 5 tahun ke atas) Ijazah/STTB tertinggi di prelist: $ijazah,Radio Group,
-tgr_fd68e454.nested_dtsen_var,ijazah_value,ijazah,273,SE2026 - L BLOK III,15,Ijazah/STTB tertinggi yang dimiliki $NAME$ (usia 5 tahun ke atas) Ijazah/STTB tertinggi di prelist: $ijazah,Radio Group,
-tgr_fd68e454.nested_dtsen_var,profesi_label,profesi,274,SE2026 - L BLOK III,16,Profesi Pekerjaan Utama $NAME$ (usia 10 tahun ke atas),Select,
-tgr_fd68e454.nested_dtsen_var,profesi_value,profesi,274,SE2026 - L BLOK III,16,Profesi Pekerjaan Utama $NAME$ (usia 10 tahun ke atas),Select,
-tgr_fd68e454.nested_dtsen_var,profesi_lainnya,profesi_lainnya,275,SE2026 - L BLOK III,,Profesi Pekerjaan Utama lainnya:,Text Input,
-tgr_fd68e454.nested_dtsen_var,status_kerja_label,status_kerja,276,SE2026 - L BLOK III,17,Status Kedudukan Dalam Pekerjaan Utama $NAME$,Radio Group,
-tgr_fd68e454.nested_dtsen_var,status_kerja_value,status_kerja,276,SE2026 - L BLOK III,17,Status Kedudukan Dalam Pekerjaan Utama $NAME$,Radio Group,
-tgr_fd68e454.nested_dtsen_var,pendapatan_pekerjaan_label,pendapatan_pekerjaan,277,SE2026 - L BLOK III,18,"a. Pendapatan dari pekerjaan baik berupa uang maupun barang/jasa (gaji, tunjangan, uang makan, honor, lembur, dll)",Radio Group,
-tgr_fd68e454.nested_dtsen_var,pendapatan_pekerjaan_value,pendapatan_pekerjaan,277,SE2026 - L BLOK III,18,"a. Pendapatan dari pekerjaan baik berupa uang maupun barang/jasa (gaji, tunjangan, uang makan, honor, lembur, dll)",Radio Group,
-tgr_fd68e454.nested_dtsen_var,pend_gaji,pend_gaji,278,SE2026 - L BLOK III,a,Upah/Gaji,Currency,
-tgr_fd68e454.nested_dtsen_var,pend_tunjangan,pend_tunjangan,279,SE2026 - L BLOK III,b,Tunjangan,Currency,
-tgr_fd68e454.nested_dtsen_var,pend_uangmkn,pend_uangmkn,280,SE2026 - L BLOK III,c,Uang Makan,Currency,
-tgr_fd68e454.nested_dtsen_var,pend_honor,pend_honor,281,SE2026 - L BLOK III,d,Honor,Currency,
-tgr_fd68e454.nested_dtsen_var,pend_lembur,pend_lembur,282,SE2026 - L BLOK III,e,Lembur,Currency,
-tgr_fd68e454.nested_dtsen_var,pend_lainnya,pend_lainnya,283,SE2026 - L BLOK III,f,Lainnya,Currency,
-tgr_fd68e454.nested_dtsen_var,nilai_pend_pekerjaan,nilai_pend_pekerjaan,284,SE2026 - L BLOK III,18,a1. Total Pendapatan (a+b+c+d+e+f),Variable,
-tgr_fd68e454.nested_dtsen_var,pendapatan_usaha_label,pendapatan_usaha,286,SE2026 - L BLOK III,18,"b. Pendapatan dari usaha, baik offline (warung, kos-kosan, dll) maupun online (affiliate, online shop, endorse, youtuber, dll ) :",Radio Group,
-tgr_fd68e454.nested_dtsen_var,pendapatan_usaha_value,pendapatan_usaha,286,SE2026 - L BLOK III,18,"b. Pendapatan dari usaha, baik offline (warung, kos-kosan, dll) maupun online (affiliate, online shop, endorse, youtuber, dll ) :",Radio Group,
-tgr_fd68e454.nested_dtsen_var,pend_usaha,pend_usaha,287,SE2026 - L BLOK III,18,b1. Total Pendapatan,Currency,
-tgr_fd68e454.nested_dtsen_var,pend_usaha_lain_label,pend_usaha_lain,288,SE2026 - L BLOK III,18,"c. Penerimaan pendapatan lain (transfer/pemberian/passive income seperti pensiunan, kupon SBN, Obligasi, dll ):",Radio Group,
-tgr_fd68e454.nested_dtsen_var,pend_usaha_lain_value,pend_usaha_lain,288,SE2026 - L BLOK III,18,"c. Penerimaan pendapatan lain (transfer/pemberian/passive income seperti pensiunan, kupon SBN, Obligasi, dll ):",Radio Group,
-tgr_fd68e454.nested_dtsen_var,nilai_pend_lain,nilai_pend_lain,289,SE2026 - L BLOK III,18,c1. Total Pendapatan,Currency,
-tgr_fd68e454.nested_dtsen_var,rekening_label,rekening,290,SE2026 - L BLOK III,19,Apakah $NAME$ memiliki rekening aktif atau dompet digital?,Radio Group,
-tgr_fd68e454.nested_dtsen_var,rekening_value,rekening,290,SE2026 - L BLOK III,19,Apakah $NAME$ memiliki rekening aktif atau dompet digital?,Radio Group,
-tgr_fd68e454.nested_dtsen_var,dis_fisik_label,dis_fisik,292,SE2026 - L BLOK III,a,Disabilitas Fisik,Radio Group,
-tgr_fd68e454.nested_dtsen_var,dis_fisik_value,dis_fisik,292,SE2026 - L BLOK III,a,Disabilitas Fisik,Radio Group,
-tgr_fd68e454.nested_dtsen_var,dis_mental_label,dis_mental,293,SE2026 - L BLOK III,b,Disabilitas Mental,Radio Group,
-tgr_fd68e454.nested_dtsen_var,dis_mental_value,dis_mental,293,SE2026 - L BLOK III,b,Disabilitas Mental,Radio Group,
-tgr_fd68e454.nested_dtsen_var,dis_intelek_label,dis_intelek,294,SE2026 - L BLOK III,c,Disabilitas Intelektual,Radio Group,
-tgr_fd68e454.nested_dtsen_var,dis_intelek_value,dis_intelek,294,SE2026 - L BLOK III,c,Disabilitas Intelektual,Radio Group,
-tgr_fd68e454.nested_dtsen_var,dis_netra_label,dis_netra,295,SE2026 - L BLOK III,d,Disabilitas Sensorik Netra,Radio Group,
-tgr_fd68e454.nested_dtsen_var,dis_netra_value,dis_netra,295,SE2026 - L BLOK III,d,Disabilitas Sensorik Netra,Radio Group,
-tgr_fd68e454.nested_dtsen_var,dis_rungu_label,dis_rungu,296,SE2026 - L BLOK III,e,Disabilitas Sensorik Rungu,Radio Group,
-tgr_fd68e454.nested_dtsen_var,dis_rungu_value,dis_rungu,296,SE2026 - L BLOK III,e,Disabilitas Sensorik Rungu,Radio Group,
-tgr_fd68e454.nested_dtsen_var,dis_wicara_label,dis_wicara,297,SE2026 - L BLOK III,f,Disabilitas Sensorik Wicara,Radio Group,
-tgr_fd68e454.nested_dtsen_var,dis_wicara_value,dis_wicara,297,SE2026 - L BLOK III,f,Disabilitas Sensorik Wicara,Radio Group,
-tgr_fd68e454.nested_dtsen_var,sakit_hipertensi_label,sakit_hipertensi,299,SE2026 - L BLOK III,a,Hipertensi (tekanan darah tinggi),Radio Group,
-tgr_fd68e454.nested_dtsen_var,sakit_hipertensi_value,sakit_hipertensi,299,SE2026 - L BLOK III,a,Hipertensi (tekanan darah tinggi),Radio Group,
-tgr_fd68e454.nested_dtsen_var,sakit_rematik_label,sakit_rematik,300,SE2026 - L BLOK III,b,Rematik,Radio Group,
-tgr_fd68e454.nested_dtsen_var,sakit_rematik_value,sakit_rematik,300,SE2026 - L BLOK III,b,Rematik,Radio Group,
-tgr_fd68e454.nested_dtsen_var,sakit_asma_label,sakit_asma,301,SE2026 - L BLOK III,c,Asma,Radio Group,
-tgr_fd68e454.nested_dtsen_var,sakit_asma_value,sakit_asma,301,SE2026 - L BLOK III,c,Asma,Radio Group,
-tgr_fd68e454.nested_dtsen_var,sakit_jantung_label,sakit_jantung,302,SE2026 - L BLOK III,d,Masalah jantung,Radio Group,
-tgr_fd68e454.nested_dtsen_var,sakit_jantung_value,sakit_jantung,302,SE2026 - L BLOK III,d,Masalah jantung,Radio Group,
-tgr_fd68e454.nested_dtsen_var,sakit_diabetes_label,sakit_diabetes,303,SE2026 - L BLOK III,e,Diabetes (kencing manis),Radio Group,
-tgr_fd68e454.nested_dtsen_var,sakit_diabetes_value,sakit_diabetes,303,SE2026 - L BLOK III,e,Diabetes (kencing manis),Radio Group,
-tgr_fd68e454.nested_dtsen_var,sakit_tbc_label,sakit_tbc,304,SE2026 - L BLOK III,f,Tuberkulosis (TBC),Radio Group,
-tgr_fd68e454.nested_dtsen_var,sakit_tbc_value,sakit_tbc,304,SE2026 - L BLOK III,f,Tuberkulosis (TBC),Radio Group,
-tgr_fd68e454.nested_dtsen_var,sakit_stroke_label,sakit_stroke,305,SE2026 - L BLOK III,g,Stroke,Radio Group,
-tgr_fd68e454.nested_dtsen_var,sakit_stroke_value,sakit_stroke,305,SE2026 - L BLOK III,g,Stroke,Radio Group,
-tgr_fd68e454.nested_dtsen_var,sakit_kanker_label,sakit_kanker,306,SE2026 - L BLOK III,h,Kanker atau tumor ganas,Radio Group,
-tgr_fd68e454.nested_dtsen_var,sakit_kanker_value,sakit_kanker,306,SE2026 - L BLOK III,h,Kanker atau tumor ganas,Radio Group,
-tgr_fd68e454.nested_dtsen_var,sakit_hemofilia_label,sakit_hemofilia,307,SE2026 - L BLOK III,j,Hemofilia,Radio Group,
-tgr_fd68e454.nested_dtsen_var,sakit_hemofilia_value,sakit_hemofilia,307,SE2026 - L BLOK III,j,Hemofilia,Radio Group,
-tgr_fd68e454.nested_dtsen_var,sakit_ginjal_label,sakit_ginjal,308,SE2026 - L BLOK III,i,Gagal ginjal,Radio Group,
-tgr_fd68e454.nested_dtsen_var,sakit_ginjal_value,sakit_ginjal,308,SE2026 - L BLOK III,i,Gagal ginjal,Radio Group,
-tgr_fd68e454.nested_dtsen_var,sakit_hiv_label,sakit_hiv,309,SE2026 - L BLOK III,k,HIV/AIDS,Radio Group,
-tgr_fd68e454.nested_dtsen_var,sakit_hiv_value,sakit_hiv,309,SE2026 - L BLOK III,k,HIV/AIDS,Radio Group,
-tgr_fd68e454.nested_dtsen_var,sakit_kolestrol_label,sakit_kolestrol,310,SE2026 - L BLOK III,l,Kolestrol,Radio Group,
-tgr_fd68e454.nested_dtsen_var,sakit_kolestrol_value,sakit_kolestrol,310,SE2026 - L BLOK III,l,Kolestrol,Radio Group,
-tgr_fd68e454.nested_dtsen_var,sakit_sirosis_label,sakit_sirosis,311,SE2026 - L BLOK III,m,Sirosis hati,Radio Group,
-tgr_fd68e454.nested_dtsen_var,sakit_sirosis_value,sakit_sirosis,311,SE2026 - L BLOK III,m,Sirosis hati,Radio Group,
-tgr_fd68e454.nested_dtsen_var,sakit_talasemia_label,sakit_talasemia,312,SE2026 - L BLOK III,n,Talasemia,Radio Group,
-tgr_fd68e454.nested_dtsen_var,sakit_talasemia_value,sakit_talasemia,312,SE2026 - L BLOK III,n,Talasemia,Radio Group,
-tgr_fd68e454.nested_dtsen_var,sakit_leukemia_label,sakit_leukemia,313,SE2026 - L BLOK III,o,Leukemia,Radio Group,
-tgr_fd68e454.nested_dtsen_var,sakit_leukemia_value,sakit_leukemia,313,SE2026 - L BLOK III,o,Leukemia,Radio Group,
-tgr_fd68e454.nested_dtsen_var,sakit_alzheimer_label,sakit_alzheimer,314,SE2026 - L BLOK III,p,Alzheimer,Radio Group,
-tgr_fd68e454.nested_dtsen_var,sakit_alzheimer_value,sakit_alzheimer,314,SE2026 - L BLOK III,p,Alzheimer,Radio Group,
-tgr_fd68e454.nested_dtsen_var,sakit_lainnya_label,sakit_lainnya,315,SE2026 - L BLOK III,q,Lainnya,Radio Group,
-tgr_fd68e454.nested_dtsen_var,sakit_lainnya_value,sakit_lainnya,315,SE2026 - L BLOK III,q,Lainnya,Radio Group,
-tgr_fd68e454.nested_dtsen_var,ec_art_dtsen,ec_art_dtsen,554,,,ec_art_dtsen,Variable,
-tgr_fd68e454.nested_dtsen_var,ec_art_pendapatan,ec_art_pendapatan,556,,,ec_art_pendapatan,Variable,
-tgr_fd68e454.nested_dtsen_var,set_sekolah_prelist,set_sekolah_prelist,558,,,set_sekolah_prelist,Variable,
-tgr_fd68e454.nested_dtsen_var,sekolah_prelist,sekolah_prelist,559,,,Sekolah Prelist,Variable,
-tgr_fd68e454.nested_dtsen_var,set_ijazah_prelist,set_ijazah_prelist,561,,,set_ijazah_prelist,Variable,
-tgr_fd68e454.nested_dtsen_var,ijazah_prelist,ijazah_prelist,563,,,Ijazah Prelist,Variable,
-tgr_fd68e454.nested_dtsen_var,assignment_id,assignment_id,,,,,,ID Assignment
-tgr_fd68e454.nested_dtsen_var,index1,index1,,,,,,ID Roster/Nested Level 1
-tgr_fd68e454.nested_dtsen_var,level_1_full_code,level_1_full_code,,,,,,Kode Lengkap Provinsi
-tgr_fd68e454.nested_dtsen_var,level_2_full_code,level_2_full_code,,,,,,Kode Lengkap Kabupaten/Kota
-tgr_fd68e454.nested_dtsen_var,assignment_date_modified,assignment_date_modified,,,,,,Tanggal Assignment Terakhir Diubah
-tgr_fd68e454.nested_dtsen_var,assignment_id_timestamp,assignment_id_timestamp,,,,,,ID Assignment + Timestamp
-tgr_fd68e454.nested_dtsen_var,assignment_listing,assignment_listing,,,,,,"1 = Assignment Tambahan, 0 = Assignment Prelist"
-tgr_fd68e454.nested_dtsen_var,assignment_status_alias,assignment_status_alias,,,,,,Status Assignment
-tgr_fd68e454.nested_dtsen_var,assignment_status_id,assignment_status_id,,,,,,ID Status Assignment
-tgr_fd68e454.nested_dtsen_var,is_active,is_active,,,,,,"1 = Aktif, 0 = Dihapus"
-tgr_fd68e454.nested_dtsen_var,level_1_code,level_1_code,,,,,,Kode Provinsi
-tgr_fd68e454.nested_dtsen_var,level_1_name,level_1_name,,,,,,Provinsi
-tgr_fd68e454.nested_dtsen_var,level_10_code,level_10_code,,,,,,
-tgr_fd68e454.nested_dtsen_var,level_10_full_code,level_10_full_code,,,,,,
-tgr_fd68e454.nested_dtsen_var,level_10_name,level_10_name,,,,,,
-tgr_fd68e454.nested_dtsen_var,level_2_code,level_2_code,,,,,,Kode Kabupaten/Kota
-tgr_fd68e454.nested_dtsen_var,level_2_name,level_2_name,,,,,,Kabupaten/Kota
-tgr_fd68e454.nested_dtsen_var,level_3_code,level_3_code,,,,,,Kode Kecamatan
-tgr_fd68e454.nested_dtsen_var,level_3_full_code,level_3_full_code,,,,,,Kode Lengkap Kecamatan
-tgr_fd68e454.nested_dtsen_var,level_3_name,level_3_name,,,,,,Kecamatan
-tgr_fd68e454.nested_dtsen_var,level_4_code,level_4_code,,,,,,Kode Kelurahan/Desa
-tgr_fd68e454.nested_dtsen_var,level_4_full_code,level_4_full_code,,,,,,Kode Lengkap Kelurahan/Desa
-tgr_fd68e454.nested_dtsen_var,level_4_name,level_4_name,,,,,,Kelurahan/Desa
-tgr_fd68e454.nested_dtsen_var,level_5_code,level_5_code,,,,,,Kode SLS
-tgr_fd68e454.nested_dtsen_var,level_5_full_code,level_5_full_code,,,,,,Kode Lengkap SLS
-tgr_fd68e454.nested_dtsen_var,level_5_name,level_5_name,,,,,,SLS
-tgr_fd68e454.nested_dtsen_var,level_6_code,level_6_code,,,,,,Kode Sub-SLS
-tgr_fd68e454.nested_dtsen_var,level_6_full_code,level_6_full_code,,,,,,Kode Lengkap Sub-SLS
-tgr_fd68e454.nested_dtsen_var,level_6_name,level_6_name,,,,,,Sub-SLS
-tgr_fd68e454.nested_dtsen_var,level_7_code,level_7_code,,,,,,
-tgr_fd68e454.nested_dtsen_var,level_7_full_code,level_7_full_code,,,,,,
-tgr_fd68e454.nested_dtsen_var,level_7_name,level_7_name,,,,,,
-tgr_fd68e454.nested_dtsen_var,level_8_code,level_8_code,,,,,,
-tgr_fd68e454.nested_dtsen_var,level_8_full_code,level_8_full_code,,,,,,
-tgr_fd68e454.nested_dtsen_var,level_8_name,level_8_name,,,,,,
-tgr_fd68e454.nested_dtsen_var,level_9_code,level_9_code,,,,,,
-tgr_fd68e454.nested_dtsen_var,level_9_full_code,level_9_full_code,,,,,,
-tgr_fd68e454.nested_dtsen_var,level_9_name,level_9_name,,,,,,
-tgr_fd68e454.nested_dtsen_var,survey_period_id,survey_period_id,,,,,,ID Periode Survei
-tgr_fd68e454.nested_dtsen_var,survey_period_name,survey_period_name,,,,,,
-tgr_fd68e454.nested_meteran,urutan_meteran_lain,urutan_meteran_lain,367,SE2026 - L BLOK IV,,Meteran ke-,Variable,
-tgr_fd68e454.nested_meteran,daya_terpasang_label,daya_terpasang,368,SE2026 - L BLOK IV,14,b. Berapa daya yang terpasang di rumah ini?,Radio Group,
-tgr_fd68e454.nested_meteran,daya_terpasang_value,daya_terpasang,368,SE2026 - L BLOK IV,14,b. Berapa daya yang terpasang di rumah ini?,Radio Group,
-tgr_fd68e454.nested_meteran,id_pln_pilih_label,id_pln_pilih,369,SE2026 - L BLOK IV,14,c. Sebutkan ID Pelanggan PLN atau Nomor Meteran,Radio Group,
-tgr_fd68e454.nested_meteran,id_pln_pilih_value,id_pln_pilih,369,SE2026 - L BLOK IV,14,c. Sebutkan ID Pelanggan PLN atau Nomor Meteran,Radio Group,
-tgr_fd68e454.nested_meteran,id_pelanggan,id_pelanggan,370,SE2026 - L BLOK IV,,ID Pelanggan PLN,Text Input,
-tgr_fd68e454.nested_meteran,no_meteran,no_meteran,372,SE2026 - L BLOK IV,,Nomor Meteran,Text Input,
-tgr_fd68e454.nested_meteran,hasilCekIdPel,hasilCekIdPel,560,,,​,Variable,
-tgr_fd68e454.nested_meteran,hasilCekMeteran,hasilCekMeteran,569,,,​,Variable,
-tgr_fd68e454.nested_meteran,assignment_id,assignment_id,,,,,,ID Assignment
-tgr_fd68e454.nested_meteran,index1,index1,,,,,,ID Roster/Nested Level 1
-tgr_fd68e454.nested_meteran,level_1_full_code,level_1_full_code,,,,,,Kode Lengkap Provinsi
-tgr_fd68e454.nested_meteran,level_2_full_code,level_2_full_code,,,,,,Kode Lengkap Kabupaten/Kota
-tgr_fd68e454.nested_meteran,assignment_date_modified,assignment_date_modified,,,,,,Tanggal Assignment Terakhir Diubah
-tgr_fd68e454.nested_meteran,assignment_id_timestamp,assignment_id_timestamp,,,,,,ID Assignment + Timestamp
-tgr_fd68e454.nested_meteran,assignment_listing,assignment_listing,,,,,,"1 = Assignment Tambahan, 0 = Assignment Prelist"
-tgr_fd68e454.nested_meteran,assignment_status_alias,assignment_status_alias,,,,,,Status Assignment
-tgr_fd68e454.nested_meteran,assignment_status_id,assignment_status_id,,,,,,ID Status Assignment
-tgr_fd68e454.nested_meteran,cek_idpel,cek_idpel,,,,,,
-tgr_fd68e454.nested_meteran,is_active,is_active,,,,,,"1 = Aktif, 0 = Dihapus"
-tgr_fd68e454.nested_meteran,level_1_code,level_1_code,,,,,,Kode Provinsi
-tgr_fd68e454.nested_meteran,level_1_name,level_1_name,,,,,,Provinsi
-tgr_fd68e454.nested_meteran,level_10_code,level_10_code,,,,,,
-tgr_fd68e454.nested_meteran,level_10_full_code,level_10_full_code,,,,,,
-tgr_fd68e454.nested_meteran,level_10_name,level_10_name,,,,,,
-tgr_fd68e454.nested_meteran,level_2_code,level_2_code,,,,,,Kode Kabupaten/Kota
-tgr_fd68e454.nested_meteran,level_2_name,level_2_name,,,,,,Kabupaten/Kota
-tgr_fd68e454.nested_meteran,level_3_code,level_3_code,,,,,,Kode Kecamatan
-tgr_fd68e454.nested_meteran,level_3_full_code,level_3_full_code,,,,,,Kode Lengkap Kecamatan
-tgr_fd68e454.nested_meteran,level_3_name,level_3_name,,,,,,Kecamatan
-tgr_fd68e454.nested_meteran,level_4_code,level_4_code,,,,,,Kode Kelurahan/Desa
-tgr_fd68e454.nested_meteran,level_4_full_code,level_4_full_code,,,,,,Kode Lengkap Kelurahan/Desa
-tgr_fd68e454.nested_meteran,level_4_name,level_4_name,,,,,,Kelurahan/Desa
-tgr_fd68e454.nested_meteran,level_5_code,level_5_code,,,,,,Kode SLS
-tgr_fd68e454.nested_meteran,level_5_full_code,level_5_full_code,,,,,,Kode Lengkap SLS
-tgr_fd68e454.nested_meteran,level_5_name,level_5_name,,,,,,SLS
-tgr_fd68e454.nested_meteran,level_6_code,level_6_code,,,,,,Kode Sub-SLS
-tgr_fd68e454.nested_meteran,level_6_full_code,level_6_full_code,,,,,,Kode Lengkap Sub-SLS
-tgr_fd68e454.nested_meteran,level_6_name,level_6_name,,,,,,Sub-SLS
-tgr_fd68e454.nested_meteran,level_7_code,level_7_code,,,,,,
-tgr_fd68e454.nested_meteran,level_7_full_code,level_7_full_code,,,,,,
-tgr_fd68e454.nested_meteran,level_7_name,level_7_name,,,,,,
-tgr_fd68e454.nested_meteran,level_8_code,level_8_code,,,,,,
-tgr_fd68e454.nested_meteran,level_8_full_code,level_8_full_code,,,,,,
-tgr_fd68e454.nested_meteran,level_8_name,level_8_name,,,,,,
-tgr_fd68e454.nested_meteran,level_9_code,level_9_code,,,,,,
-tgr_fd68e454.nested_meteran,level_9_full_code,level_9_full_code,,,,,,
-tgr_fd68e454.nested_meteran,level_9_name,level_9_name,,,,,,
-tgr_fd68e454.nested_meteran,survey_period_id,survey_period_id,,,,,,ID Periode Survei
-tgr_fd68e454.nested_meteran,survey_period_name,survey_period_name,,,,,,
 tgr_fd68e454.pair_label_value_0,assignment_id,assignment_id,,,,,,ID Assignment
 tgr_fd68e454.pair_label_value_0,level_1_full_code,level_1_full_code,,,,,,Kode Lengkap Provinsi
 tgr_fd68e454.pair_label_value_0,level_2_full_code,level_2_full_code,,,,,,Kode Lengkap Kabupaten/Kota
@@ -586,7 +346,7 @@ tgr_fd68e454.root_table,nama_usaha_bang,nama_usaha_bang,33,SE2026 - P,,Nama Bang
 tgr_fd68e454.root_table,no_kk,no_kk,34,SE2026 - P,,Nomor KK $ket,Text Input,
 tgr_fd68e454.root_table,nik,nik,35,SE2026 - P,,NIK $ket,Text Input,
 tgr_fd68e454.root_table,nama_kk,nama_kk,36,SE2026 - P,,Nama Kepala Keluarga (KK) $ket,Text Input,
-tgr_fd68e454.root_table,htmlHasilPemadananNIK_p,htmlHasilPemadananNIK_p,37,SE2026 - P,,‎ Hasil Pengecekan NIK,Variable,
+tgr_fd68e454.root_table,htmlHasilPemadananNIK_p,htmlHasilPemadananNIK_p,37,SE2026 - P,,Hasil Pengecekan NIK,Variable,
 tgr_fd68e454.root_table,nama_ak_lain,nama_ak_lain,38,SE2026 - P,,Nama Anggota Keluarga Lainnya $ket,Text Input,
 tgr_fd68e454.root_table,alamat_lookup_umkm,alamat_lookup_umkm,39,SE2026 - P,,Alamat dari lookup,Variable,
 tgr_fd68e454.root_table,jumlah_usaha_prelist,jumlah_usaha_prelist,40,SE2026 - P,,Jumlah Usaha yang Dimiliki Seluruh Anggota Keluarga (Sumber: UMKM dan ST2023),Text Input,
@@ -606,11 +366,6 @@ tgr_fd68e454.root_table,kode_bang_value,kode_bang,50,SE2026 - P,,Kode Penggunaan
 tgr_fd68e454.root_table,geotag_accuracy,geotag,51,SE2026 - P,,Geotagging,GpsInput,
 tgr_fd68e454.root_table,geotag_latitude,geotag,51,SE2026 - P,,Geotagging,GpsInput,
 tgr_fd68e454.root_table,geotag_longitude,geotag,51,SE2026 - P,,Geotagging,GpsInput,
-tgr_fd68e454.root_table,foto_depan_p_filename,foto_depan_p,52,SE2026 - P,,Foto tampak depan (harus mencakup atap dan dinding),PhotoInput,
-tgr_fd68e454.root_table,foto_depan_p_uri,foto_depan_p,52,SE2026 - P,,Foto tampak depan (harus mencakup atap dan dinding),PhotoInput,
-tgr_fd68e454.root_table,foto_depan_p_url,foto_depan_p,52,SE2026 - P,,Foto tampak depan (harus mencakup atap dan dinding),PhotoInput,
-tgr_fd68e454.root_table,jumlah_ak_kk,jumlah_ak_kk,53,SE2026 - P,,Jumlah Anggota Keluarga Berdasarkan Kartu Keluarga,Number,
-tgr_fd68e454.root_table,jumlah_ak,jumlah_ak,54,SE2026 - P,,"Jumlah Anggota Keluarga Yang menetap di dalam bangunan tempat tinggal minimal 1 tahun, atau kurang dari 1 tahun dan berniat menetap",Text Input,
 tgr_fd68e454.root_table,usaha_kos_label,usaha_kos,55,SE2026 - P,,Apakah $namaKK atau anggota keluarga dari $namaKK memiliki usaha penyewaan lahan atau kontrakan atau kos kosan?,Radio Group,
 tgr_fd68e454.root_table,usaha_kos_value,usaha_kos,55,SE2026 - P,,Apakah $namaKK atau anggota keluarga dari $namaKK memiliki usaha penyewaan lahan atau kontrakan atau kos kosan?,Radio Group,
 tgr_fd68e454.root_table,usaha_keliling_label,usaha_keliling,56,SE2026 - P,,"Apakah $namaKK atau anggota keluarga dari $namaKK memiliki usaha keliling (pedagang sayur keliling, ojek keliling, tukang becak keliling, supir",Radio Group,
@@ -640,13 +395,10 @@ tgr_fd68e454.root_table,jasa_pertanian_value,jasa_pertanian,67,SE2026 - P,,Apaka
 tgr_fd68e454.root_table,jumlah_usaha_ditemukan,jumlah_usaha_ditemukan,68,SE2026 - P,,Jumlah usaha yang ditemukan Jumlah usaha akan terisi dengan meng-update keberadaan usaha,Variable,
 tgr_fd68e454.root_table,dtsen_nama_kk,dtsen_nama_kk,265,SE2026 - L BLOK III,1,a. Nama Kepala Keluarga,Variable,
 tgr_fd68e454.root_table,dtsen_no_kk,dtsen_no_kk,266,SE2026 - L BLOK III,1,c. Nomor kartu keluarga,Variable,
-tgr_fd68e454.root_table,jml_kk,jml_kk,267,SE2026 - L BLOK III,2,a. Jumlah anggota keluarga sesuai KK,Variable,
-tgr_fd68e454.root_table,jml_kk_update,jml_kk_update,269,SE2026 - L BLOK III,2,b. Jumlah anggota keluarga sesuai hasil pendataan Jumlah anggota keluarga dnegan status keberadaan kode 1/3/4/5,Variable,
 tgr_fd68e454.root_table,jns_bangunan_label,jns_bangunan,317,SE2026 - L BLOK IV,1,a. Apa jenis bangunan tempat tinggal yang ditempati?,Radio Group,
 tgr_fd68e454.root_table,jns_bangunan_value,jns_bangunan,317,SE2026 - L BLOK IV,1,a. Apa jenis bangunan tempat tinggal yang ditempati?,Radio Group,
 tgr_fd68e454.root_table,jns_bangunan_lain,jns_bangunan_lain,318,SE2026 - L BLOK IV,1,a. Jenis bangunan tempat tinggal kode 5.Lainnya: .................,Text Input,
 tgr_fd68e454.root_table,nm_apt,nm_apt,319,SE2026 - L BLOK IV,1,"b. Jika apartemen/rumah susun , sebutkan Nama/Nomor Lantai: .",Text Input,
-tgr_fd68e454.root_table,jml_ak_tinggal,jml_ak_tinggal,320,SE2026 - L BLOK IV,2,a. Berapa jumlah keluarga yang tinggal dalam 1 rumah/tempat tinggal?,Number,
 tgr_fd68e454.root_table,status_kepemilikan_label,status_kepemilikan,322,SE2026 - L BLOK IV,3,a. Apa status kepemilikan bangunan tempat tinggal yang ditempati?,Radio Group,
 tgr_fd68e454.root_table,status_kepemilikan_value,status_kepemilikan,322,SE2026 - L BLOK IV,3,a. Apa status kepemilikan bangunan tempat tinggal yang ditempati?,Radio Group,
 tgr_fd68e454.root_table,status_kepemilikan_lain,status_kepemilikan_lain,323,SE2026 - L BLOK IV,3,a. Deskripsi status kepemilikan bangunan tempat tinggal yang ditempati lainnya,Text Input,
@@ -764,36 +516,10 @@ tgr_fd68e454.root_table,nik_prelist,nik_prelist,478,,,NIK prelist untuk pembandi
 tgr_fd68e454.root_table,mode,mode,483,,,Mode,Variable,Moda Survei
 tgr_fd68e454.root_table,nama_principal,nama_principal,490,,,Nama Keluarga/Bangunan/Usaha untuk principal,Variable,
 tgr_fd68e454.root_table,var_desa,var_desa,491,,,New Question,Variable,
-tgr_fd68e454.root_table,anomali_1_dtsen_resolved_at,anomali_1_dtsen_resolved_at,492,,,anomali_1_dtsen_resolved_at,Variable,
 tgr_fd68e454.root_table,has_kodepos,has_kodepos,493,,,has_kodepos,Variable,
-tgr_fd68e454.root_table,anomali_2_dtsen_resolved_at,anomali_2_dtsen_resolved_at,495,,,anomali_2_dtsen_resolved_at,Variable,
-tgr_fd68e454.root_table,hasilPemadananNIK_p,hasilPemadananNIK_p,496,,,Hasil Pengecekkan NIK,Variable,
-tgr_fd68e454.root_table,htmlHasilPemadananNIK2_p,htmlHasilPemadananNIK2_p,498,,,Hasil Pengecekan NIK,Variable,
-tgr_fd68e454.root_table,anomali_3_dtsen_resolved_at,anomali_3_dtsen_resolved_at,499,,,anomali_3_dtsen_resolved_at,Variable,
-tgr_fd68e454.root_table,anomali_4_dtsen_resolved_at,anomali_4_dtsen_resolved_at,500,,,anomali_4_dtsen_resolved_at,Variable,
-tgr_fd68e454.root_table,anomali_5_dtsen_resolved_at,anomali_5_dtsen_resolved_at,502,,,anomali_5_dtsen_resolved_at,Variable,
-tgr_fd68e454.root_table,anomali_6_dtsen_resolved_at,anomali_6_dtsen_resolved_at,503,,,anomali_6_dtsen_resolved_at,Variable,
 tgr_fd68e454.root_table,jml_meteran_var,jml_meteran_var,504,,,jml_meteran_var,Variable,
-tgr_fd68e454.root_table,anomali_7_dtsen_resolved_at,anomali_7_dtsen_resolved_at,505,,,anomali_7_dtsen_resolved_at,Variable,
-tgr_fd68e454.root_table,alamat_klrg,alamat_klrg,506,,,Alamat $ket,Variable,
-tgr_fd68e454.root_table,total_pendapatan_keluarga_sebulan,total_pendapatan_keluarga_sebulan,507,,,Total Pendapatan Keluarga Sebulan,Variable,
-tgr_fd68e454.root_table,kode_keberedaan_keluarga,kode_keberedaan_keluarga,508,,,Pilihan kode keberadaan keluarga,Variable,
-tgr_fd68e454.root_table,total_pengeluaran_keluarga_sebulan,total_pengeluaran_keluarga_sebulan,509,,,Total Pengeluaran Keluarga Sebulan,Variable,
-tgr_fd68e454.root_table,kode_keluarga_new,kode_keluarga_new,510,,,Pilihan Keberadaan Keluarga (new),Variable,
 tgr_fd68e454.root_table,kode_bangunan_new,kode_bangunan_new,512,,,Pilihan Keberadaan Bangunan (new),Variable,
-tgr_fd68e454.root_table,jumlah_tabung3kg,jumlah_tabung3kg,517,,,jumlah_tabung3kg_prelist,Variable,
-tgr_fd68e454.root_table,jumlah_tabung5kg,jumlah_tabung5kg,519,,,jumlah_tabung5kg_prelist,Variable,
-tgr_fd68e454.root_table,no_keluarga_terbesar,no_keluarga_terbesar,521,,,NOMOR URUT KELUARGA TERBESAR:,Variable,
-tgr_fd68e454.root_table,no_keluarga,no_keluarga,522,,,Nomor Urut Keluarga,Variable,
-tgr_fd68e454.root_table,jumlah_kulkas,jumlah_kulkas,523,,,jumlah_kulkas_prelist,Variable,
-tgr_fd68e454.root_table,jumlah_ac,jumlah_ac,524,,,jumlah_ac_prelist,Variable,
-tgr_fd68e454.root_table,jumlah_emas,jumlah_emas,525,,,jumlah_emas_prelist,Variable,
 tgr_fd68e454.root_table,pilihan_kode_bang,pilihan_kode_bang,526,,,Options untuk kode_bang disesuaikan,Variable,
-tgr_fd68e454.root_table,jumlah_laptop,jumlah_laptop,527,,,jumlah_laptop_prelist,Variable,
-tgr_fd68e454.root_table,jumlah_motor,jumlah_motor,528,,,jumlah_motor_prelist,Variable,
-tgr_fd68e454.root_table,jumlah_mobil,jumlah_mobil,529,,,jumlah_mobil_prelist,Variable,
-tgr_fd68e454.root_table,jumlah_lahan,jumlah_lahan,530,,,jumlah_lahan_prelist,Variable,
-tgr_fd68e454.root_table,jumlah_rumah,jumlah_rumah,531,,,jumlah_rumah_prelist,Variable,
 tgr_fd68e454.root_table,usaha_gabung,usaha_gabung,534,,,List yang ditampilkan di se2026_nested,Variable,
 tgr_fd68e454.root_table,nama_usaha_prelist,nama_usaha_prelist,536,,,Nama Usaha Prelist,Variable,
 tgr_fd68e454.root_table,idsbr_all,idsbr_all,541,,,idsbr_all,Variable,
