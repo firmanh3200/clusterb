@@ -2,14 +2,18 @@ import streamlit as st
 import pandas as pd
 import streamlit.components.v1 as components
 import json
-import io
 
 # ============================================================
-# FUNGSI HELPER
+# HELPER: BACA CSV
 # ============================================================
 
 def load_metadata(filepath):
-    """Membaca CSV metadata → dict {tabel: [{kolom, keterangan, tipe}, ...]}"""
+    def _clean(val):
+        if val is None or (isinstance(val, float) and pd.isna(val)):
+            return ""
+        s = str(val).strip()
+        return "" if s.lower() == "nan" else s
+
     for enc in ("utf-8", "latin-1", "cp1252"):
         try:
             df = pd.read_csv(filepath, encoding=enc)
@@ -20,10 +24,8 @@ def load_metadata(filepath):
         return None
 
     df.columns = [c.strip().lower() for c in df.columns]
-
     col_tabel = next((c for c in df.columns if c in ("tabel", "table", "nama_tabel")), None)
     col_kolom = next((c for c in df.columns if c in ("kolom", "column", "nama_kolom")), None)
-    col_label = next((c for c in df.columns if c in ("label", "lable", "Label")), None)
     col_ket   = next((c for c in df.columns if c in ("keterangan", "deskripsi", "description", "info", "ket")), None)
     col_tipe  = next((c for c in df.columns if c in ("tipe", "type", "tipe_data", "data_type")), None)
 
@@ -32,17 +34,20 @@ def load_metadata(filepath):
 
     tables = {}
     for _, row in df.iterrows():
-        tbl  = str(row[col_tabel]).strip()
-        kol  = str(row[col_kolom]).strip()
-        lab  = str(row[col_label]).strip()
-        ket  = str(row[col_ket]).strip() if col_ket else ""
-        tipe = str(row[col_tipe]).strip() if col_tipe else ""
-        tables.setdefault(tbl, []).append({"kolom": kol, "label": lab, "keterangan": ket, "tipe": tipe})
+        tbl  = _clean(row[col_tabel])
+        kol  = _clean(row[col_kolom])
+        ket  = _clean(row[col_ket]) if col_ket else ""
+        tipe = _clean(row[col_tipe]) if col_tipe else ""
+        if tbl and kol:
+            tables.setdefault(tbl, []).append({"kolom": kol, "keterangan": ket, "tipe": tipe})
     return tables
 
 
+# ============================================================
+# HELPER: KOLOM & JOIN
+# ============================================================
+
 def get_all_columns(tables, selected_tables):
-    """Daftar semua kolom dari tabel terpilih."""
     cols = []
     for tbl in selected_tables:
         if tbl in tables:
@@ -50,12 +55,11 @@ def get_all_columns(tables, selected_tables):
                 ref = f"{tbl}.{c['kolom']}"
                 disp = f"{ref}  —  {c['keterangan']}" if c["keterangan"] else ref
                 cols.append({"tabel": tbl, "kolom": c["kolom"], "ref": ref,
-                             "label": c["label"], "keterangan": c["keterangan"], "tipe": c["tipe"], "display": disp})
+                             "keterangan": c["keterangan"], "tipe": c["tipe"], "display": disp})
     return cols
 
 
 def find_join_candidates(tables, selected_tables):
-    """Kolom yang namanya SAMA di 2+ tabel terpilih → kandidat JOIN."""
     if len(selected_tables) < 2:
         return []
     col_map = {}
@@ -66,6 +70,10 @@ def find_join_candidates(tables, selected_tables):
     return [{"kolom": n, "tabels": t, "display": f"{n}  →  {', '.join(t)}"}
             for n, t in sorted(col_map.items()) if len(t) >= 2]
 
+
+# ============================================================
+# HELPER: FORMAT NILAI WHERE
+# ============================================================
 
 def format_where_value(value, operator):
     if operator in ("IS NULL", "IS NOT NULL"):
@@ -81,62 +89,80 @@ def format_where_value(value, operator):
         return f"'{value}'"
 
 
-def build_query(tables, sel_tables, sel_cols, join_cols, wheres, order_bys, limit_val, use_alias):
+# ============================================================
+# HELPER: BUILD QUERY
+# ============================================================
+
+def build_query(tables, sel_tables, sel_cols, join_columns, wheres,
+                order_bys, limit_val, use_alias,
+                extra_select=None, custom_from=None, custom_order_by=None):
     if not sel_tables:
         return "-- Pilih minimal satu tabel"
 
-    # --- alias ---
-    aliases = {}
-    if use_alias:
-        used = set()
-        for tbl in sel_tables:
-            for l in range(1, len(tbl) + 1):
-                a = tbl[:l]
-                if a not in used:
-                    aliases[tbl] = a
-                    used.add(a)
-                    break
+    expr_map = {e["key"]: e["sql"] for e in (extra_select or [])}
 
-    def fr(ref):
-        if use_alias:
-            p = ref.split(".", 1)
-            if len(p) == 2 and p[0] in aliases:
-                return f"{aliases[p[0]]}.{p[1]}"
-        return ref
+    # ---- SELECT ----
+    sel_items = []
+    for c in sel_cols:
+        if c.startswith("__EXPR__"):
+            key = c[7:]
+            if key in expr_map:
+                sel_items.append(expr_map[key])
+        else:
+            sel_items.append(c)
+    if not sel_items:
+        sel_items = ["*"]
+    parts = ["SELECT " + ",\n       ".join(sel_items)]
 
-    def ft(tbl):
-        return f"{tbl} {aliases[tbl]}" if (use_alias and tbl in aliases) else tbl
-
-    parts = []
-
-    # SELECT
-    parts.append("SELECT " + ",\n       ".join([fr(c) for c in sel_cols] if sel_cols else ["*"]))
-
-    # FROM + JOIN
-    if len(sel_tables) == 1:
-        parts.append(f"FROM {ft(sel_tables[0])}")
+    # ---- FROM + JOIN ----
+    if custom_from:
+        parts.append(custom_from)
     else:
-        parts.append(f"FROM {ft(sel_tables[0])}")
-        joined = {sel_tables[0]}
-        remaining = list(sel_tables[1:])
-        safety = len(remaining) ** 2 + 1
-        it = 0
-        while remaining and it < safety:
-            it += 1
-            found = False
-            for jc in join_cols:
-                for rtbl in list(remaining):
-                    if rtbl in jc["tabels"]:
-                        for jtbl in jc["tabels"]:
-                            if jtbl in joined and jtbl != rtbl:
-                                parts.append(f"INNER JOIN {ft(rtbl)}")
-                                ol = f"{aliases[rtbl]}.{jc['kolom']}" if use_alias else f"{rtbl}.{jc['kolom']}"
-                                orr = f"{aliases[jtbl]}.{jc['kolom']}" if use_alias else f"{jtbl}.{jc['kolom']}"
-                                parts.append(f"  ON {ol} = {orr}")
-                                joined.add(rtbl)
-                                remaining.remove(rtbl)
-                                found = True
-                                break
+        aliases = {}
+        if use_alias:
+            used = set()
+            for tbl in sel_tables:
+                for l in range(1, len(tbl) + 1):
+                    a = tbl[:l]
+                    if a not in used:
+                        aliases[tbl] = a
+                        used.add(a)
+                        break
+
+        def fr(ref):
+            if use_alias:
+                p = ref.split(".", 1)
+                if len(p) == 2 and p[0] in aliases:
+                    return f"{aliases[p[0]]}.{p[1]}"
+            return ref
+
+        def ft(tbl):
+            return f"{tbl} {aliases[tbl]}" if (use_alias and tbl in aliases) else tbl
+
+        if len(sel_tables) == 1:
+            parts.append(f"FROM {ft(sel_tables[0])}")
+        else:
+            parts.append(f"FROM {ft(sel_tables[0])}")
+            joined = {sel_tables[0]}
+            remaining = list(sel_tables[1:])
+            safety = len(remaining) ** 2 + 1
+            it = 0
+            while remaining and it < safety:
+                it += 1
+                found = False
+                for jc in join_columns:
+                    for rtbl in list(remaining):
+                        if rtbl in jc["tabels"]:
+                            for jtbl in jc["tabels"]:
+                                if jtbl in joined and jtbl != rtbl:
+                                    parts.append(f"INNER JOIN {ft(rtbl)}")
+                                    ol = f"{aliases[rtbl]}.{jc['kolom']}" if use_alias else f"{rtbl}.{jc['kolom']}"
+                                    orr = f"{aliases[jtbl]}.{jc['kolom']}" if use_alias else f"{jtbl}.{jc['kolom']}"
+                                    parts.append(f"  ON {ol} = {orr}")
+                                    joined.add(rtbl)
+                                    remaining.remove(rtbl)
+                                    found = True
+                                    break
                         if found:
                             break
                 if found:
@@ -146,11 +172,11 @@ def build_query(tables, sel_tables, sel_cols, join_cols, wheres, order_bys, limi
                     parts.append(f"CROSS JOIN {ft(rtbl)}")
                 remaining.clear()
 
-    # WHERE
+    # ---- WHERE ----
     if wheres:
         wp = []
         for i, w in enumerate(wheres):
-            col, op, val = fr(w["column"]), w["operator"], w["value"]
+            col, op, val = w["column"], w["operator"], w["value"]
             if op in ("IS NULL", "IS NOT NULL"):
                 cl = f"{col} {op}"
             elif op in ("IN", "NOT IN"):
@@ -164,16 +190,22 @@ def build_query(tables, sel_tables, sel_cols, join_cols, wheres, order_bys, limi
             wp.append(cl)
         parts.append("WHERE " + "\n      ".join(wp))
 
-    # ORDER BY
-    if order_bys:
-        parts.append("ORDER BY " + ", ".join(f"{fr(o['column'])} {o['direction']}" for o in order_bys))
+    # ---- ORDER BY ----
+    if custom_order_by:
+        parts.append(custom_order_by)
+    elif order_bys:
+        parts.append("ORDER BY " + ", ".join(f"{o['column']} {o['direction']}" for o in order_bys))
 
-    # LIMIT
+    # ---- LIMIT ----
     if limit_val and str(limit_val).strip().isdigit():
         parts.append(f"LIMIT {int(limit_val)}")
 
     return "\n".join(parts)
 
+
+# ============================================================
+# HELPER: COPY BUTTON
+# ============================================================
 
 def copy_button(text):
     components.html(
@@ -186,20 +218,87 @@ def copy_button(text):
 
 
 # ============================================================
+# DEFAULTS PER TAB
+# ============================================================
+
+DEFAULTS = {
+    "umk": {
+        "tables": ["tgr_fd68e454.se2026_nested", "tgr_fd68e454.base_table_assignment"],
+        "cols": [],
+        "extra_select": [
+            {"key": "umk_1",  "display": "n.assignment_id", "sql": "n.assignment_id"},
+            {"key": "umk_2",  "display": "COALESCE(kab_l, CONCAT('[',n.level_2_code,'] ',n.level_2_name)) AS kab", "sql": "COALESCE(kab_l, CONCAT('[', n.level_2_code,'] ',n.level_2_name)) AS kab"},
+            {"key": "umk_3",  "display": "COALESCE(kec_l, CONCAT('[',n.level_3_code,'] ',n.level_3_name)) AS kec", "sql": "COALESCE(kec_l, CONCAT('[', n.level_3_code,'] ',n.level_3_name)) AS kec"},
+            {"key": "umk_4",  "display": "COALESCE(desa_l, CONCAT('[',n.level_4_code,'] ',n.level_4_name)) AS desakel", "sql": "COALESCE(desa_l, CONCAT('[', n.level_4_code,'] ',n.level_4_name)) AS desakel"},
+            {"key": "umk_5",  "display": "COALESCE(CONCAT('[',sls_l,'] ',kodesls_l), CONCAT('[',n.level_5_code,'] ',n.level_5_name)) AS sls", "sql": "COALESCE(CONCAT('[',sls_l,'] ', kodesls_l), CONCAT('[', n.level_5_code,'] ',n.level_5_name)) AS sls"},
+            {"key": "umk_6",  "display": "nama_usaha", "sql": "nama_usaha"},
+            {"key": "umk_7",  "display": "nama_komersial", "sql": "nama_komersial"},
+            {"key": "umk_8",  "display": "keg_utama", "sql": "keg_utama"},
+            {"key": "umk_9",  "display": "COALESCE(kbli_akhir, kbli_prelist) AS kbli", "sql": "COALESCE(kbli_akhir, kbli_prelist) AS kbli"},
+            {"key": "umk_10", "display": "kategori", "sql": "kategori"},
+            {"key": "umk_11", "display": "COALESCE(total_pendapatan, total_pendapatan_bln*12) AS total_pendapatan", "sql": "COALESCE(total_pendapatan, total_pendapatan_bln*12) AS total_pendapatan"},
+            {"key": "umk_12", "display": "COALESCE(keberadaan_usaha_label) AS keberadaan", "sql": "COALESCE(keberadaan_usaha_label) AS keberadaan"},
+            {"key": "umk_13", "display": "COALESCE(jaringan_label) AS jaringan", "sql": "COALESCE(jaringan_label) AS jaringan"},
+            {"key": "umk_14", "display": "CONCAT('https://fasih-sm.bps.go.id/app/assignment-detail/', n.assignment_id) AS link_fasih", "sql": "CONCAT('https://fasih-sm.bps.go.id/app/assignment-detail/', n.assignment_id) AS link_fasih"},
+        ],
+        "default_extra_select": ["umk_1","umk_2","umk_3","umk_4","umk_5","umk_6","umk_7","umk_8","umk_9","umk_10","umk_11","umk_12","umk_13","umk_14"],
+        "custom_from": """FROM tgr_fd68e454.se2026_nested n
+LEFT JOIN tgr_fd68e454.base_table_assignment bta
+  ON bta.assignment_id = n.assignment_id
+  AND bta.date_modified = n.assignment_date_modified""",
+        "custom_order_by": """ORDER BY
+  COALESCE(kab_l, CONCAT('[', n.level_2_code,'] ',n.level_2_name)),
+  COALESCE(kec_l, CONCAT('[', n.level_3_code,'] ',n.level_3_name)),
+  COALESCE(desa_l, CONCAT('[', n.level_4_code,'] ',n.level_4_name)),
+  COALESCE(CONCAT('[',sls_l,'] ', kodesls_l), CONCAT('[', n.level_5_code,'] ',n.level_5_name))""",
+    },
+    "ub": {
+        "tables": ["tcz_37526b20.root_table", "tcz_37526b20.base_table_assignment"],
+        "cols": [],
+        "extra_select": [
+            {"key": "ub_1",  "display": "n.assignment_id", "sql": "n.assignment_id"},
+            {"key": "ub_2",  "display": "COALESCE(kab_l_label, CONCAT('[',n.level_2_code,'] ',n.level_2_name)) AS kab", "sql": "COALESCE(kab_l_label, CONCAT('[', n.level_2_code,'] ',n.level_2_name)) AS kab"},
+            {"key": "ub_3",  "display": "COALESCE(kec_l_label, CONCAT('[',n.level_3_code,'] ',n.level_3_name)) AS kec", "sql": "COALESCE(kec_l_label, CONCAT('[', n.level_3_code,'] ',n.level_3_name)) AS kec"},
+            {"key": "ub_4",  "display": "COALESCE(desa_l_label, CONCAT('[',n.level_4_code,'] ',n.level_4_name)) AS desakel", "sql": "COALESCE(desa_l_label, CONCAT('[', n.level_4_code,'] ',n.level_4_name)) AS desakel"},
+            {"key": "ub_5",  "display": "COALESCE(CONCAT('[',idsls,'] '), CONCAT('[',n.level_5_code,'] ',n.level_5_name)) AS sls", "sql": "COALESCE(CONCAT('[',idsls,'] '), CONCAT('[', n.level_5_code,'] ',n.level_5_name)) AS sls"},
+            {"key": "ub_6",  "display": "nama_usaha", "sql": "nama_usaha"},
+            {"key": "ub_7",  "display": "nama_komersial", "sql": "nama_komersial"},
+            {"key": "ub_8",  "display": "keg_utama", "sql": "keg_utama"},
+            {"key": "ub_9",  "display": "COALESCE(kbli_akhir, kbli_prelist) AS kbli", "sql": "COALESCE(kbli_akhir, kbli_prelist) AS kbli"},
+            {"key": "ub_10", "display": "kategori", "sql": "kategori"},
+            {"key": "ub_11", "display": "COALESCE(total_pendapatan) AS total_pendapatan", "sql": "COALESCE(total_pendapatan) AS total_pendapatan"},
+            {"key": "ub_12", "display": "COALESCE(keberadaan_label) AS keberadaan", "sql": "COALESCE(keberadaan_label) AS keberadaan"},
+            {"key": "ub_13", "display": "COALESCE(jaringan_label) AS jaringan", "sql": "COALESCE(jaringan_label) AS jaringan"},
+            {"key": "ub_14", "display": "CONCAT('https://fasih-sm.bps.go.id/app/assignment-detail/', n.assignment_id) AS link_fasih", "sql": "CONCAT('https://fasih-sm.bps.go.id/app/assignment-detail/', n.assignment_id) AS link_fasih"},
+        ],
+        "default_extra_select": ["ub_1","ub_2","ub_3","ub_4","ub_5","ub_6","ub_7","ub_8","ub_9","ub_10","ub_11","ub_12","ub_13","ub_14"],
+        "custom_from": """FROM tcz_37526b20.root_table n
+LEFT JOIN tcz_37526b20.base_table_assignment bta
+  ON bta.assignment_id = n.assignment_id""",
+        "custom_order_by": """ORDER BY
+  COALESCE(kab_l_label, CONCAT('[', n.level_2_code,'] ',n.level_2_name)),
+  COALESCE(kec_l_label, CONCAT('[', n.level_3_code,'] ',n.level_3_name)),
+  COALESCE(desa_l_label, CONCAT('[', n.level_4_code,'] ',n.level_4_name)),
+  COALESCE(CONCAT('[',idsls,'] '), CONCAT('[', n.level_5_code,'] ',n.level_5_name))""",
+    },
+    "kel": {
+        "tables": [],
+        "cols": []
+    },
+}
+
+
+# ============================================================
 # RENDER SATU TAB
 # ============================================================
 
 def render_tab(prefix, csv_path, tables):
-    # --- Jika file tidak ditemukan ---
+
+    # ---- File tidak ditemukan ----
     if tables is None:
         st.warning(f"⚠️ File `{csv_path}` tidak ditemukan atau format tidak sesuai.")
         st.info("Pastikan CSV memiliki kolom: **tabel**, **kolom**, **keterangan** (opsional: **tipe**)")
-        sample = """tabel,kolom,keterangan,tipe
-pelanggan,id_pelanggan,ID Pelanggan (PK),INT
-pelanggan,nama,Nama Lengkap,VARCHAR(100)
-pesanan,id_pesanan,ID Pesanan (PK),INT
-pesanan,id_pelanggan,FK ke pelanggan,INT
-pesanan,total,Total Nilai,DECIMAL(15,2)"""
+        sample = "tabel,kolom,keterangan,tipe\npelanggan,id_pelanggan,ID Pelanggan,INT\npelanggan,nama,Nama Lengkap,VARCHAR(100)"
         st.code(sample, language="csv")
         st.download_button(f"⬇ Download contoh {csv_path}", sample, csv_path, "text/csv", use_container_width=True)
         return
@@ -209,84 +308,104 @@ pesanan,total,Total Nilai,DECIMAL(15,2)"""
         st.warning("CSV tidak berisi data tabel.")
         return
 
-    # ================================================================
-    # PREVIEW DATAFRAME CSV
-    # ================================================================
+    # ---- Preview CSV ----
     with st.expander("👁️ Lihat Data Metadata CSV", expanded=False):
-        # Rekonstruksi dataframe dari dict tables untuk ditampilkan
         rows = []
-        for tbl, kolom_list in tables.items():
-            for k in kolom_list:
-                rows.append({"tabel": tbl, "kolom": k["kolom"],
-                             "label": k["label"], "keterangan": k["keterangan"], "tipe": k["tipe"]})
-        df_preview = pd.DataFrame(rows).fillna("").replace("nan", "")
-        st.dataframe(df_preview, width="stretch", hide_index=True)
+        for tbl, kl in tables.items():
+            for k in kl:
+                rows.append({"tabel": tbl, "kolom": k["kolom"], "keterangan": k["keterangan"], "tipe": k["tipe"]})
+        st.dataframe(pd.DataFrame(rows).fillna("").replace("nan", ""), use_container_width=True, hide_index=True)
         st.caption(f"Total: **{len(table_names)}** tabel, **{len(rows)}** kolom")
 
-    # ================================================================
+    # ---- Konfigurasi tab ----
+    cfg = DEFAULTS.get(prefix, {})
+    has_custom = bool(cfg.get("custom_from"))
+    extra_select = cfg.get("extra_select", [])
+    default_extra_keys = cfg.get("default_extra_select", [])
+
+    # ============================================================
     # 1. PILIH TABEL
-    # ================================================================
+    # ============================================================
     st.markdown("### 1️⃣ Pilih Tabel")
+
+    if f"{prefix}_tables" not in st.session_state:
+        st.session_state[f"{prefix}_tables"] = [t for t in cfg.get("tables", []) if t in table_names]
+
     selected_tables = st.multiselect("Pilih satu atau lebih tabel:", table_names, key=f"{prefix}_tables")
 
     if not selected_tables:
         st.info("👆 Pilih minimal satu tabel untuk melanjutkan.")
         return
 
-    # Kolom tersedia
+    # ---- Kolom reguler dari CSV ----
     all_cols = get_all_columns(tables, selected_tables)
     col_refs = [c["ref"] for c in all_cols]
     col_disp = {c["ref"]: c["display"] for c in all_cols}
 
-    # Cleanup session jika tabel berubah
-    if f"{prefix}_cols" in st.session_state:
-        st.session_state[f"{prefix}_cols"] = [c for c in st.session_state[f"{prefix}_cols"] if c in col_disp]
-
-    # ================================================================
-    # 2. PILIH KOLOM
-    # ================================================================
+    # ============================================================
+    # 2. PILIH KOLOM (ekspresi ⚡ + reguler 📋)
+    # ============================================================
     st.markdown("### 2️⃣ Pilih Kolom")
+
+    merged = {}
+    for e in extra_select:
+        merged[f"__EXPR__{e['key']}"] = f"⚡ {e['display']}"
+    for ref, disp in col_disp.items():
+        merged[ref] = f"📋 {disp}"
+
+    if f"{prefix}_cols" in st.session_state:
+        st.session_state[f"{prefix}_cols"] = [c for c in st.session_state[f"{prefix}_cols"] if c in merged]
+
+    if f"{prefix}_cols" not in st.session_state:
+        defs = [f"__EXPR__{k}" for k in default_extra_keys if f"__EXPR__{k}" in merged]
+        defs += [c for c in cfg.get("cols", []) if c in merged]
+        st.session_state[f"{prefix}_cols"] = defs
+
     selected_columns = st.multiselect(
-        "Kolom yang ditampilkan  (kosongkan = SELECT *):",
-        col_refs, format_func=lambda x: col_disp.get(x, x),
-        key=f"{prefix}_cols")
+        "Kolom / ekspresi yang ditampilkan  (kosongkan = SELECT *):",
+        list(merged.keys()), format_func=lambda x: merged.get(x, x), key=f"{prefix}_cols")
 
-    # ================================================================
-    # 3. JOIN (opsional)
-    # ================================================================
+    # ============================================================
+    # 3. FROM + JOIN
+    # ============================================================
     join_columns = []
-    if len(selected_tables) >= 2:
-        st.markdown("### 3️⃣ JOIN — Kolom Penghubung  *(Opsional)*")
-        candidates = find_join_candidates(tables, selected_tables)
 
-        if candidates:
-            valid_jc = [f"{prefix}_jc_{i}" for i in range(len(candidates))]
-            if f"{prefix}_jc" in st.session_state:
-                st.session_state[f"{prefix}_jc"] = [k for k in st.session_state[f"{prefix}_jc"] if k in valid_jc]
+    if has_custom:
+        st.markdown("### 3️⃣ FROM + JOIN")
+        st.info("JOIN sudah didefinisikan di bawah. Edit langsung di text area jika perlu.")
+        if f"{prefix}_custom_from" not in st.session_state:
+            st.session_state[f"{prefix}_custom_from"] = cfg["custom_from"]
+        st.text_area("FROM + JOIN:", key=f"{prefix}_custom_from", height=110)
+    else:
+        if len(selected_tables) >= 2:
+            st.markdown("### 3️⃣ JOIN — Kolom Penghubung  *(Opsional)*")
+            candidates = find_join_candidates(tables, selected_tables)
 
-            cmap = {f"{prefix}_jc_{i}": c for i, c in enumerate(candidates)}
-            chosen = st.multiselect(
-                f"Kolom bernama sama di beberapa tabel  ({len(candidates)} ditemukan):",
-                list(cmap.keys()), format_func=lambda x: cmap[x]["display"], key=f"{prefix}_jc")
-            join_columns = [cmap[k] for k in chosen if k in cmap]
+            if candidates:
+                valid_jc = [f"{prefix}_jc_{i}" for i in range(len(candidates))]
+                if f"{prefix}_jc" in st.session_state:
+                    st.session_state[f"{prefix}_jc"] = [k for k in st.session_state[f"{prefix}_jc"] if k in valid_jc]
 
-            if join_columns:
-                for jc in join_columns:
-                    st.success(f"✅ `{jc['kolom']}`  menghubungkan:  {', '.join(jc['tabels'])}")
-        else:
-            st.warning("⚠️ Tidak ditemukan kolom bernama sama di beberapa tabel. "
-                       "Tambahkan kondisi hubungan manual di WHERE jika perlu.")
+                cmap = {f"{prefix}_jc_{i}": c for i, c in enumerate(candidates)}
+                chosen = st.multiselect(
+                    f"Kolom bernama sama di {len(selected_tables)} tabel  ({len(candidates)} ditemukan):",
+                    list(cmap.keys()), format_func=lambda x: cmap[x]["display"], key=f"{prefix}_jc")
+                join_columns = [cmap[k] for k in chosen if k in cmap]
 
-    # Warning CROSS JOIN
-    if len(selected_tables) >= 2 and not join_columns:
-        st.warning("⚠️ Beberapa tabel dipilih tanpa kolom JOIN → akan menghasilkan CROSS JOIN (perkalian cartesian).")
+                if join_columns:
+                    for jc in join_columns:
+                        st.success(f"✅ `{jc['kolom']}`  →  {', '.join(jc['tabels'])}")
+            else:
+                st.warning("⚠️ Tidak ada kolom bernama sama di beberapa tabel. Tambahkan kondisi di WHERE jika perlu.")
 
-    # ================================================================
+        if len(selected_tables) >= 2 and not join_columns:
+            st.warning("⚠️ Beberapa tabel tanpa kolom JOIN → akan menghasilkan CROSS JOIN.")
+
+    # ============================================================
     # 4. WHERE
-    # ================================================================
+    # ============================================================
     st.markdown("### 4️⃣ Kondisi WHERE")
 
-    # Cleanup
     if f"{prefix}_wheres" in st.session_state:
         vr = set(col_refs)
         st.session_state[f"{prefix}_wheres"] = [w for w in st.session_state[f"{prefix}_wheres"] if w["column"] in vr]
@@ -298,8 +417,7 @@ pesanan,total,Total Nilai,DECIMAL(15,2)"""
         with w2:
             wop = st.selectbox("Operator",
                                ["=", "!=", ">", "<", ">=", "<=", "LIKE", "NOT LIKE",
-                                "IN", "NOT IN", "BETWEEN", "IS NULL", "IS NOT NULL"],
-                               key=f"{prefix}_wop")
+                                "IN", "NOT IN", "BETWEEN", "IS NULL", "IS NOT NULL"], key=f"{prefix}_wop")
         with w3:
             wval = st.text_input("Nilai", key=f"{prefix}_wval",
                                  placeholder="teks / angka / 1,2,3 / val1 AND val2",
@@ -328,102 +446,119 @@ pesanan,total,Total Nilai,DECIMAL(15,2)"""
                     st.session_state[f"{prefix}_wheres"].pop(i)
                     st.rerun()
 
+    # ============================================================
     # ORDER BY & LIMIT
+    # ============================================================
     with st.expander("📌 ORDER BY  &  LIMIT  *(Opsional)*"):
-        if f"{prefix}_obs" in st.session_state:
-            vr = set(col_refs)
-            st.session_state[f"{prefix}_obs"] = [o for o in st.session_state[f"{prefix}_obs"] if o["column"] in vr]
 
-        o1, o2, o3 = st.columns([3, 2, 2])
-        with o1:
-            obc = st.selectbox("Kolom", [""] + col_refs,
-                               format_func=lambda x: col_disp.get(x, x) if x else "— Pilih —",
-                               key=f"{prefix}_obc")
-        with o2:
-            obd = st.selectbox("Arah", ["ASC", "DESC"], key=f"{prefix}_obd")
-        with o3:
-            st.markdown("<br>", unsafe_allow_html=True)
-            if st.button("➕", key=f"{prefix}_aob") and obc:
-                st.session_state.setdefault(f"{prefix}_obs", []).append({"column": obc, "direction": obd})
-                st.rerun()
+        if has_custom:
+            if f"{prefix}_custom_ob" not in st.session_state:
+                st.session_state[f"{prefix}_custom_ob"] = cfg.get("custom_order_by", "")
+            st.text_area("ORDER BY:", key=f"{prefix}_custom_ob", height=100)
+        else:
+            if f"{prefix}_obs" in st.session_state:
+                vr = set(col_refs)
+                st.session_state[f"{prefix}_obs"] = [o for o in st.session_state[f"{prefix}_obs"] if o["column"] in vr]
 
-        for i, ob in enumerate(st.session_state.get(f"{prefix}_obs", [])):
-            oa, obb = st.columns([4, 1])
-            with oa:
-                st.caption(f"• {ob['column']}  {ob['direction']}")
-            with obb:
-                if st.button("✕", key=f"{prefix}_dob_{i}"):
-                    st.session_state[f"{prefix}_obs"].pop(i)
+            o1, o2, o3 = st.columns([3, 2, 2])
+            with o1:
+                obc = st.selectbox("Kolom", [""] + col_refs,
+                                   format_func=lambda x: col_disp.get(x, x) if x else "— Pilih —",
+                                   key=f"{prefix}_obc")
+            with o2:
+                obd = st.selectbox("Arah", ["ASC", "DESC"], key=f"{prefix}_obd")
+            with o3:
+                st.markdown("<br>", unsafe_allow_html=True)
+                if st.button("➕", key=f"{prefix}_aob") and obc:
+                    st.session_state.setdefault(f"{prefix}_obs", []).append({"column": obc, "direction": obd})
                     st.rerun()
 
-        # ✅ FIX: baca langsung dari widget, JANGAN tulis ulang ke session_state
+            for i, ob in enumerate(st.session_state.get(f"{prefix}_obs", [])):
+                oa, obb = st.columns([4, 1])
+                with oa:
+                    st.caption(f"• {ob['column']}  {ob['direction']}")
+                with obb:
+                    if st.button("✕", key=f"{prefix}_dob_{i}"):
+                        st.session_state[f"{prefix}_obs"].pop(i)
+                        st.rerun()
+
         st.text_input("LIMIT", placeholder="Kosongkan = tanpa limit", key=f"{prefix}_lim")
 
-    # ================================================================
-    # 5. TOMBOL BUAT QUERY
-    # ================================================================
+    # ============================================================
+    # 5. TOMBOL
+    # ============================================================
     st.markdown("---")
-    use_alias = st.checkbox("🏷️ Gunakan alias tabel  (misal: pelanggan → p)", key=f"{prefix}_alias")
+
+    if not has_custom:
+        use_alias = st.checkbox("🏷️ Gunakan alias tabel", key=f"{prefix}_alias")
+    else:
+        use_alias = False
 
     b1, b2 = st.columns([1, 1])
     with b1:
         if st.button("🔨 Buat Query", type="primary", use_container_width=True, key=f"{prefix}_build"):
+            cf = st.session_state.get(f"{prefix}_custom_from", "") if has_custom else None
+            cob = st.session_state.get(f"{prefix}_custom_ob", "") if has_custom else None
+            if has_custom and not cob.strip():
+                cob = None
+
             st.session_state[f"{prefix}_query"] = build_query(
                 tables, selected_tables, selected_columns, join_columns,
                 st.session_state.get(f"{prefix}_wheres", []),
                 st.session_state.get(f"{prefix}_obs", []),
-                st.session_state.get(f"{prefix}_lim", ""),   # ✅ baca dari sini
-                use_alias)
+                st.session_state.get(f"{prefix}_lim", ""),
+                use_alias,
+                extra_select=extra_select or None,
+                custom_from=cf,
+                custom_order_by=cob)
     with b2:
         if st.button("🗑 Reset Semua Kondisi", type="secondary", use_container_width=True, key=f"{prefix}_reset"):
             for k in (f"{prefix}_wheres", f"{prefix}_obs", f"{prefix}_query", f"{prefix}_jc"):
                 st.session_state.pop(k, None)
             st.rerun()
 
-    # ================================================================
+    # ============================================================
     # 6. HASIL QUERY
-    # ================================================================
+    # ============================================================
     if st.session_state.get(f"{prefix}_query"):
         st.markdown("---")
         st.markdown("### 6️⃣ Hasil Query SQL")
         q = st.session_state[f"{prefix}_query"]
         st.code(q, language="sql")
-
         cb1, cb2 = st.columns([1, 1])
         with cb1:
             copy_button(q)
         with cb2:
-            st.download_button("💾 Download .sql", q, f"query_{prefix}.sql",
-                               "text/plain", use_container_width=True)
+            st.download_button("💾 Download .sql", q, f"query_{prefix}.sql", "text/plain", use_container_width=True)
+
+
 # ============================================================
 # MAIN APP
 # ============================================================
 
 st.set_page_config(page_title="SQL Query Builder", page_icon="🔧", layout="wide")
 st.title("🔧 SQL Query Builder")
-st.caption("Generate query SQL untuk Anda Copas ke SQL-LAB")
+st.caption("Generate query SQL dari file metadata CSV")
 
 st.markdown("""<style>
-    div[data-testid="stTabsTablist"] { gap: 8px; }
     .stTabs [data-baseweb="tab-list"] [data-baseweb="tab"] { font-size: 16px; padding: 10px 28px; }
 </style>""", unsafe_allow_html=True)
 
-# Load kedua file
-tables_umk = load_metadata("metadata_umk.csv")
-tables_ub = load_metadata("metadata_ub.csv")
+tables_umk      = load_metadata("metadata_umk.csv")
+tables_ub       = load_metadata("metadata_ub.csv")
 tables_keluarga = load_metadata("metadata_keluarga.csv")
 
-tab_umk, tab_umb, tab_kel = st.tabs(["📄 UMK", "📄 UB", "📄 KELUARGA"])
+tab_umk, tab_ub, tab_kel = st.tabs(["📄 UMK", "📄 UB", "📄 KELUARGA"])
 
 with tab_umk:
     st.markdown(f"**Data:** `metadata_umk.csv`  —  "
                 f"{'✅ ' + str(len(tables_umk)) + ' tabel' if tables_umk else '❌ file tidak ditemukan'}")
     render_tab("umk", "metadata_umk.csv", tables_umk)
 
-with tab_umb:
-    st.markdown(f"**Data:** `metadata_umb.csv`  —  "
+with tab_ub:
+    st.markdown(f"**Data:** `metadata_ub.csv`  —  "
                 f"{'✅ ' + str(len(tables_ub)) + ' tabel' if tables_ub else '❌ file tidak ditemukan'}")
-    render_tab("umb", "metadata_umb.csv", tables_ub)
+    render_tab("ub", "metadata_ub.csv", tables_ub)
 
 with tab_kel:
     st.markdown(f"**Data:** `metadata_keluarga.csv`  —  "
