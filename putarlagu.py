@@ -17,9 +17,8 @@ def load_media_bytes(file_path):
 
 # ---------------- Fungsi Utama ----------------
 def main():
-    st.title("🎵 Local MP3/MP4 Player")
-    st.caption("Memutar file langsung dari folder 'lagu'")
-
+    st.title("🎵 MP3/MP4 Player")
+    
     folder_name = "lagu"
 
     if not os.path.exists(folder_name):
@@ -36,7 +35,7 @@ def main():
 
     media_files.sort()
 
-    st.subheader("Pilih Media")
+    st.subheader("Pilih Lagu")
     selected_file = st.selectbox(
         "Daftar Lagu/Video:",
         media_files,
