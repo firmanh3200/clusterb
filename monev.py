@@ -133,7 +133,7 @@ if not csv_files:
     )
     st.stop()
 
-with st.sidebar:
+with st.expander:
     st.header("📁 Pilih File")
     selected_file = st.selectbox(
         "File CSV",
