@@ -1,6 +1,6 @@
 import streamlit as st
 import os
-import mimetypes  # <-- DITAMBAHKAN: Untuk deteksi tipe file otomatis
+import mimetypes
 
 # ---------------- Konfigurasi Halaman ----------------
 st.set_page_config(
@@ -56,21 +56,22 @@ def main():
         is_video = selected_file.lower().endswith(('.mp4', '.mkv', '.webm'))
 
         try:
+            # Ambil file dalam bentuk bytes
             media_bytes = load_media_bytes(file_path)
             
-            # PERBAIKAN: Deteksi MIME type secara otomatis (misal: audio/mpeg, audio/wav)
+            # Deteksi MIME type secara otomatis
             mime_type, _ = mimetypes.guess_type(file_path)
             
             if is_video:
-                # Fallback jika gagal mendeteksi
                 if not mime_type or not mime_type.startswith('video'):
                     mime_type = "video/mp4"
-                st.video(media_bytes, format=mime_type, key=selected_file)
+                # Parameter 'key' dihapus di sini
+                st.video(media_bytes, format=mime_type)
             else:
-                # Fallback jika gagal mendeteksi
                 if not mime_type or not mime_type.startswith('audio'):
                     mime_type = "audio/mpeg"
-                st.audio(media_bytes, format=mime_type, key=selected_file)
+                # Parameter 'key' dihapus di sini
+                st.audio(media_bytes, format=mime_type)
                 
         except Exception as e:
             st.error(f"Gagal memuat pemutar. Detail: {e}")
