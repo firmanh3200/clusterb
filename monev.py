@@ -69,7 +69,7 @@ def coerce_column(df: pd.DataFrame, col: str, col_type: str) -> pd.Series:
         return s.astype(str).str.lower().map({
             "true": True, "false": False, "1": True, "0": False
         })
-    else:  # teks
+    else:
         return s.astype(str)
 
 
@@ -166,9 +166,8 @@ with st.expander("🔧 **Langkah 2 — Tentukan Tipe Data Kolom**", expanded=Fal
         "**Jika tidak diubah, mengikuti default.**"
     )
 
-    # Tampilkan dalam grid: 4 kolom per baris
     grid_size = 4
-    col_types = {}  # tipe final yang digunakan aplikasi
+    col_types = {}
 
     for i in range(0, len(selected_columns), grid_size):
         row_cols = st.columns(grid_size)
@@ -189,11 +188,9 @@ with st.expander("🔧 **Langkah 2 — Tentukan Tipe Data Kolom**", expanded=Fal
                     )
                     col_types[col] = chosen_type
 
-                    # Tampilkan peringatan jika user mengubah dari default
                     if chosen_type != detected:
                         st.caption(f"⚠️ default: *{detected}*")
 
-    # Reset tombol jika ingin kembali ke default
     if st.button("🔄 Kembalikan Semua ke Default", use_container_width=True):
         st.rerun()
 
@@ -204,13 +201,11 @@ st.divider()
 # ──────────────────────────────────────────────
 df_selected = df_raw[selected_columns].copy()
 
-# Terapkan konversi tipe data
 for col in selected_columns:
     df_selected[col] = coerce_column(df_selected, col, col_types[col])
 
 st.subheader("📋 Dataframe — Kolom Terpilih")
 
-# Badge tipe per kolom
 type_badges = "  ".join(
     f"{type_icons.get(col_types[c], '❓')} `{c}`:*{col_types[c]}*"
     for c in selected_columns
@@ -420,7 +415,9 @@ def build_chart(df, chart_type, x, y, color, agg):
     if x and col_types.get(x) == "tanggal":
         plot_df[x] = pd.to_datetime(plot_df[x], errors="coerce")
 
-    common_kwargs = dict(data_frame=plot_df, x=x, color=color)
+    # ✅ FIX: tidak ada 'data_frame' di kwargs,
+    #    karena plot_df sudah dikirim sebagai argumen posisi pertama
+    common_kwargs = dict(x=x, color=color)
     if y:
         common_kwargs["y"] = y
 
