@@ -38,7 +38,6 @@ def get_csv_files() -> list[str]:
 
 
 def detect_column_type(series: pd.Series) -> str:
-    """Autodetect tipe kolom."""
     if set(series.dropna().unique()).issubset({True, False, "True", "False", "true", "false"}):
         return "boolean"
     if series.dtype == "object":
@@ -59,7 +58,6 @@ def detect_column_type(series: pd.Series) -> str:
 
 
 def coerce_column(df: pd.DataFrame, col: str, col_type: str) -> pd.Series:
-    """Konversi kolom ke tipe yang ditentukan user."""
     s = df[col].copy()
     if col_type == "numerik":
         return pd.to_numeric(s, errors="coerce")
@@ -345,7 +343,8 @@ st.download_button(
 st.divider()
 
 # ──────────────────────────────────────────────
-# 7. PILIH & TAMPILKAN GRAFIK
+# 7. GRAFIK — konfigurasi DAN rendering di dalam
+#    satu expander yang sama
 # ──────────────────────────────────────────────
 st.subheader("📈 Visualisasi Grafik")
 
@@ -353,7 +352,7 @@ if len(df_filtered) == 0:
     st.error("Data kosong setelah filter. Tidak bisa membuat grafik.")
     st.stop()
 
-with st.expander("🎨 **Langkah 4 — Pilih Jenis Grafik & Konfigurasi**", expanded=False):
+with st.expander("🎨 **Langkah 4 — Pilih Jenis Grafik & Tampilkan**", expanded=True):
 
     chart_col1, chart_col2, chart_col3 = st.columns(3)
 
@@ -391,112 +390,109 @@ with st.expander("🎨 **Langkah 4 — Pilih Jenis Grafik & Konfigurasi**", expa
         agg_options = ["none", "sum", "mean", "count", "min", "max"]
         agg_func = st.selectbox("Agregasi (jika ada duplikat di X)", options=agg_options, index=0)
 
+    # ── Garis pemisah config vs grafik ──
+    st.markdown("---")
 
-# ──────────────────────────────────────────────
-# Buat Grafik
-# ──────────────────────────────────────────────
-def build_chart(df, chart_type, x, y, color, agg):
-    chart_map = {
-        "Bar Chart": "bar", "Line Chart": "line", "Scatter Plot": "scatter",
-        "Pie Chart": "pie", "Histogram": "histogram", "Box Plot": "box",
-        "Area Chart": "area", "Violin Plot": "violin",
-    }
-    px_name = chart_map.get(chart_type, "bar")
+    # ── Buat & tampilkan grafik LANGSUNG DI SINI ──
+    def build_chart(df, chart_type, x, y, color, agg):
+        chart_map = {
+            "Bar Chart": "bar", "Line Chart": "line", "Scatter Plot": "scatter",
+            "Pie Chart": "pie", "Histogram": "histogram", "Box Plot": "box",
+            "Area Chart": "area", "Violin Plot": "violin",
+        }
+        px_name = chart_map.get(chart_type, "bar")
 
-    plot_df = df.copy()
+        plot_df = df.copy()
 
-    # Konversi tanggal di sumbu X
-    if x and col_types.get(x) == "tanggal":
-        plot_df[x] = pd.to_datetime(plot_df[x], errors="coerce")
+        if x and col_types.get(x) == "tanggal":
+            plot_df[x] = pd.to_datetime(plot_df[x], errors="coerce")
 
-    # --- Agregasi ---
-    if agg != "none" and x and y and px_name in ("bar", "line", "area", "scatter"):
-        # Tentukan kolom groupby: selalu x, plus color jika berbeda dari x
-        groupby_cols = [x]
-        if color and color != x:
-            groupby_cols.append(color)
+        # Agregasi
+        if agg != "none" and x and y and px_name in ("bar", "line", "area", "scatter"):
+            groupby_cols = [x]
+            if color and color != x:
+                groupby_cols.append(color)
 
-        if agg == "count":
-            plot_df = plot_df.groupby(groupby_cols, dropna=False).size().reset_index(name=f"count_of_{x}")
-            y = f"count_of_{x}"
-        else:
-            agg_dict = {y: agg}
-            plot_df = plot_df.groupby(groupby_cols, as_index=False, dropna=False).agg(agg_dict)
+            if agg == "count":
+                plot_df = plot_df.groupby(groupby_cols, dropna=False).size().reset_index(name=f"count_of_{x}")
+                y = f"count_of_{x}"
+            else:
+                plot_df = plot_df.groupby(groupby_cols, as_index=False, dropna=False).agg({y: agg})
 
-    # --- Pastikan kolom yang dipakai ada di plot_df ---
-    if x and x not in plot_df.columns:
-        return None, f"Kolom sumbu X '`{x}`' tidak ditemukan dalam data setelah agregasi."
-    if y and y not in plot_df.columns:
-        return None, f"Kolom sumbu Y '`{y}`' tidak ditemukan dalam data setelah agregasi."
-    if color and color not in plot_df.columns:
-        color = None  # aman: lewati warna daripada crash
+        # Validasi kolom ada
+        if x and x not in plot_df.columns:
+            return None, f"Kolom sumbu X '`{x}`' tidak ditemukan setelah agregasi."
+        if y and y not in plot_df.columns:
+            return None, f"Kolom sumbu Y '`{y}`' tidak ditemukan setelah agregasi."
+        if color and color not in plot_df.columns:
+            color = None
 
-    # --- Siapkan kwargs (tanpa data_frame, sudah lewat posisi) ---
-    common_kwargs = dict(x=x)
-    if y:
-        common_kwargs["y"] = y
-    if color:
-        common_kwargs["color"] = color
-
-    try:
-        if px_name == "pie":
-            fig = px.pie(
-                plot_df,
-                values=y if y else None,
-                names=x,
-                color=color if color and color in plot_df.columns else None,
-                hole=0.35,
-            )
-        elif px_name == "histogram":
-            fig = px.histogram(
-                plot_df,
-                x=x,
-                y=y if y else None,
-                color=color if color and color in plot_df.columns else None,
-                nbins=30,
-                barmode="overlay",
-            )
-        elif px_name == "box":
-            fig = px.box(
-                plot_df,
-                x=x,
-                y=y,
-                color=color if color and color in plot_df.columns else None,
-            )
-        elif px_name == "violin":
-            fig = px.violin(
-                plot_df,
-                x=x,
-                y=y,
-                color=color if color and color in plot_df.columns else None,
-                box=True,
-                points="outliers",
-            )
-        elif px_name == "area":
-            fig = px.area(plot_df, **common_kwargs)
-        elif px_name == "bar":
-            fig = px.bar(plot_df, **common_kwargs, barmode="group")
-        elif px_name == "line":
-            fig = px.line(plot_df, **common_kwargs, markers=True)
-        elif px_name == "scatter":
-            fig = px.scatter(plot_df, **common_kwargs, size_max=15)
-        else:
-            fig = px.bar(plot_df, **common_kwargs)
-
-        fig.update_layout(
-            template="plotly_white",
-            height=500,
-            margin=dict(l=40, r=30, t=60, b=60),
-            title=dict(font_size=16),
-            legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
-        )
-        fig.update_xaxes(title_text=x)
+        common_kwargs = dict(x=x)
         if y:
-            fig.update_yaxes(title_text=y)
-        return fig
+            common_kwargs["y"] = y
+        if color:
+            common_kwargs["color"] = color
 
-    except Exception as e:
-        return None, str(e)
+        try:
+            if px_name == "pie":
+                fig = px.pie(plot_df, values=y if y else None, names=x,
+                             color=color if color and color in plot_df.columns else None,
+                             hole=0.35)
+            elif px_name == "histogram":
+                fig = px.histogram(plot_df, x=x, y=y if y else None,
+                                   color=color if color and color in plot_df.columns else None,
+                                   nbins=30, barmode="overlay")
+            elif px_name == "box":
+                fig = px.box(plot_df, x=x, y=y,
+                             color=color if color and color in plot_df.columns else None)
+            elif px_name == "violin":
+                fig = px.violin(plot_df, x=x, y=y,
+                                color=color if color and color in plot_df.columns else None,
+                                box=True, points="outliers")
+            elif px_name == "area":
+                fig = px.area(plot_df, **common_kwargs)
+            elif px_name == "bar":
+                fig = px.bar(plot_df, **common_kwargs, barmode="group")
+            elif px_name == "line":
+                fig = px.line(plot_df, **common_kwargs, markers=True)
+            elif px_name == "scatter":
+                fig = px.scatter(plot_df, **common_kwargs, size_max=15)
+            else:
+                fig = px.bar(plot_df, **common_kwargs)
+
+            fig.update_layout(
+                template="plotly_white",
+                height=500,
+                margin=dict(l=40, r=30, t=60, b=60),
+                title=dict(font_size=16),
+                legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
+            )
+            fig.update_xaxes(title_text=x)
+            if y:
+                fig.update_yaxes(title_text=y)
+            return fig
+
+        except Exception as e:
+            return None, str(e)
+
+    fig, error = build_chart(df_filtered, chart_type, x_col, y_col, color_col, agg_func)
+
+    if fig:
+        st.plotly_chart(fig, use_container_width=True)
+        img_bytes = fig.to_image(format="png", scale=2)
+        st.download_button(
+            label="🖼️ Unduh Grafik (PNG)",
+            data=img_bytes,
+            file_name=f"chart_{chart_type.lower().replace(' ', '_')}.png",
+            mime="image/png",
+        )
+    elif error:
+        st.error(f"❌ Gagal membuat grafik: **{error}**")
+        st.info(
+            "💡 **Tips:** Pastikan kombinasi sumbu X/Y sesuai dengan jenis grafik. "
+            "Contoh: Pie Chart butuh kolom kategorikal di X dan kolom numerik di Y."
+        )
+
 # ──────────────────────────────────────────────
 # Ringkasan Tipe Data
 # ──────────────────────────────────────────────
