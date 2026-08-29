@@ -405,31 +405,73 @@ def build_chart(df, chart_type, x, y, color, agg):
 
     plot_df = df.copy()
 
-    if agg != "none" and x and y and px_name in ("bar", "line", "area", "scatter"):
-        if agg == "count":
-            plot_df = plot_df.groupby(x).size().reset_index(name=f"count_of_{x}")
-            y = f"count_of_{x}"
-        else:
-            plot_df = plot_df.groupby(x, as_index=False).agg({y: agg})
-
+    # Konversi tanggal di sumbu X
     if x and col_types.get(x) == "tanggal":
         plot_df[x] = pd.to_datetime(plot_df[x], errors="coerce")
 
-    # ✅ FIX: tidak ada 'data_frame' di kwargs,
-    #    karena plot_df sudah dikirim sebagai argumen posisi pertama
-    common_kwargs = dict(x=x, color=color)
+    # --- Agregasi ---
+    if agg != "none" and x and y and px_name in ("bar", "line", "area", "scatter"):
+        # Tentukan kolom groupby: selalu x, plus color jika berbeda dari x
+        groupby_cols = [x]
+        if color and color != x:
+            groupby_cols.append(color)
+
+        if agg == "count":
+            plot_df = plot_df.groupby(groupby_cols, dropna=False).size().reset_index(name=f"count_of_{x}")
+            y = f"count_of_{x}"
+        else:
+            agg_dict = {y: agg}
+            plot_df = plot_df.groupby(groupby_cols, as_index=False, dropna=False).agg(agg_dict)
+
+    # --- Pastikan kolom yang dipakai ada di plot_df ---
+    if x and x not in plot_df.columns:
+        return None, f"Kolom sumbu X '`{x}`' tidak ditemukan dalam data setelah agregasi."
+    if y and y not in plot_df.columns:
+        return None, f"Kolom sumbu Y '`{y}`' tidak ditemukan dalam data setelah agregasi."
+    if color and color not in plot_df.columns:
+        color = None  # aman: lewati warna daripada crash
+
+    # --- Siapkan kwargs (tanpa data_frame, sudah lewat posisi) ---
+    common_kwargs = dict(x=x)
     if y:
         common_kwargs["y"] = y
+    if color:
+        common_kwargs["color"] = color
 
     try:
         if px_name == "pie":
-            fig = px.pie(plot_df, values=y if y else None, names=x, color=color, hole=0.35)
+            fig = px.pie(
+                plot_df,
+                values=y if y else None,
+                names=x,
+                color=color if color and color in plot_df.columns else None,
+                hole=0.35,
+            )
         elif px_name == "histogram":
-            fig = px.histogram(plot_df, x=x, y=y if y else None, color=color, nbins=30, barmode="overlay")
+            fig = px.histogram(
+                plot_df,
+                x=x,
+                y=y if y else None,
+                color=color if color and color in plot_df.columns else None,
+                nbins=30,
+                barmode="overlay",
+            )
         elif px_name == "box":
-            fig = px.box(plot_df, x=x, y=y, color=color)
+            fig = px.box(
+                plot_df,
+                x=x,
+                y=y,
+                color=color if color and color in plot_df.columns else None,
+            )
         elif px_name == "violin":
-            fig = px.violin(plot_df, x=x, y=y, color=color, box=True, points="outliers")
+            fig = px.violin(
+                plot_df,
+                x=x,
+                y=y,
+                color=color if color and color in plot_df.columns else None,
+                box=True,
+                points="outliers",
+            )
         elif px_name == "area":
             fig = px.area(plot_df, **common_kwargs)
         elif px_name == "bar":
@@ -455,26 +497,6 @@ def build_chart(df, chart_type, x, y, color, agg):
 
     except Exception as e:
         return None, str(e)
-
-
-fig, error = build_chart(df_filtered, chart_type, x_col, y_col, color_col, agg_func)
-
-if fig:
-    st.plotly_chart(fig, use_container_width=True)
-    img_bytes = fig.to_image(format="png", scale=2)
-    st.download_button(
-        label="🖼️ Unduh Grafik (PNG)",
-        data=img_bytes,
-        file_name=f"chart_{chart_type.lower().replace(' ', '_')}.png",
-        mime="image/png",
-    )
-elif error:
-    st.error(f"❌ Gagal membuat grafik: **{error}**")
-    st.info(
-        "💡 **Tips:** Pastikan kombinasi sumbu X/Y sesuai dengan jenis grafik. "
-        "Contoh: Pie Chart butuh kolom kategorikal di X dan kolom numerik di Y."
-    )
-
 # ──────────────────────────────────────────────
 # Ringkasan Tipe Data
 # ──────────────────────────────────────────────
