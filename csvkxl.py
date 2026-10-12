@@ -42,10 +42,11 @@ with st.expander("ℹ️ Tentang Aplikasi"):
     #st.caption("Dibuat dengan Streamlit + Pandas")
 
 st.title("📊 File Toolkit")
-st.markdown(
-    "Toolkit untuk konversi format file ke Excel, lengkap dengan fitur "
-    "**✂️ split data** dan **📌 penentuan baris header**."
-)
+st.divider()
+# st.markdown(
+#     "Toolkit untuk konversi format file ke Excel, lengkap dengan fitur "
+#     "**✂️ split data** dan **📌 penentuan baris header**."
+# )
 
 # ================= Helper Functions =================
 
