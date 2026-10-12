@@ -13,8 +13,8 @@ st.set_page_config(
 )
 
 # ================= Sidebar Info =================
-with st.sidebar:
-    st.header("ℹ️ Tentang Aplikasi")
+with st.expander("ℹ️ Tentang Aplikasi"):
+    #st.header("")
     st.markdown(
         """
         **Input didukung:**  
@@ -31,11 +31,11 @@ with st.sidebar:
         - 📋 Pilih sheet (untuk file Excel)
         """
     )
-    st.caption("Dibuat dengan Streamlit + Pandas")
+    #st.caption("Dibuat dengan Streamlit + Pandas")
 
-st.title("📊 Konverter File ke Excel (xlsx)")
+st.title("📊 File Toolkit")
 st.markdown(
-    "Konversi berbagai format file ke Excel, lengkap dengan fitur "
+    "Toolkit untuk konversi format file ke Excel, lengkap dengan fitur "
     "**✂️ split data** dan **📌 penentuan baris header**."
 )
 
@@ -235,7 +235,7 @@ def df_to_xlsx_bytes(df, sheet_name="Sheet1", index=False):
 
 
 # ================= Tabs Utama =================
-tab_convert, tab_split = st.tabs(["📄 Konversi ke Excel", "✂️ Split Berdasarkan Kolom"])
+tab_split, tab_convert = st.tabs(["✂️ Split Berdasarkan Kolom", "📄 Konversi ke Excel"])
 
 # ------------------- TAB 1: KONVERSI -------------------
 with tab_convert:
